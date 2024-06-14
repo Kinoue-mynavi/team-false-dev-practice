@@ -1,0 +1,65 @@
+{% extends "layout_staff.html" %}
+{% block body %}
+
+  <!-- 機能共用 CSS -->
+  <link rel="stylesheet" href="/static/css/staff/staff_event.css">
+
+  <!-- ナビゲーション領域 -->
+  <nav>
+    <div class="container">
+      <p class="menu">
+        <a href="{{ url_for('staff_staff_top') }}">スタッフメニュー</a>
+        >
+        <a href="{{ url_for('staff_manage_event') }}">イベント管理</a>
+        {% if mode == 'create' %}
+          > 新規登録
+        {% elif mode == 'update' %}
+          > 変更内容入力
+        {% endif %}
+      </p>
+    </div>
+  </nav>
+
+  <!-- メインコンテンツ領域 -->
+  <main>
+    <div class="container">
+      <h1 id="main_title">
+        <!-- ここに ページタイトルを表示する -->
+      </h1>
+      <h2 id="main_sub_title">イベント情報</h2>
+
+      <form id="inputForm" method="post" class="add_event">
+        <div id="form_area" class="base_pattern">
+          <p>イベント名<span class="required">（必須）</span>：</p>
+          <p><input name="event_name" type="text" value="{{ event_name }}"></p>
+
+          <p>イベントカテゴリ名<span class="required">（必須）</span>：</p>
+          <p id="output_event_category_sb">
+            <select id="event_category_sb" name="event_category_id" form="inputForm" required="required">
+              <option value="0">イベントを選択</option>
+              {{ selectbox_option }}
+            </select>
+          </p>
+
+          <p>開催日<span class="required">（必須）</span>：</p>
+          <p><input name="event_date" type="date" value="{{ event_date }}"></p>
+
+          <p>開催場所<span class="required">（必須）</span>：</p>
+          <p><input name="event_place" type="text" value="{{ event_place }}"></p>
+
+          <p>イベント概要：</p>
+          <p>
+            <textarea name="event_overview">{{ event_overview }}</textarea>
+          </p>
+
+          <!-- hidden属性の項目 -->
+          <input name="event_id" type="hidden" value="{{ event_id }}">
+        </div>
+        <div id="button_area">
+          <input type="button" class="other_button" value="一覧画面へ戻る" onclick="location.href=`{{url_for('staff_manage_event')}}`">
+          <input type="submit" formaction="{{url_for('confirm_event', mode=mode)}}" class="go_next_button" value="確認画面へ">
+        </div>
+      </form>
+    </div>
+  </main>
+{% endblock %}

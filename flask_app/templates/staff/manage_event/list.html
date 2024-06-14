@@ -1,0 +1,88 @@
+{% extends "layout_staff.html" %}
+{% block body %}
+
+<!-- 機能共用 CSS -->
+<link rel="stylesheet" href="/static/css/staff/staff_event.css">
+
+<!-- ナビゲーション領域 -->
+<nav>
+  <div class="container">
+    <p class="menu">
+      <a href="{{ url_for('staff_staff_top') }}">スタッフメニュー</a>
+      > イベント管理
+    </p>
+  </div>
+</nav>
+
+<!-- メインコンテンツ領域 -->
+<main>
+  <div class="container">
+    <h1 id="main_title">
+      イベント一覧
+    </h1>
+    <div id="list_area" class="base_pattern">
+      <div id="output_event_category_sb">
+        <form method="post" action="{{url_for('staff_manage_event')}}">
+          <select id="event_category_sb" name="event_category_id" onchange="submit(this.form)">
+            <option value="0">イベントカテゴリを選択</option>
+            {{ selectbox_option }}
+          </select>
+        </form>
+      </div>
+      <div id="output_list_table">
+        <table border="1">
+          <tbody>
+            <tr>
+              <th class="event_date">開催日</th>
+              <th class="event_category_name">イベントカテゴリ名</th>
+              <th class="event_name">イベント名</th>
+              <th class="event_place">開催場所</th>
+              <th class="action_button"></th>
+            </tr>
+            {% for event in mst_event %}
+            <form method="post">
+              <tr>
+                <td class="event_date">{{ event.event_date }}</td>
+                <td class="event_category_name">
+                  {% for event_category in mst_event_category %}
+                  {% if event.event_category_id == event_category.event_category_id %}
+                  {{ event_category.event_category_name }}
+                  {% endif %}
+                  {% endfor %}
+                </td>
+                <td class="event_name">{{ event.event_name }}</td>
+                <td class="event_place">{{ event.event_place }}</td>
+                <td class="action_button">
+                  <div>
+                    <input type="submit" formaction="{{url_for('input_event', mode='update')}}" class="half_button"
+                      value="変更" />
+                    {% if event.isDeletable != false %}
+                    <input type="submit" formaction="{{url_for('confirm_event', mode='delete')}}" class="half_button"
+                      value="削除" />
+                    {% endif %}
+                  </div>
+                </td>
+              </tr>
+              <!-- hidden属性の項目 -->
+              <input name="event_date" type="hidden" value="{{ event.event_date }}">
+              <input name="event_category_id" type="hidden" value="{{ event.event_category_id }}">
+              <input name="event_name" type="hidden" value="{{ event.event_name }}">
+              <input name="event_place" type="hidden" value="{{ event.event_place }}">
+              <input name="event_id" type="hidden" value="{{ event.event_id  }}">
+              <input name="event_overview" type="hidden" value="{{ event.event_overview  }}">
+
+            </form>
+            {% else %}
+            イベントが存在しません。
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div id="button_area">
+      <input type="button" class="go_next_button" value="新規登録"
+        onclick="location.href=`{{url_for('input_event', mode='create')}}`">
+    </div>
+  </div>
+</main>
+{% endblock %}
