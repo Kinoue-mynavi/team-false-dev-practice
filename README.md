@@ -83,5 +83,3 @@ Package Version
 - setuptools 54.2.0
 - SQLAlchemy 1.4.32
 - Werkzeug 2.0.3
-
-# team-false-dev-practice
