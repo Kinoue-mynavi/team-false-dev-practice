@@ -28,6 +28,15 @@ cd team-false-dev-practice
 
 ### 作業開始時
 
+- developブランチにいることを確認する（※いない場合、`git checkout develop`で移動する）
+
+```shell
+git branch
+
+* develop
+  main
+```
+
 - developを最新の状態にする
 
 ```shell
