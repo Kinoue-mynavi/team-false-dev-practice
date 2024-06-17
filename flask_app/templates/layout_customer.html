@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+	<title>ムジクロチケット管理ページ</title>
+
+    <link rel="stylesheet" href="/static/css/customer/layout.css">
+</head>
+<body>
+	<header>
+		<button class="toggle-menu-button"></button>
+		<div class="site_title">
+			<a href="/"><img src="/static/images/logo_customer.png" alt="ムジクロチケット"></a>
+		</div>
+		<div class="user_info">
+			<p class="header-display-name">ゲストさん</p>
+			<div class="button-container">
+				<input class="header-button" type="button" value="ログイン"
+					onClick="location.href=``">
+				<input class="header-button" type="button" value="新規登録"
+					onClick="location.href=``">
+            </div>
+		</div>
+	</header>
+
+	<!-- flashメッセージ表示 -->
+	{% for message in get_flashed_messages() %}
+	<div class="alert alert-info" role="alert">
+		{{ message }}
+	</div>
+	{% endfor %}
+
+	<!-- メインコンテンツ領域 -->
+	<div class="mujiclo-staff-body">
+		{% block body %}{% endblock %}
+	</div>
+
+	<!-- フッター領域 -->
+	<footer>
+		<div class="container">
+			<p class="copyright"><small>© MUJIQLO ENTERTAINMENT INC.</small></p>
+		</div>
+	</footer>
+
+  <div class="modal-container">
+		<nav class="modal-nav">
+			<ul class="modal-menu">
+				<li>メニュー1</li>
+				<li>メニュー2</li>
+				<li>メニュー3</li>
+				<li>メニュー4</li>
+			</ul>
+		</nav>
+  </div>
+
+  <script src="/static/js/main.js"></script>
+</body>
+</html>
