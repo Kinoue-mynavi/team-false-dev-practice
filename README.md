@@ -12,13 +12,13 @@
 cd ~/projects/mujiqlo
 ```
 
-#### リポジトリをクローンする
+#### 3. リポジトリをクローンする
 
 ```shell
 git clone https://github.com/Kinoue-mynavi/team-false-dev-practice.git
 ```
 
-### クローンされたディレクトリに移動する
+#### 4. クローンされたディレクトリに移動する
 
 ```shell
 cd team-false-dev-practice
