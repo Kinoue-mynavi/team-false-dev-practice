@@ -1,0 +1,188 @@
+@charset "UTF-8";
+/* ==================================================
+* サイトの基本デザイン
+* ================================================== */
+* {
+	margin: 0px;
+	padding: 0px;
+	box-sizing: border-box;
+	font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Meiryo,
+		メイリオ, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+}
+
+/* --------------------------------------------------
+* 基本設定
+---------- */
+/* コンテナ領域 */
+.container {
+	width: 900px;
+	margin: 0px auto;
+	position: relative;
+}
+
+/* --------------------------------------------------
+* ヘッダー領域
+---------- */
+header {
+  width: 100%;
+  background-color: #389BE3;
+  height: 130px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline: 24px;
+  position: relative;
+}
+
+/* ロゴ表示領域 */
+header .site_title {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  height: 50px;
+  z-index: 20;
+}
+
+header img {
+	max-width: 100%;
+	height: 100%;
+}
+
+/* ログイン・ログアウトボタン表示領域 */
+header .user_info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+header .user_info p {
+  margin-bottom: 0;
+  color: #ffffff;
+}
+
+.button-container {
+    display: flex;
+    gap: 12px;
+}
+
+.header-button {
+    display: flex;
+    align-items: center;
+    padding-inline: 24px;
+    height: 32px;
+    border-radius: 16px;
+    border: 2px solid #ffffff;
+    font-size: 14px;
+    background-color: transparent;
+    color: #ffffff;
+}
+
+.header-display-name {
+    position: relative;
+    z-index: 20;
+}
+
+.toggle-menu-button {
+  height: 26px;
+  width: 26px;
+  background-color: transparent;
+  background-image: url("/static/icons/hamburger.svg");
+  border: none;
+  position: relative;
+  z-index: 20;
+}
+
+.toggle-menu-button.is-visible {
+  background-image: url("/static/icons/close.svg");
+}
+
+.toggle-menu-button:focus {
+  outline: none;
+}
+
+/* --------------------------------------------------
+* メインコンテンツ領域
+---------- */
+main {
+	width: 100%;
+	padding-bottom: 40px; /* フッターの長さ分 画面下端に余白を設ける */
+}
+
+main h1 {
+	padding: 20px 0 10px;
+}
+
+main h2 {
+	margin: 10px 0 5px;
+	padding: 0.25em 0.5em;
+	line-height: 1em;
+	border-left: solid 10px #389BE3;
+}
+
+/* --------------------------------------------------
+* フッター領域
+---------- */
+footer {
+	height: 40px;
+	width: 100%;
+	position: fixed;
+	bottom: 0; /* 要素を画面の下端に固定する */
+	background-color: gray;
+}
+
+/* 企業のコピーライト */
+footer p.copyright {
+	padding-top: 5px;
+	text-align: center;
+	color: white;
+}
+
+/* --------------------------------------------------
+* ハンバーガーメニュー
+---------- */
+.modal-container {
+  margin: 0;
+  padding: 16px;
+  background-color: #389BE3;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+  visibility: hidden;
+  opacity: 0;
+  transition-property: opacity visibility;
+  transition-duration: 0.5s;
+}
+
+.modal-nav {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-container.is-visible {
+  visibility: visible;
+  opacity: 1;
+}
+
+.modal-menu li {
+  color: #fff;
+  line-height: 400%;
+  text-align: center;
+  list-style-type: none;
+  margin: 0;
+}
+
+.close-menu {
+  border: solid 2px #ffffff;
+  height: 32px;
+  padding-inline: 16px;
+  background-color: transparent;
+  color: #ffffff;
+  border-radius: 16px;
+}
