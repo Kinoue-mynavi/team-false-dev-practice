@@ -1,3 +1,182 @@
+## Team False Git/Github運用手順
+
+### 導入
+
+#### 1.リポジトリのクローン
+
+#### 2. 作業したいディレクトリに移動する
+
+- 井上の場合
+
+```shell
+cd ~/projects/mujiqlo
+```
+
+#### リポジトリをクローンする
+
+```shell
+git clone https://github.com/Kinoue-mynavi/team-false-dev-practice.git
+```
+
+### クローンされたディレクトリに移動する
+
+```shell
+cd team-false-dev-practice
+```
+
+下記の「作業開始時」の手順に従って、作業を開始する。
+
+### 作業開始時
+
+- developを最新の状態にする
+
+```shell
+git pull origin develop
+```
+
+- 作業ブランチを作成する
+
+```shell
+git checkout -b 【your-branch-name】
+```
+
+### 作業終了時
+
+#### ステージング + コミットする
+
+```shell
+git add .
+
+git commit -m "【commit messages】"
+```
+
+#### リモートリポジトリ（Github）にプッシュする
+
+```shell
+git push origin 【your-branch-name】
+```
+
+#### Githubにアクセスし、Pull Requestを作成する
+
+https://github.com/Kinoue-mynavi/team-false-dev-practice
+
+を開き、
+
+1. 画面上部に表示されるアラートからPull Requestを作成する
+2. 概要欄に記載のチェックボックスの事項を確認する
+3. 2の確認を終えたら「Create Pull Request」ボタン押下でPRを作成する。
+
+### 自分のブランチがGithub上でMergeされたら
+
+#### ローカルでdevelopブランチに移動
+
+```shell
+git checkout develop
+```
+
+#### 最新のdevelopをPULL
+
+```shell
+git pull origin develop
+```
+
+#### 再度、作業ブランチを作成して作業開始
+
+```shell
+git checkout -b 【新しい作業ブランチ名】
+```
+
+作業開始！
+
+### コンフリクトを解消する
+
+#### ローカルでdevelopブランチに移動
+
+```shell
+git checkout develop
+```
+
+#### 最新のdevelopをPULL
+
+```shell
+git pull origin develop
+```
+
+#### 最新のdevelopを自分の作業ブランチにマージする
+
+```shell
+git merge develop
+```
+
+#### 上記によって、コンフリクトが発生するので解消する
+
+```
+↓ developの変更（他の人の変更）
+>>>>>> develop
+
+<<<<<<
+
+↓ head (自分の作業ブランチの変更)
+>>>>>> head
+
+<<<<<<
+```
+
+- 自分の変更が「正」の場合、`>>>>>> develop`部分を削除する
+- 他の人の変更が「正」の場合、`>>>>>> head`部分を削除する
+- 最後に、`<<<<`or`>>>>`等でコード検索して、検索結果が見つからなければOK
+- コマンドラインにエディタが出現した場合、`Esc`を押下後、`:wq`を入力し保存して抜ける。
+
+#### （コンフリクト解消後）ステージング + コミットする
+
+```shell
+git add .
+
+git commit -m "resolve conflict"
+```
+
+#### 再度プッシュする
+
+```shell
+git push origin 【your-branch-name】
+```
+
+### 誤ってコミットしてしまったら、、、
+
+- 直前のコミットをリセットする（Gitの履歴に残らない）
+
+```shell
+git reset --soft HEAD^
+```
+
+- ステージングを解除する
+
+```shell
+git restore --staged .
+```
+
+### 手元の差分を退避させたい場合、、、
+
+- 現在の差分を退避
+
+```shell
+git stash -u
+```
+
+- 退避させた変更を表示
+
+```shell
+git stash list
+```
+
+- 退避させた変更を再度適応
+    - git pull後などに行う。
+    - ※過去に退避した結果があるかもしれないので、`stash@{0}`の番号に注意して適応する。（0とは限らない。）
+
+```shell
+git stash apply stash@{0}
+```
+
 ## 2024 年新人研修向けムジクロチケット実行手順
 
 ### １.データベース作成
