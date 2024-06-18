@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+	<title>新規会員登録</title>
+</head>
+<header>
+    <h1>新規会員登録</h1>
+</header>
+<body>
+    <main>
+        <div class="new_member_registration">
+
+            <form id="inputForm" method="post" class="new_member_registration">
+                <div id="form_area" class="base_pattern">
+                <p>アカウント名<span class="required">（必須）</span>：</p>
+                <p><input name="customer_account" type="text" value="customer_account"></p>
+
+                <p>パスワード<span class="required">（必須）</span>：</p>
+                <p><input name="customer_password" type="text" value="customer_password"></p>
+
+                <p>氏名<span class="required"></span>：</p>
+                <p><input name="customer_name" type="text" value="customer_name"></p>
+
+                <p>郵便番号<span class="required"></span>：</p>
+                <p><input name="customer_zipcode" type="text" value="customer_zipcode"></p>
+
+                <p>住所<span class="required"></span>：</p>
+                <p><input name="customer_address" type="text" value="customer_address"></p>
+
+                <p>電話番号<span class="required"></span>：</p>
+                <p><input name="customer_phone" type="text" value="customer_phone"></p>
+
+                <input type="radio" name="customer_payment" value="クレジットカード">クレジットカード
+                <input type="radio" name="customer_payment" value="PayPay">PayPay
+                <input type="radio" name="customer_payment" value="振込">振込
+                <input type="radio" name="customer_payment" value="後で設定する">後で設定する
+
+                </div>
+                <div id="button_area">
+                    <input type="submit" formaction="{{url_for('customer_new_member', mode=mode)}}" class="confirm_button" value="登録">
+                </div>
+            </form>
+        </div>
+    </main>
+</body>

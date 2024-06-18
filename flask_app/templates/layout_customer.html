@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
+<meta charset="UTF-8">
 	<title>ムジクロチケット管理ページ</title>
 
     <link rel="stylesheet" href="/static/css/customer/layout.css">
@@ -16,9 +16,9 @@
 			<p class="header-display-name">ゲストさん</p>
 			<div class="button-container">
 				<input class="header-button" type="button" value="ログイン"
-					onClick="location.href=``">
+					onClick="location.href=`{{url_for('login')}}`">
 				<input class="header-button" type="button" value="新規登録"
-					onClick="location.href=``">
+					onClick="location.href=`{{url_for('new_member')}}`">
             </div>
 		</div>
 	</header>
