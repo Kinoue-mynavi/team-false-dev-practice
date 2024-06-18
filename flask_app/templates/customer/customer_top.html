@@ -1,19 +1,21 @@
 {% extends "layout_customer.html" %}
 
 {% block body %}
-<!-- ナビゲーション領域 -->
-<nav>
-  <div class="container">
-    <p class="menu">
-      > トップページ
-    </p>
-  </div>
-</nav>
 
+<!-- 機能画面表示領域 -->
 <div class="container">
-  <h1>
+  <h1 id="main_title">
     イベント一覧
   </h1>
+
+  <div id="list_area" class="base_pattern">
+    <div id="output_list_table">
+      {}
+    </div>
+  </div>
+  </div>
+
+
 </div>
 
 {% endblock %}
