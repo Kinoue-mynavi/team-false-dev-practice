@@ -1,0 +1,22 @@
+{% extends "layout_staff.html" %}
+
+{% block body %}
+
+<!-- メインコンテンツ領域 -->
+<main>
+	<div class="container">
+		<h1 id="main_title">
+			本当に退会しますか？
+		</h1>
+		<div id="menu_button_area">
+			<p>
+				<input type="button" class="menu_button" value="戻る"onClick="window.location.href=`{{url_for('mypage_manage_account')}}`">
+			</p>
+			<p>
+				<input type="button" class="menu_button" value="退会する" onClick="window.location.href=`{{url_for('mypage_manage_ticket')}}`">
+			</p>
+			
+		</div>
+	</div>
+</main>
+{% endblock %}
