@@ -1,0 +1,28 @@
+{% extends "layout_customer.html" %}
+{% block body %}
+<!-- メインコンテンツ領域 -->
+<main>
+    <div class="container">
+        <h1 id="main_title">
+            <!-- ここに ページタイトルを表示する -->
+        </h1>
+    <table>
+        {% for reservation in reservation_param_list %}
+        <!-- イベント -->
+         <form action="{{ url_for('customer_manage_reservation') }}" method="post">
+            <tr>
+                <td class="event_name">{{ reservation.event_name }}</td>
+                <td>
+                    <div id="button_area">
+                        <input type="submit" class="go_next_button" value="詳細">
+                    </div>
+                </td>
+            </tr>
+        </form>
+        {% endfor %}
+    </table>
+    <hr>
+    </div>
+</main>
+        
+{% endblock %}
