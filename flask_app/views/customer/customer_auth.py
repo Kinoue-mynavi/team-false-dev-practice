@@ -20,9 +20,18 @@ def customer_customer_login():
 @app.route("/login_customer", methods=["POST"])
 def login_customer():
     isLoginError = False
+
+    customer_account = request.form.get("customer_account")
+    customer_password = request.form.get("customer_password")
+
+    # アカウント名とパスワードが提供されているか確認
+    if not customer_account or not customer_password:
+        flash(errorMessages.w02('アカウント名またはパスワード'))
+        return render_template("/customer/auth/login.html")
+    
     customer_array = read_customer_customer_account(
         request.form["customer_account"])
-
+    
     # 会員アカウントが存在するかチェック
     if len(customer_array) == 0:
         flash(errorMessages.w04('アカウント名'))
