@@ -23,16 +23,16 @@ def login_customer():
     customer_array = read_customer_customer_account(
         request.form["customer_account"])
 
+    # 会員アカウントが存在するかチェック
     if len(customer_array) == 0:
         flash(errorMessages.w04('アカウント名'))
         isLoginError = True
-    # 会員アカウントが存在するかチェック
-    else:
-        customer = customer_array[0]
-        # パスワードが一致するかチェック
-        if request.form["customer_password"] != customer.customer_password:
-            flash(errorMessages.w04('アカウント名'))
-            isLoginError = True
+    
+    # パスワードが一致するかチェック
+    customer = customer_array[0]
+    if request.form["customer_password"] != customer.customer_password:
+        flash(errorMessages.w04('アカウント名'))
+        isLoginError = True
 
     # エラーがあればログインページに遷移
     if isLoginError:
