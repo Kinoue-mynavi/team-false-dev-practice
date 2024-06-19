@@ -2,6 +2,8 @@
 
 {% block body %}
 
+
+
 <!-- 機能画面表示領域 -->
 <div class="container">
   <h1 id="main_title">
@@ -9,15 +11,17 @@
   </h1>
 
   <div id="list_area" class="base_pattern">
-    <div id="output_list_table">
-      {% for event in mst_event %}
-        {{ event.event_name }}
-          <div id="button_area">
+      <div id="event_list">
+        {% for event in mst_events %}
+        <div class="event_item">
+          <h2 class="event_name">{{ event.event_name }}</h2>
+          <div class="button_area">
             <input type="button" class="event_detail_button" value="詳細"
-              onclick="location.href=`{{url_for('event_reserv_confirm')}}`">
+              onclick="location.href='/event/{{ event.event_id }}'">
           </div>
-      {% endfor %}
-    </div>
+        </div>
+        {% endfor %}
+      </div>
   </div>
   </div>
 

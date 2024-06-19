@@ -13,15 +13,9 @@ infoMessages = InfoMessages()
 @app.route("/customer_top")
 def customer_top():
     mst_events = read_event()
-
     # イベントが1件も取得できなければ、エラーメッセージ表示
     if not mst_events:
         flash(errorMessages.w01('イベントカテゴリ'))
 
     return render_template("/customer/customer_top.html", mst_events=mst_events)
 
-@app.route("/event_reserv_confirm")
-def event_reserv_confirm():
-    flash("イベント詳細が開くはず、、")
-    return redirect(url_for("customer_top"))
-    # return render_template("/customer/event_detail.html")
