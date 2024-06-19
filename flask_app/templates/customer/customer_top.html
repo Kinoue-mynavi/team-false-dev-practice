@@ -10,11 +10,13 @@
 
   <div id="list_area" class="base_pattern">
     <div id="output_list_table">
-      <div id="button_area">
-        ここにイベント名
-        <input type="button" class="event_detail_button" value="詳細"
-          onclick="location.href=`{{url_for('event_reserv_confirm')}}`">
-      </div>
+      {% for event in mst_event %}
+        {{ event.event_name }}
+          <div id="button_area">
+            <input type="button" class="event_detail_button" value="詳細"
+              onclick="location.href=`{{url_for('event_reserv_confirm')}}`">
+          </div>
+      {% endfor %}
     </div>
   </div>
   </div>
