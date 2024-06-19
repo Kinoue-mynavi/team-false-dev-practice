@@ -2,6 +2,7 @@
 
 {% block body %}
 
+<link rel="stylesheet" href="/static/css/customer/info.css">
 <main>
     <body>
         <div class="container">
@@ -10,8 +11,11 @@
             </h2></div>
             
                 <div class = "form">
-                    <p>アカウント名<span class="required">（必須）</span></p>
-                        <p>{{ customer_account }}</p>
+                        <p>アカウント名<span class="required">（必須）</span></p>
+                        <div class = "under">
+                            <p>{{ customer_account }}</p>
+                        </div>
+                    
 
 
                     <p>パスワード<span class="required">（必須）</span></p>
@@ -21,7 +25,7 @@
                         <p>{{ customer_name }}</p>
 
                     <p>郵便番号</p>
-                        <p>{ {customer_zipcode }}</p>
+                        <p>{{customer_zipcode }}</p>
 
                     <p>住所</p>
                         <p>{{ customer_address }}</p>
@@ -36,8 +40,8 @@
 
                 <div class = "button">
                 <br>
-                    <input type="button" class="other_button" value="戻る" onclick="location.href=`{{url_for('')}}`">
-                    <input type="submit" class="other_button" value="確定" onclick="location.href=`{{url_for('')}}`">
+                    <input type="button" class="other_button" value="戻る">
+                    <input type="submit" class="other_button" value="変更">
                 </div>
                 <!-- (url_for('ビューに指定しているメゾット名')) -->
         </div>
