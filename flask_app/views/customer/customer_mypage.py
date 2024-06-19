@@ -1,5 +1,11 @@
-from flask import redirect, render_template, session
+from flask import render_template, redirect, session
 from flask_app.__init__ import app
+from flask_app.messages import ErrorMessages, InfoMessages
+
+# エラーメッセージクラスのインスタンス作成
+errorMessages = ErrorMessages()
+# インフォメーションメッセージクラスのインスタンス作成
+infoMessages = InfoMessages()
 #ここにログインチェック関数のインポート
 
 
@@ -37,4 +43,5 @@ def mypage_manage_unsubscribe():
 @app.route("/mypage/manage_unsubscribe/confirm")
 def display_confirmation():
     return render_template("/customer/mypage/manage_unsubscribe/confirm.html")
+
 
