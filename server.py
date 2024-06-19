@@ -10,7 +10,13 @@ import flask_app.views.staff.staff_ticket
 import flask_app.views.staff.staff_event_category
 import flask_app.views.staff.staff_event
 import flask_app.views.customer.customer_top
+<<<<<<< HEAD
+import flask_app.views.customer.customer_mypage
+
+
+=======
 import flask_app.views.customer.customer_auth
+>>>>>>> develop
 app.secret_key = 'hoge'
 
 if __name__ == '__main__':
