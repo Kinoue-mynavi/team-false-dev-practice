@@ -170,12 +170,21 @@ footer p.copyright {
   opacity: 1;
 }
 
+.modal-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
 .modal-menu li {
-  color: #fff;
-  line-height: 400%;
   text-align: center;
-  list-style-type: none;
   margin: 0;
+}
+
+.modal-menu li a {
+  color: #fff;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 .close-menu {
