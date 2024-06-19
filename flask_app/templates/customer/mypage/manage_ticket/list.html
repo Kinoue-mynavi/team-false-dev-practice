@@ -4,8 +4,9 @@
 
 ##チケット一覧（デバック用）##
 
-<div id="button_area">
-    <input type="submit" formaction="{{url_for('confirm_cancel', mode=mode)}}" class="confirm_button" value="登録">
-</div>
+<form action="{{url_for('confirm_cancel', mode=mode)}}">
+    <input type="submit" class="button" value="詳細">
+</form>
 
+##form形式　ticket_idでイベントIDが欲しいです##
 {% endblock %}

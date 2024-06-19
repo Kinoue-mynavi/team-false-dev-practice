@@ -1,6 +1,7 @@
 from flask import render_template, redirect, session
 from flask_app.__init__ import app
 from flask_app.messages import ErrorMessages, InfoMessages
+from flask_app.models.functions.ticket import read_ticket_event_id
 
 # エラーメッセージクラスのインスタンス作成
 errorMessages = ErrorMessages()
@@ -51,6 +52,7 @@ def display_confirmation():
 def confirm_cancel():
     if session["logged_in_customer"] == True:
         # チケット詳細を開いてキャンセル確認
+        
 
         return render_template("/customer/mypage/manage_ticket/confirm_cancel.html")
     else:
