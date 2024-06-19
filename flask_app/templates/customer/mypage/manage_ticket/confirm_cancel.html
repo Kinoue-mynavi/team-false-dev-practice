@@ -4,32 +4,33 @@
 <main>
     <p><h2>予約詳細</h2></p>
     <p>イベント名</p>
-    テキストエリア
+    {{event_name}}
 
     <p>開催日</p>
-    日時
+    {{event_days}}
 
     <p>開催場所</p>
-    場所
+    {{event_place}}
 
     <p>イベント概要</p>
-    概要
+    {{event_overview}}
 
     <p>チケット券種選択</p>
-    券種（値段）
+    {{ticket_seat_if}}（{{ticket_price}}）
+
 
     <p>予約者情報</p>
     <p>氏名</p>
-    氏名
+    {{customer_name}}
     <p>郵便番号</p>
-    郵便番号
+    {{customer_zipcode}}
     <p>住所</p>
-    住所
+    {{customer_address}}
     <p>電話番号</p>
-    電話番号
+    {{customer_phone}}
 
     <p>支払方法</p>
-    クレカpay振込　ラジオで
+    {{customer_payment}}
 
     <div id="button_area">
         <input type="submit" formaction="{{url_for('customer_new_member', mode=mode)}}" class="return_button" value="戻る">
