@@ -21,7 +21,7 @@ def mypage_manage_account():
         return render_template("/customer/mypage/manage_account/info.html")
     else:
         return redirect("/customer/auth/login.html")
-    
+
 #予約一覧に遷移
 @app.route("/mypage_manage_ticket")
 def mypage_manage_ticket():
@@ -44,4 +44,9 @@ def mypage_manage_unsubscribe():
 def display_confirmation():
     return render_template("/customer/mypage/manage_unsubscribe/confirm.html")
 
+# チケット詳細 キャンセル確認に遷移
+@app.route("/mypage/manage_unsubscribe/confirm")
+def display_confirmation():
+    return render_template("/customer/mypage/manage_unsubscribe/confirm.html")
 
+# チケットキャンセル チケット一覧に遷移
