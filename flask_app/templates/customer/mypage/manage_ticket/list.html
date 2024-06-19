@@ -2,6 +2,10 @@
 
 {% block body %}
 
+##チケット一覧（デバック用）##
 
+<div id="button_area">
+    <input type="submit" formaction="{{url_for('confirm_cancel', mode=mode)}}" class="confirm_button" value="登録">
+</div>
 
 {% endblock %}

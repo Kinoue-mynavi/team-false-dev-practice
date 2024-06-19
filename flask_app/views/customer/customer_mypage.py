@@ -44,9 +44,24 @@ def mypage_manage_unsubscribe():
 def display_confirmation():
     return render_template("/customer/mypage/manage_unsubscribe/confirm.html")
 
+
+
 # チケット詳細 キャンセル確認に遷移
-@app.route("/mypage/manage_unsubscribe/confirm")
-def display_confirmation():
-    return render_template("/customer/mypage/manage_unsubscribe/confirm.html")
+@app.route("/mypage/manage_ticket/confirm_cancel")
+def confirm_cancel():
+    if session["logged_in_customer"] == True:
+        # チケット詳細を開いてキャンセル確認
+
+        return render_template("/customer/mypage/manage_ticket/confirm_cancel.html")
+    else:
+        return redirect("/customer/auth/login.html")
 
 # チケットキャンセル チケット一覧に遷移
+@app.route("/mypage_manage_ticket")
+def ticket_cancel_list():
+    if session["logged_in_customer"] == True:
+        # チケットキャンセルして一覧に戻る
+
+        return render_template("/customer/mypage/manage_ticket/list.html")
+    else:
+        return redirect("/customer/auth/login.html")
