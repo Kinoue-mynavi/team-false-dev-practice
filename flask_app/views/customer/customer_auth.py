@@ -12,7 +12,7 @@ errorMessages = ErrorMessages()
 infoMessages = InfoMessages()
 
 # 新規会員登録画面へ遷移
-@app.route('/new_member', methods=["GET", "POST"])
+@app.route('/customer/auth/signup', methods=["GET"])
 def new_member():
     return render_template("/customer/auth/signup.html")
 
@@ -23,7 +23,7 @@ def login():
     return render_template("/customer/auth/login.html")
 
 # 新規会員登録 情報入力画面
-@app.route('/customer_new_member', methods=['POST'])
+@app.route('/customer/auth/signup', methods=['POST'])
 def customer_new_member():
     # バリデーションフラグ
     isValidateError = False
