@@ -10,7 +10,11 @@
 
   <div id="list_area" class="base_pattern">
     <div id="output_list_table">
-      {}
+      <div id="button_area">
+        ここにイベント名
+        <input type="button" class="event_detail_button" value="詳細"
+          onclick="location.href=`{{url_for('event_reserv_confirm')}}`">
+      </div>
     </div>
   </div>
   </div>
