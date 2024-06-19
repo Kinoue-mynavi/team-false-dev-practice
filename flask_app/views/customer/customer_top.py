@@ -2,8 +2,6 @@ from flask import render_template, redirect, flash, url_for
 from flask_app.__init__ import app
 from flask_app.messages import ErrorMessages, InfoMessages
 from flask_app.models.functions.event import read_event
-from flask_app.models.mst_event import Mst_event
-
 
 # エラーメッセージクラスのインスタンス作成
 errorMessages = ErrorMessages()
@@ -19,9 +17,3 @@ def customer_top():
         flash(errorMessages.w01('イベントカテゴリ'))
 
     return render_template("/customer/customer_top.html")
-
-@app.route("/event_reserv_confirm")
-def event_reserv_confirm():
-    flash("イベント詳細が開くはず、、")
-    return redirect(url_for("customer_top"))
-    # return render_template("/customer/event_detail.html")

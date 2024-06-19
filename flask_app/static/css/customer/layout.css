@@ -127,8 +127,6 @@ main h2 {
 footer {
 	height: 40px;
 	width: 100%;
-	position: fixed;
-	bottom: 0; /* 要素を画面の下端に固定する */
 	background-color: gray;
 }
 
