@@ -10,6 +10,8 @@ import flask_app.views.staff.staff_ticket
 import flask_app.views.staff.staff_event_category
 import flask_app.views.staff.staff_event
 import flask_app.views.customer.customer_top
+import flask_app.views.customer.customer_mypage
+
 
 app.secret_key = 'hoge'
 
