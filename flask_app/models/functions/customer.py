@@ -44,6 +44,10 @@ def read_customer_one(customer_id):
     customer = Mst_customer.query.get(customer_id)
     return customer
 
+# 会員　一件取得　辞書型
+def read_customer_one_dict(customer_id):
+    customer = Mst_customer.query.get(customer_id)
+    return customer.to_dict()
 
 # 会員アカウント名を条件に取得
 def read_customer_customer_account(customer_account):

@@ -44,3 +44,15 @@ class Mst_customer(db.Model):
             self.customer_phone,
             self.customer_payment
         )
+
+    def to_dict(self):
+        return {
+            "customer_id": self.customer_id,
+            "customer_account": self.customer_account,
+            "customer_password":  self.customer_password,
+            "customer_name": self.customer_name,
+            "customer_zipcode": self.customer_zipcode,
+            "customer_address": self.customer_address,
+            "customer_phone": self.customer_phone,
+            "customer_payment": self.customer_payment,
+        }

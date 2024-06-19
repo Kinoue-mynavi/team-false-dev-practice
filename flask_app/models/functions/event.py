@@ -29,6 +29,11 @@ def read_event_one(event_id):
     event = Mst_event.query.get(event_id)
     return event
 
+# イベント　一件取得 辞書型
+def read_event_one_dict(event_id):
+    event = Mst_event.query.get(event_id)
+    return event.to_dict()
+
 
 # イベント　イベントカテゴリIDを条件に取得
 def read_event_event_category(event_category_id):
