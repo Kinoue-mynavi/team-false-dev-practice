@@ -17,6 +17,7 @@ def new_member():
     return render_template("/customer/auth/signup.html")
 
 # ログイン画面へ遷移
+# デバック用
 @app.route('/login', methods=["GET", "POST"])
 def login():
     return render_template("/customer/auth/login.html")
