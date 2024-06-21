@@ -1,0 +1,61 @@
+{% extends "layout_customer.html" %}
+
+{% block body %}
+    
+<section class="section">
+    <h2 class="section_title">チケット入力情報の確認</h2>
+    <div class="section_container">
+        <div class="section_item">
+            <h3 class="section_item_label">イベント名</h3>
+            <p class="section_item_content">{{ event.event_name }}</p>
+        </div>
+    
+        <div class="section_item">
+            <h3 class="section_item_label">チケット券種選択</h3>
+            <p class="section_item_content">{{ ticket_seat }}</p>
+        </div>
+    
+        <div class="section_item">
+            <h3 class="section_item_label">予約者情報</h3>
+            <div class="section_item_content">
+                <div class="reserver_info_container">
+                    <div class="reserver_info_item">
+                        <span class="list_circle"></span>
+                        <span class="reserver_info_item_label">氏名</span>
+                        <p class="reserver_info_item_value">{{ customer.customer_name }}</p>
+                    </div>
+                    <div class="reserver_info_item">
+                        <span class="list_circle"></span>
+                        <span class="reserver_info_item_label">郵便番号</span>
+                        <p class="reserver_info_item_value">{{ customer.customer_zipcode }}</p>
+                    </div>
+                    <div class="reserver_info_item">
+                        <span class="list_circle"></span>
+                        <span class="reserver_info_item_label">住所</span>
+                        <p class="reserver_info_item_value">{{ customer.customer_address}}</p>
+                    </div>
+                    <div class="reserver_info_item">
+                        <span class="list_circle"></span>
+                        <span class="reserver_info_item_label">電話番号</span>
+                        <p class="reserver_info_item_value">{{ customer.customer_phone}}</p>
+                    </div>
+                    <div class="reserver_info_item">
+                        <span class="list_circle"></span>
+                        <span class="reserver_info_item_label">支払方法</span>
+                        <p class="reserver_info_item_value">{{ customer.customer_payment}}</p>
+                    </div>
+                </div>
+            </div>
+            <form class="reserver_info_buttons_container">
+                <!-- hidden -->
+                <input type="hidden" name="customer_id" value="{{ customer.customer_id }}">
+                <input type="hidden" name="ticket_id" value="{{ ticket.ticket_id }}">
+                <!-- -->
+                <button type="submit" class="section_button back_button" onclick="location.href=`/event/{{ event.event_id }}`">戻る</button>
+                <button type="submit" class="section_button submit_button" formmethod="post" onclick="location.href=`{{ url_for('submit_new_reservation') }}`">確定</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
