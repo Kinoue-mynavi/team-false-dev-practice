@@ -1,0 +1,25 @@
+@charset "UTF-8";
+/* ==================================================
+* サイトの基本デザイン
+* ================================================== */
+* {
+	margin: 0px;
+	padding: 0px;
+	box-sizing: border-box;
+	font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Meiryo,
+		メイリオ, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: #000000;
+}
+
+a:hover {
+    opacity: 0.6;
+	transition: .5s;
+}
+
+li {
+    list-style-type: none;
+}

@@ -127,8 +127,6 @@ main h2 {
 footer {
 	height: 40px;
 	width: 100%;
-	position: fixed;
-	bottom: 0; /* 要素を画面の下端に固定する */
 	background-color: gray;
 }
 
@@ -137,6 +135,76 @@ footer p.copyright {
 	padding-top: 5px;
 	text-align: center;
 	color: white;
+}
+
+/* --------------------------------------------------
+* セクション
+---------- */
+
+.section {
+  max-width: 765px;
+  margin-inline: auto;
+  padding-top: 58px;
+  padding-bottom: 120px;
+}
+
+.section_title {
+  font-size: 40px;
+  text-align: center;
+  margin-bottom: 45px;
+}
+
+.section_container {
+  display: flex;
+  flex-direction: column;
+  gap: 58px;
+}
+
+.section_item {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.section_item_label {
+  padding-left: 22px;
+  padding-block: 14px;
+  border-left: solid 13px #389BE3;
+  border-bottom: solid 2px #389BE3;
+}
+
+.section_item_content {
+  padding-left: 35px;
+}
+
+.section_button {
+  width: 236px;
+  height: 77px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  border-radius: 118px;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.section_button:hover {
+  opacity: 0.5;
+  transition: .5s;
+}
+
+.back_button {
+  border: solid 2px #389BE3;
+  color: #389BE3;
+}
+
+.submit_button {
+  background-color: #F56A1C;
+  border: solid 2px #F56A1C;
+  color: #ffffff;
 }
 
 /* --------------------------------------------------
@@ -170,12 +238,21 @@ footer p.copyright {
   opacity: 1;
 }
 
+.modal-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
 .modal-menu li {
-  color: #fff;
-  line-height: 400%;
   text-align: center;
-  list-style-type: none;
   margin: 0;
+}
+
+.modal-menu li a {
+  color: #fff;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 .close-menu {

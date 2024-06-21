@@ -1,0 +1,41 @@
+{% extends "layout_customer.html" %}
+
+{% block body %}
+<main>
+    <p><h2>予約詳細</h2></p>
+    <p>イベント名</p>
+    テキストエリア
+
+    <p>開催日</p>
+    日時
+
+    <p>開催場所</p>
+    場所
+
+    <p>イベント概要</p>
+    概要
+
+    <p>チケット券種選択</p>
+    券種（値段）
+
+    <p>予約者情報</p>
+    <p>氏名</p>
+    氏名
+    <p>郵便番号</p>
+    郵便番号
+    <p>住所</p>
+    住所
+    <p>電話番号</p>
+    電話番号
+
+    <p>支払方法</p>
+    クレカpay振込　ラジオで
+
+    <div id="button_area">
+        <input type="submit" formaction="{{url_for('customer_new_member', mode=mode)}}" class="return_button" value="戻る">
+        <input type="submit" formaction="{{url_for('customer_new_member', mode=mode)}}" class="confirm_button" value="登録">
+    </div>
+
+</main>
+
+{% endblock %}
