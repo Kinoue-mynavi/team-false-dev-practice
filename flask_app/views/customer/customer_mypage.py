@@ -1,10 +1,12 @@
 from flask import render_template, redirect, session, request, flash, url_for
 from flask_app.__init__ import app
 from flask_app.messages import ErrorMessages, InfoMessages
-from flask_app.models.functions.ticket import read_ticket_one, ticket_seat_id_str, delete_ticket
+from flask_app.models.functions.ticket import read_ticket_one, ticket_seat_id_str, delete_ticket, read_ticket_event_id
 from flask_app.models.functions.customer import read_customer_one, read_customer_customer_account, update_customer
 from flask_app.models.functions.event import read_event_one
 from flask_app.views.customer.common.customer_common import is_customer_login
+from flask_app.models.functions.reservations import param_reservation, read_reservation, read_reservation_customer_id
+from operator import itemgetter
 from datetime import datetime
 
 # エラーメッセージクラスのインスタンス作成
@@ -81,7 +83,7 @@ def display_confirmation():
 def confirm_cancel():
     if session["logged_in_customer"] == True:
         # チケット詳細を開いてキャンセル確認
-        # ticket_id = request.form.get('ticket_id')
+        # get_ticket_id = request.form.get('ticket_id')
         # デバック用
         get_ticket_id = 1
 
@@ -176,7 +178,7 @@ def mypage_manage_account_edit():
     #     return redirect("/customer/auth/login.html")
 
 #アカウント情報変更画面
-@app.route("/mypage_manage_account/update", methods=['POST'])
+@app.route("/mypage_manage_account/update", methods=['POST', 'GET'])
 def mypage_manage_account_update():
     # バリデーションフラグ
     isValidateError = False
@@ -190,6 +192,9 @@ def mypage_manage_account_update():
     customer_address = request.form.get('customer_address')
     customer_phone = request.form.get('customer_phone')
     customer_payment = request.form.get('customer_payment')
+
+    print("-------------------------------")
+    print(customer_payment)
 
     # バリデーションチェック
     # 必須 アカウント名50文字以下 W2 W7
@@ -228,22 +233,11 @@ def mypage_manage_account_update():
     if not customer_phone.isdigit():
         flash(errorMessages.w10('電話番号'))
         isValidateError = True
-    # アカウント名の一意性チェック W3
-    if read_customer_customer_account(customer_account):
-        flash(errorMessages.w03('アカウント名'))
-        isValidateError = True
 
     # バリデーションフラグのチェック
     # 不備がある場合はアカウント情報変更画面にリダイレクト
     if isValidateError:
         return redirect(url_for('mypage_manage_account_edit'))
-
-    # 入力情報を辞書型に入っているリスト型に入れる
-    request_list = {"customer_account":customer_account, "customer_password":customer_password,
-            "customer_name":customer_name, "customer_zipcode":customer_zipcode,
-            "customer_address":customer_address, "customer_phone":customer_phone,
-            "customer_payment":customer_payment}
-    request_lists = [request_list]
 
     # 会員IDの取得
     # customer_id = read_customer_one(session[logged_in_customer_id])
@@ -251,7 +245,52 @@ def mypage_manage_account_update():
     customer_id=customer.customer_id
 
     # データベースを変更
-    update_customer(customer_id, request_lists)
+    update_customer(customer_id, request)
+
+    # 支払方法の表示設定
+    if customer.customer_payment == "1":
+        payment = "クレジットカード"
+    
+    elif customer.customer_payment == "2":
+        payment = "PayPay"
+    
+    elif customer.customer_payment == "3":
+        payment = "銀行振込"
+    
+    else:
+        payment = "未選択"
 
     # アカウント情報画面に遷移
-    return render_template("/customer/mypage/manage_account/info.html")
+    return render_template("/customer/mypage/manage_account/info.html",
+                            customer_account = customer.customer_account,
+                            customer_password = customer.customer_password,
+                            customer_name = customer.customer_name,
+                            customer_zipcode = customer.customer_zipcode,
+                            customer_address = customer.customer_address,
+                            customer_phone = customer.customer_phone,
+                            customer_payment = payment)
+
+# 予約管理　list
+@app.route("/customer_manage_reservation", methods=["GET", "POST"])
+@is_customer_login
+
+def customer_manage_reservation():
+    # customer_id を取得
+    customer_id = session.get('logged_in_customer_id')  
+    ticket_id = session.get('ticket_id')
+    event_id = session.get('event_id')
+
+    # customer_id を引数として渡す
+    tbl_reservation = read_reservation_customer_id(customer_id)
+    reservation_param_list = sorted(param_reservation(tbl_reservation),
+                                    key=itemgetter('event_date'))
+
+
+
+    # 予約情報が1件も取得できなければ、エラーメッセージ表示
+    if not reservation_param_list:
+        flash(errorMessages.w01('予約情報'))
+
+    return render_template("/customer/mypage/manage_ticket/list.html",
+                            reservation_param_list = reservation_param_list,
+                            event_id = event_id)
