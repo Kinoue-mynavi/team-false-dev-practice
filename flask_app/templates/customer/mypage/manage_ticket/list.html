@@ -12,7 +12,7 @@
               <div class="event_item">
                 <h2 class="event_name">{{ reservation.event_name }}</h2>
                 <div class="button_area">
-                  <input type="button" class="event_detail_button" value="詳細">
+                  <input type="button" class="event_detail_button" value="詳細" onClick="window.location.href=`{{url_for('confirm_cancel')}}`">
                 </div>
               </div>
               {% endfor %}
