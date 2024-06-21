@@ -5,6 +5,10 @@ from flask_app.models.functions.ticket import read_ticket_one, ticket_seat_id_st
 from flask_app.models.functions.customer import read_customer_one, read_customer_customer_account, update_customer
 from flask_app.models.functions.event import read_event_one
 from flask_app.views.customer.common.customer_common import is_customer_login
+from flask_app.models.functions.reservations import param_reservation, read_reservation, read_reservation_customer_id
+from flask_app.models.functions.customer import read_customer_one, read_customer_customer_account
+from flask_app.models.functions.ticket import read_ticket_one, read_ticket_event_id
+from operator import itemgetter
 
 # エラーメッセージクラスのインスタンス作成
 errorMessages = ErrorMessages()
@@ -245,4 +249,27 @@ def mypage_manage_account_update():
                             customer_phone = customer.customer_phone,
                             customer_payment = payment)
 
+# 予約管理　list
+@app.route("/customer_manage_reservation", methods=["GET", "POST"])
+@is_customer_login
 
+def customer_manage_reservation():
+    # customer_id を取得
+    customer_id = session.get('logged_in_customer_id')  
+    ticket_id = session.get('ticket_id')
+    event_id = session.get('event_id')
+
+    # customer_id を引数として渡す
+    tbl_reservation = read_reservation_customer_id(customer_id)
+    reservation_param_list = sorted(param_reservation(tbl_reservation),
+                                    key=itemgetter('event_date'))
+
+
+
+    # 予約情報が1件も取得できなければ、エラーメッセージ表示
+    if not reservation_param_list:
+        flash(errorMessages.w01('予約情報'))
+
+    return render_template("/customer/mypage/manage_ticket/list.html",
+                            reservation_param_list = reservation_param_list,
+                            event_id = event_id)
