@@ -1,0 +1,29 @@
+/* メインタイトルのCSS */
+#main_title {
+    text-align: center;
+}
+
+
+/* イベント一覧全体のCSS */
+#event_list {
+    width: 600px;
+    margin-inline: auto;
+}
+
+.event_item {
+    position: relative;
+}
+
+
+/* イベント名のCSS */
+.event_name {
+    text-align: center;
+}
+
+/* 詳細ボタンのCSS */
+.button_area {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}

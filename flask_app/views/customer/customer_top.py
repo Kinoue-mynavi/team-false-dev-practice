@@ -10,12 +10,10 @@ infoMessages = InfoMessages()
 
 @app.route("/customer_top")
 def customer_top():
-    return render_template("/customer/customer_top.html")
-
-    mst_event = read_event()
-
+    mst_events = read_event()
     # イベントが1件も取得できなければ、エラーメッセージ表示
-    if not mst_event:
+    if not mst_events:
         flash(errorMessages.w01('イベントカテゴリ'))
 
-    return render_template("/customer/customer_top.html")
+    return render_template("/customer/customer_top.html", mst_events=mst_events)
+
