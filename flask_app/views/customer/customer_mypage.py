@@ -5,11 +5,10 @@ from flask_app.messages import ErrorMessages, InfoMessages
 from flask_app.models.functions.event import create_event
 from flask_app.models.functions.reservations import delete_reservation, param_reservation, read_reservation
 from flask import render_template, flash, request, redirect, session, url_for
-from flask_app.__init__ import app
+from flask import render_template, redirect, session
+from flask_app.views.staff.common.staff_common import is_staff_login
+from flask_app.models.functions.customer import read_customer_one
 from flask_app.messages import ErrorMessages, InfoMessages
-from flask_app.models.functions.customer import read_customer_customer_account, read_customer_one, update_customer
-from flask_app.views.customer.common.customer_common import is_customer_login
-
 # エラーメッセージクラスのインスタンス作成
 errorMessages = ErrorMessages()
 # インフォメーションメッセージクラスのインスタンス作成
@@ -34,6 +33,35 @@ def customer_manage_reservation():
  
 #ここにログインチェック関数のインポート
 
+# アカウント情報表示
+@app.route("/customer_info", methods=["GET", "POST"])
+@is_staff_login
+def customer_info():
+    # 表示するレコードを指定する
+    # customer = read_customer_one(session[logged_in_customer_id])
+    customer = read_customer_one(1)
+
+    if customer.customer_payment == "1":
+        payment = "クレジットカード"
+    
+    elif customer.customer_payment == "2":
+        payment = "PayPay"
+    
+    elif customer.customer_payment == "3":
+        payment = "銀行振込"
+    
+    else:
+        payment = "未選択"
+
+
+    return render_template("/customer/mypage/manage_accont/info.html",
+                customer_account = customer.customer_account,
+                customer_password = customer.customer_password,
+                customer_name = customer.customer_name,
+                customer_zipcode = customer.customer_zipcode,
+                customer_address = customer.customer_address,
+                customer_phone = customer.customer_phone,
+                customer_payment = payment)
 
 # マイページメニュー（トップページ）
 @app.route("/mypage_mypage_top")
@@ -43,7 +71,7 @@ def mypage_mypage_top():
 #アカウント情報に遷移
 @app.route("/mypage_manage_account")
 def mypage_manage_account():
-    if session["logged_in_customer"] == True:
+    if session["logged_in_customer"]:
         return render_template("/customer/mypage/manage_account/info.html")
     else:
         return redirect("/customer/auth/login.html")
@@ -51,7 +79,7 @@ def mypage_manage_account():
 #予約一覧に遷移
 @app.route("/mypage_manage_ticket")
 def mypage_manage_ticket():
-    if session["logged_in_customer"] == True:
+    if session["logged_in_customer"]:
         return render_template("/customer/mypage/manage_ticket/list.html")
     else:
         return redirect("/customer/auth/login.html")
@@ -59,7 +87,7 @@ def mypage_manage_ticket():
 #退会に遷移
 @app.route("/mypage_manage_unsubscribe")
 def mypage_manage_unsubscribe():
-    if session["logged_in_customer"] == True:
+    if session["logged_in_customer"]:
         return render_template("/customer/mypage/manage_unsubscribe/confirm.html")
     else:
         return redirect("/customer/auth/login.html")
@@ -69,6 +97,7 @@ def mypage_manage_unsubscribe():
 @app.route("/mypage/manage_unsubscribe/confirm")
 def display_confirmation():
     return render_template("/customer/mypage/manage_unsubscribe/confirm.html")
+
 
 
 
@@ -171,6 +200,4 @@ def mypage_manage_account_update():
 
     # アカウント情報画面に遷移
     return render_template("/customer/mypage/manage_account/info.html")
-
-
 

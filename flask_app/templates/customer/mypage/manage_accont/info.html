@@ -1,0 +1,52 @@
+{% extends "layout_customer.html" %}
+
+{% block body %}
+
+<link rel="stylesheet" href="/static/css/customer/info.css">
+<main>
+    <body>
+        <div class="container">
+            <h2><div style="text-align: center">
+                会員情報
+            </h2></div>
+            
+                <div class = "form">
+                        <p>アカウント名<span class="required">（必須）</span></p>
+                        <div class = "under">
+                            <p>{{ customer_account }}</p>
+                        </div>
+                    
+
+
+                    <p>パスワード<span class="required">（必須）</span></p>
+                        <p>{{ customer_password }}</p>
+
+                    <p>氏名</p>
+                        <p>{{ customer_name }}</p>
+
+                    <p>郵便番号</p>
+                        <p>{{customer_zipcode }}</p>
+
+                    <p>住所</p>
+                        <p>{{ customer_address }}</p>
+
+                    <p>電話番号</p>
+                        <p>{{ customer_phone }}</p>
+                
+                    <p>支払い方法</p>
+                        <p>{{ customer_payment }}</p>
+
+                </div>
+
+                <div class = "button">
+                <br>
+                    <input type="button" class="other_button" value="戻る">
+                    <input type="submit" class="other_button" value="変更">
+                </div>
+                <!-- (url_for('ビューに指定しているメゾット名')) -->
+        </div>
+    </body>
+</main>
+
+
+{% endblock %}
