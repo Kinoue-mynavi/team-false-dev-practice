@@ -2,12 +2,7 @@
 
 {% block body %}
 <main>
-    ##ここはレビュー用のページ##
-    <br>
-    ##現在はただのモックアップです##
-    <br>
-    <h1>##井上君イケメン!!!##</h1>
-    <h2">##佐々木君かっこいい!!!##</h2>
+    イベント名：{{event.event_name}}
 
     <form action="{{url_for('confirm_cancel')}}"　method="post">
         <input type="hidden" name="ticket_id" value="{{ ticket }}">

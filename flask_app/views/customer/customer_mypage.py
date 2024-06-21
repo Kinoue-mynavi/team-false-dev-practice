@@ -166,7 +166,18 @@ def ticket_cancel_list():
 @app.route("/mypage_review", methods=["POST"])
 def review():
     if session["logged_in_customer"] == True:
-        return render_template("/customer/mypage/manage_ticket/review.html")
+        # レビュー画面
+        # チケットid取得
+        # チケット情報:チケットid, イベントid, 席種, 料金, 受付状態
+        ticket = request.form["ticket_id"]
+        print("----------------------1")
+        print(ticket)
+        # イベント情報:イベント名, 開催日, 開催場所, イベント概要
+        print("---------------------2")
+        print(ticket["event_id"])
+        event = read_event_one(ticket["event_id"])
+
+        return render_template("/customer/mypage/manage_ticket/review.html", event=event)
     else:
         return redirect("/customer/auth/login.html")
 
