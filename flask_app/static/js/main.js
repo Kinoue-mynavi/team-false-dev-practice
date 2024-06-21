@@ -21,3 +21,9 @@ const handleClickMenuButton = () => {
 };
 
 toggleMenuButton.addEventListener("click", handleClickMenuButton);
+
+
+// ページネーション用
+const page_info_div = document.querySelector(".pagination-page-info");
+const page_info = page_info_div.querySelectorAll("b");
+document.querySelector(".pagination-page-info").innerText = page_info[1].innerText + " 件中 " + page_info[0].innerText + " 件目を表示";
