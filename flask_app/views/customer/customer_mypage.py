@@ -121,23 +121,16 @@ def confirm_cancel():
 # チケットキャンセル チケット一覧に遷移
 @app.route("/mypage_manage_ticket", methods=["POST"])
 def ticket_cancel_list():
-    print("-------------------------1")
     if session["logged_in_customer"] == True:
         # チケットキャンセルして一覧に戻る
         ticket_id = request.form["ticket_id"]
 
-        print("-----------------------------------------------2")
-        print(ticket_id)
-
         # チケット削除
         delete_ticket(ticket_id)
-        print("------------------------------------------------3")
-        print("削除しました！！")
         flash(infoMessages.i03("予約情報"))
 
         return render_template("/customer/mypage/manage_ticket/list.html")
     else:
-        print("---------------------------------4")
         return redirect("/customer/auth/login.html")
 
 #アカウント情報変更に遷移
