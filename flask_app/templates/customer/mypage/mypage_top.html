@@ -5,20 +5,15 @@
 <!-- メインコンテンツ領域 -->
 <main>
 	<div class="container">
-		<h1 id="main_title">
-			マイページ
-		</h1>
-		<div id="menu_button_area">
-			<p>
-				<input type="button" class="menu_button" value="アカウント管理"onClick="window.location.href=`{{url_for('customer_info')}}`">
-			</p>
-			<p>
-				<input type="button" class="menu_button" value="予約一覧" onClick="window.location.href=`{{url_for('mypage_manage_ticket')}}`">
-			</p>
-			<p>
-				<input type="button" class="menu_button" value="退会" onClick="window.location.href=`{{url_for('mypage_manage_unsubscribe')}}`">
-			</p>
-			
+		<div class="section">
+			<h1 id="main_title">
+				マイページ
+			</h1>
+			<div id="menu_button_area">
+					<input type="button" class="menu_button" value="アカウント管理"onClick="window.location.href=`{{url_for('customer_info')}}`">
+					<input type="button" class="menu_button" value="予約一覧" onClick="window.location.href=`{{url_for('mypage_manage_ticket')}}`">
+					<input type="button" class="menu_button" value="退会" onClick="window.location.href=`{{url_for('mypage_manage_unsubscribe')}}`">
+			</div>
 		</div>
 	</div>
 </main>
