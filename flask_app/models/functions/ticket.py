@@ -28,10 +28,6 @@ def read_ticket_one(ticket_id):
     ticket = Mst_ticket.query.get(ticket_id)
     return ticket
 
-def read_ticket_one_dict(ticket_id):
-    ticket = Mst_ticket.query.get(ticket_id)
-    return ticket.to_dict()
-
 
 # チケット　イベントIDを条件に抽出
 def read_ticket_event_id(event_id):
