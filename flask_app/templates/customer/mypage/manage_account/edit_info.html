@@ -1,0 +1,51 @@
+{% extends "layout_customer.html" %}
+
+{% block body %}
+
+<!-- メイン領域 -->
+<main>
+<body>
+
+    <div class="container">
+        <h2 id="main_title">
+			会員情報変更
+		</h2>
+
+        <form>
+            <div class="form_area">
+                <p>アカウント名<span class="required">（必須）</span></p>
+                <p><input name="customer_account" type="text" value="{{ customer_account }}"></p>
+                <p>パスワード<span class="required">（必須）</span></p>
+                <p><input name="customer_password" type="password" value="{{ customer_password }}"></p>
+                <p>氏名</p>
+                <p><input name="customer_name" type="text" value="{{ customer_name }}"></p>
+                <p>郵便番号</p>
+                <p><input name="customer_zipcode" type="text" value="{{ customer_zipcode }}"></p>
+                <p>住所</p>
+                <p><input name="customer_address" type="text" value="{{ customer_address }}"></p>
+                <p>電話番号</p>
+                <p><input name="customer_phone" type="text" value="{{ customer_phone }}"></p>
+                <p>支払方法<span class="required">（必須）</span></p>
+                <input name="customer_payment" type="radio" value="credit_card">クレジットカード
+                <input name="customer_payment" type="radio" value="paypay">PayPay
+                <input name="customer_payment" type="radio" value="transfer">振込
+                <input name="customer_payment" type="radio" value="no_setup">後で設定する
+            </div>
+
+            <div id="button_area">
+                <input type="button" class="other_button" value="戻る" onclick="location.href=`{{url_for('mypage_info')}}`">
+                <input type="submit" formaction="{{ url_for('update_mypage_info) }}" class="go_next_button" value="確定">
+            </div>
+        </form>
+    </div>
+
+</body>
+</main>
+
+{% endblock %}
+
+
+<!-- memo-morota
+フィールドチェックするならpattern属性使える。
+pattern="[0-9]{7}" title="ハイフン無し、半角数字7字で入力して下さい。" 
+-->

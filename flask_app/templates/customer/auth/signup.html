@@ -1,0 +1,40 @@
+{% extends "layout_customer.html" %}
+
+{% block body %}
+    <main>
+        <div class="new_member_registration">
+
+            <form id="inputForm" method="post" class="new_member_registration">
+                <div id="form_area" class="base_pattern">
+                <p>アカウント名<span class="required">（必須）</span>：</p>
+                <p><input name="customer_account" type="text" value=""></p>
+
+                <p>パスワード<span class="required">（必須）</span>：</p>
+                <p><input name="customer_password" type="password" value=""></p>
+
+                <p>氏名<span class="required"></span>：</p>
+                <p><input name="customer_name" type="text" value=""></p>
+
+                <p>郵便番号<span class="required"></span>：</p>
+                <p><input name="customer_zipcode" type="text" value=""></p>
+
+                <p>住所<span class="required"></span>：</p>
+                <p><input name="customer_address" type="text" value=""></p>
+
+                <p>電話番号<span class="required"></span>：</p>
+                <p><input name="customer_phone" type="text" value=""></p>
+
+                <input type="radio" name="customer_payment" value=1>クレジットカード
+                <input type="radio" name="customer_payment" value=2>PayPay
+                <input type="radio" name="customer_payment" value=3>振込
+                <input type="radio" name="customer_payment" value=0 checked="checked">後で設定する
+
+                </div>
+                <div id="button_area">
+                    <input type="submit" formaction="{{url_for('customer_new_member', mode=mode)}}" class="confirm_button" value="登録">
+                </div>
+            </form>
+        </div>
+    </main>
+
+{% endblock %}

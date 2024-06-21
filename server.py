@@ -11,9 +11,10 @@ import flask_app.views.staff.staff_event_category
 import flask_app.views.staff.staff_event
 import flask_app.views.customer.customer_top
 import flask_app.views.customer.customer_mypage
+import flask_app.views.customer.customer_auth
+import flask_app.views.customer.customer_event
 
 app.secret_key = 'hoge'
 
 if __name__ == '__main__':
     app.run()
-
