@@ -13,7 +13,7 @@ infoMessages = InfoMessages()
 #ここにログインチェック関数のインポート
 
 # アカウント情報表示
-@app.route("/customer_info", methods=["GET", "POST"])
+@app.route("/customer/manage_customer/customer_info", methods=["GET", "POST"])
 def customer_info():
     # 表示するレコードを指定する
     # customer = read_customer_one(session[logged_in_customer_id])
@@ -39,7 +39,7 @@ def customer_info():
                 customer_payment = payment)
 
 # マイページメニュー（トップページ）
-@app.route("/mypage_mypage_top")
+@app.route("/customer/mypage_top")
 def mypage_mypage_top():
     return render_template("/customer/mypage/mypage_top.html")
 
@@ -53,7 +53,7 @@ def mypage_manage_account():
 
 
 #予約一覧に遷移
-@app.route("/mypage_manage_ticket")
+@app.route("/customer/manage_ticket/ticket_list")
 def mypage_manage_ticket():
     if session["logged_in_customer"] == True:
         return render_template("/customer/mypage/manage_ticket/list.html")
@@ -61,7 +61,7 @@ def mypage_manage_ticket():
         return redirect("/customer/auth/login.html")
 
 #退会に遷移
-@app.route("/mypage_manage_unsubscribe")
+@app.route("/customer/manage_unsubscribe/confirm")
 def mypage_manage_unsubscribe():
     if session["logged_in_customer"] == True:
         return render_template("/customer/mypage/manage_unsubscribe/confirm.html")
