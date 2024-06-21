@@ -32,10 +32,12 @@
     <p>支払方法</p>
     {{customer_payment_str}}
 
-    <div id="button_area">
-        <input type="submit" formaction="{{url_for('mypage_manage_ticket', mode=mode)}}" class="return_button" value="戻る">
-        <input type="submit" formaction="{{url_for('ticket_cancel_list', mode=mode)}}" class="confirm_button" value="キャンセル">
-    </div>
+    <form action="{{ url_for('ticket_cancel_list') }}" method="post">
+        <input type="hidden" name="ticket_id" value="{{ ticket.ticket_id }}">
+        <input type="submit" value="キャンセル確定">
+    </form>
+    <input type="button" type="button" value="一覧に戻る" onClick="location.href=`/mypage_manage_ticket`">
+
 
 </main>
 

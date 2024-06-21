@@ -1,7 +1,7 @@
-from flask import render_template, redirect, session, request
+from flask import render_template, redirect, session, request, flash
 from flask_app.__init__ import app
 from flask_app.messages import ErrorMessages, InfoMessages
-from flask_app.models.functions.ticket import read_ticket_one, ticket_seat_id_str
+from flask_app.models.functions.ticket import read_ticket_one, ticket_seat_id_str, delete_ticket
 from flask_app.models.functions.customer import read_customer_one
 from flask_app.models.functions.event import read_event_one
 
@@ -92,11 +92,23 @@ def confirm_cancel():
         return redirect("/customer/auth/login.html")
 
 # チケットキャンセル チケット一覧に遷移
-@app.route("/mypage_manage_ticket")
+@app.route("/mypage_manage_ticket", methods=["POST"])
 def ticket_cancel_list():
+    print("-------------------------1")
     if session["logged_in_customer"] == True:
         # チケットキャンセルして一覧に戻る
+        ticket_id = request.form["ticket_id"]
+
+        print("-----------------------------------------------2")
+        print(ticket_id)
+
+        # チケット削除
+        delete_ticket(ticket_id)
+        print("------------------------------------------------3")
+        print("削除しました！！")
+        flash(infoMessages.i03("予約情報"))
 
         return render_template("/customer/mypage/manage_ticket/list.html")
     else:
+        print("---------------------------------4")
         return redirect("/customer/auth/login.html")
