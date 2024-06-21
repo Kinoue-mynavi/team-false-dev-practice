@@ -1,0 +1,14 @@
+.under{
+    width: 600px;
+    padding: 10px;
+    border-bottom: solid 2px #dbdbdb;
+}
+
+
+.container1 {
+    text-align:center;
+}
+
+.required {
+    color: #ed7171
+}
