@@ -15,36 +15,44 @@ errorMessages = ErrorMessages()
 infoMessages = InfoMessages()
 #ここにログインチェック関数のインポート
 
+
 # アカウント情報表示
-@app.route("/customer_info", methods=["GET", "POST"])
+@app.route("/customer/manage_customer/customer_info", methods=["GET", "POST"])
 def customer_info():
-    # 表示するレコードを指定する
-    # customer = read_customer_one(session[logged_in_customer_id])
-    customer = read_customer_one(1)
+    if session["logged_in_customer"] == True:
+        # 表示するレコードを指定する
+        customer = read_customer_one(session["logged_in_customer_id"])
 
-    if customer.customer_payment == "1":
-        payment = "クレジットカード"
-    elif customer.customer_payment == "2":
-        payment = "PayPay"
-    elif customer.customer_payment == "3":
-        payment = "銀行振込"
+        if customer.customer_payment == "1":
+            payment = "クレジットカード"
+        elif customer.customer_payment == "2":
+            payment = "PayPay"
+        elif customer.customer_payment == "3":
+            payment = "銀行振込"
+        else:
+            payment = "未選択"
+
+
+        return render_template("/customer/mypage/manage_account/info.html",
+                    customer_account = customer.customer_account,
+                    customer_password = customer.customer_password,
+                    customer_name = customer.customer_name,
+                    customer_zipcode = customer.customer_zipcode,
+                    customer_address = customer.customer_address,
+                    customer_phone = customer.customer_phone,
+                    customer_payment = payment)
     else:
-        payment = "未選択"
+        return redirect("/customer/auth/login.html")
 
-
-    return render_template("/customer/mypage/manage_account/info.html",
-                customer_account = customer.customer_account,
-                customer_password = customer.customer_password,
-                customer_name = customer.customer_name,
-                customer_zipcode = customer.customer_zipcode,
-                customer_address = customer.customer_address,
-                customer_phone = customer.customer_phone,
-                customer_payment = payment)
 
 # マイページメニュー（トップページ）
-@app.route("/mypage_mypage_top")
+@app.route("/customer/mypage_top")
 def mypage_mypage_top():
-    return render_template("/customer/mypage/mypage_top.html")
+    if session["logged_in_customer"] == True:
+        return render_template("/customer/mypage/mypage_top.html")
+    else:
+        return redirect("/customer/auth/login.html")
+
 
 #アカウント情報に遷移
 @app.route("/mypage_manage_account")
@@ -56,15 +64,16 @@ def mypage_manage_account():
 
 
 #予約一覧に遷移
-@app.route("/mypage_manage_ticket")
+@app.route("/customer/manage_ticket/ticket_list")
 def mypage_manage_ticket():
     if session["logged_in_customer"] == True:
         return render_template("/customer/mypage/manage_ticket/list.html")
     else:
         return redirect("/customer/auth/login.html")
 
+
 #退会に遷移
-@app.route("/mypage_manage_unsubscribe")
+@app.route("/customer/manage_unsubscribe/confirm")
 def mypage_manage_unsubscribe():
     if session["logged_in_customer"] == True:
         return render_template("/customer/mypage/manage_unsubscribe/confirm.html")
@@ -75,7 +84,10 @@ def mypage_manage_unsubscribe():
 #退会
 @app.route("/mypage/manage_unsubscribe/confirm")
 def display_confirmation():
-    return render_template("/customer/mypage/manage_unsubscribe/confirm.html")
+    if session["logged_in_customer"] == True:
+        return render_template("/customer/mypage/manage_unsubscribe/confirm.html")
+    else:
+        return redirect("/customer/auth/login.html")
 
 
 # チケット詳細 キャンセル確認に遷移
@@ -134,6 +146,7 @@ def confirm_cancel():
     else:
         return redirect("/customer/auth/login.html")
 
+
 # チケットキャンセル チケット一覧に遷移
 @app.route("/mypage_manage_ticket", methods=["POST"])
 def ticket_cancel_list():
@@ -157,14 +170,13 @@ def review():
     else:
         return redirect("/customer/auth/login.html")
 
-
 #アカウント情報変更に遷移
 @app.route("/mypage_manage_account/edit")
 def mypage_manage_account_edit():
-    # if session["logged_in_customer"] == True:
+    if session["logged_in_customer"] == True:
         # 会員情報の取得
-        # customer_id = read_customer_one(session[logged_in_customer_id])
-        customer = read_customer_one(1)
+        customer = read_customer_one(session["logged_in_customer_id"])
+
 
         return render_template("/customer/mypage/manage_account/edit_info.html",
                                 customer_account=customer.customer_account,
@@ -174,101 +186,102 @@ def mypage_manage_account_edit():
                                 customer_address=customer.customer_address,
                                 customer_phone=customer.customer_phone,
                                 custome_payment=customer.customer_payment)
-    # else:
-    #     return redirect("/customer/auth/login.html")
+    else:
+        return redirect("/customer/auth/login.html")
+
 
 #アカウント情報変更画面
 @app.route("/mypage_manage_account/update", methods=['POST', 'GET'])
 def mypage_manage_account_update():
-    # バリデーションフラグ
-    isValidateError = False
+    if session["logged_in_customer"] == True:
+        # バリデーションフラグ
+        isValidateError = False
 
-    # フォームから送信されたデータを受け取る
-    # デバック用
-    customer_account = request.form.get('customer_account')
-    customer_password = request.form.get('customer_password')
-    customer_name = request.form.get('customer_name')
-    customer_zipcode = request.form.get('customer_zipcode')
-    customer_address = request.form.get('customer_address')
-    customer_phone = request.form.get('customer_phone')
-    customer_payment = request.form.get('customer_payment')
+        # フォームから送信されたデータを受け取る
+        # デバック用
+        customer_account = request.form.get('customer_account')
+        customer_password = request.form.get('customer_password')
+        customer_name = request.form.get('customer_name')
+        customer_zipcode = request.form.get('customer_zipcode')
+        customer_address = request.form.get('customer_address')
+        customer_phone = request.form.get('customer_phone')
+        customer_payment = request.form.get('customer_payment')
 
-    print("-------------------------------")
-    print(customer_payment)
+        # バリデーションチェック
+        # 必須 アカウント名50文字以下 W2 W7
+        if 50 < len(customer_account):
+            flash(errorMessages.w07('アカウント名', '50'))
+            isValidateError = True
+        if 0 >= len(customer_account):
+            flash(errorMessages.w02('アカウント名'))
+            isValidateError = True
+        # 必須 パスワード6ｰ10文字 W2 W8
+        if 6 >= len(customer_password) and 10 <= len(customer_password):
+            flash(errorMessages.w08('パスワード', '6', '10'))
+            isValidateError = True
+        if 0 >= len(customer_password):
+            flash(errorMessages.w02('パスワード'))
+            isValidateError = True
+        # 氏名20文字以下 W7
+        if 20 <= len(customer_name):
+            flash(errorMessages.w07('氏名', '20'))
+            isValidateError = True
+        # 郵便番号7文字 W6 W10
+        if 7!= len(customer_zipcode):
+            flash(errorMessages.w06('郵便番号', '7'))
+            isValidateError = True
+        if not customer_zipcode.isdigit():
+            flash(errorMessages.w10('郵便番号'))
+            isValidateError = True
+        # 住所50文字以下 W7
+        if 50 <= len(customer_address):
+            flash(errorMessages.w07('住所', '50'))
+            isValidateError = True
+        # 電話番号10-11文字 W8 W10
+        if 10 > len(customer_phone) or 11 < len(customer_phone):
+            flash(errorMessages.w08('電話番号', '10', '11'))
+            isValidateError = True
+        if not customer_phone.isdigit():
+            flash(errorMessages.w10('電話番号'))
+            isValidateError = True
 
-    # バリデーションチェック
-    # 必須 アカウント名50文字以下 W2 W7
-    if 50 < len(customer_account):
-        flash(errorMessages.w07('アカウント名', '50'))
-        isValidateError = True
-    if 0 >= len(customer_account):
-        flash(errorMessages.w02('アカウント名'))
-        isValidateError = True
-    # 必須 パスワード6ｰ10文字 W2 W8
-    if 6 >= len(customer_password) and 10 <= len(customer_password):
-        flash(errorMessages.w08('パスワード', '6', '10'))
-        isValidateError = True
-    if 0 >= len(customer_password):
-        flash(errorMessages.w02('パスワード'))
-        isValidateError = True
-    # 氏名20文字以下 W7
-    if 20 <= len(customer_name):
-        flash(errorMessages.w07('氏名', '20'))
-        isValidateError = True
-    # 郵便番号7文字 W6 W10
-    if 7!= len(customer_zipcode):
-        flash(errorMessages.w06('郵便番号', '7'))
-        isValidateError = True
-    if not customer_zipcode.isdigit():
-        flash(errorMessages.w10('郵便番号'))
-        isValidateError = True
-    # 住所50文字以下 W7
-    if 50 <= len(customer_address):
-        flash(errorMessages.w07('住所', '50'))
-        isValidateError = True
-    # 電話番号10-11文字 W8 W10
-    if 10 > len(customer_phone) or 11 < len(customer_phone):
-        flash(errorMessages.w08('電話番号', '10', '11'))
-        isValidateError = True
-    if not customer_phone.isdigit():
-        flash(errorMessages.w10('電話番号'))
-        isValidateError = True
+        # バリデーションフラグのチェック
+        # 不備がある場合はアカウント情報変更画面にリダイレクト
+        if isValidateError:
+            return redirect(url_for('mypage_manage_account_edit'))
 
-    # バリデーションフラグのチェック
-    # 不備がある場合はアカウント情報変更画面にリダイレクト
-    if isValidateError:
-        return redirect(url_for('mypage_manage_account_edit'))
+        # 会員IDの取得
+        # customer_id = read_customer_one(session[logged_in_customer_id])
+        customer = read_customer_one(1)
+        customer_id=customer.customer_id
 
-    # 会員IDの取得
-    # customer_id = read_customer_one(session[logged_in_customer_id])
-    customer = read_customer_one(1)
-    customer_id=customer.customer_id
+        # データベースを変更
+        update_customer(customer_id, request)
 
-    # データベースを変更
-    update_customer(customer_id, request)
+        # 支払方法の表示設定
+        if customer.customer_payment == "1":
+            payment = "クレジットカード"
+        
+        elif customer.customer_payment == "2":
+            payment = "PayPay"
+        
+        elif customer.customer_payment == "3":
+            payment = "銀行振込"
+        
+        else:
+            payment = "未選択"
 
-    # 支払方法の表示設定
-    if customer.customer_payment == "1":
-        payment = "クレジットカード"
-    
-    elif customer.customer_payment == "2":
-        payment = "PayPay"
-    
-    elif customer.customer_payment == "3":
-        payment = "銀行振込"
-    
+        # アカウント情報画面に遷移
+        return render_template("/customer/mypage/manage_account/info.html",
+                                customer_account = customer.customer_account,
+                                customer_password = customer.customer_password,
+                                customer_name = customer.customer_name,
+                                customer_zipcode = customer.customer_zipcode,
+                                customer_address = customer.customer_address,
+                                customer_phone = customer.customer_phone,
+                                customer_payment = payment)
     else:
-        payment = "未選択"
-
-    # アカウント情報画面に遷移
-    return render_template("/customer/mypage/manage_account/info.html",
-                            customer_account = customer.customer_account,
-                            customer_password = customer.customer_password,
-                            customer_name = customer.customer_name,
-                            customer_zipcode = customer.customer_zipcode,
-                            customer_address = customer.customer_address,
-                            customer_phone = customer.customer_phone,
-                            customer_payment = payment)
+        return redirect("/customer/auth/login.html")
 
 # 予約管理　list
 @app.route("/customer_manage_reservation", methods=["GET", "POST"])
