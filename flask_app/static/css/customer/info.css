@@ -1,5 +1,14 @@
 .under{
-    border-bottom: solid 6px #4781bb;
+    width: 600px;
+    padding: 10px;
+    border-bottom: solid 2px #dbdbdb;
 }
 
 
+.container1 {
+    text-align:center;
+}
+
+.required {
+    color: #ed7171
+}

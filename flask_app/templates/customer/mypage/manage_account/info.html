@@ -5,43 +5,53 @@
 <link rel="stylesheet" href="/static/css/customer/info.css">
 <main>
     <body>
-        <div class="container">
-            <h2><div style="text-align: center">
+        <div class = "container1>
+            <div style= "text-align: center"><h2>
                 会員情報
             </h2></div>
             
                 <div class = "form">
-                        <p>アカウント名<span class="required">（必須）</span></p>
-                        <div class = "under">
-                            <p>{{ customer_account }}</p>
-                        </div>
-                    
-
+                    <p>アカウント名<span class="required">（必須）</span></p>
+                    <div class = "under">
+                        <p>{{ customer_account }}</p>
+                    </div>
 
                     <p>パスワード<span class="required">（必須）</span></p>
+                    <div class = "under">
                         <p>{{ customer_password }}</p>
-
+                    </div>
+                    
                     <p>氏名</p>
+                    <div class = "under">
                         <p>{{ customer_name }}</p>
-
+                    </div>
+                    
                     <p>郵便番号</p>
+                    <div class = "under">
                         <p>{{customer_zipcode }}</p>
-
+                    </div>
+                    
                     <p>住所</p>
+                    <div class = "under">
                         <p>{{ customer_address }}</p>
-
+                    </div>
+                    
                     <p>電話番号</p>
+                    <div class = "under">
                         <p>{{ customer_phone }}</p>
-                
+                    </div>
+                    
                     <p>支払い方法</p>
+                    <div class = "under">
                         <p>{{ customer_payment }}</p>
-
+                    </div>
+                    
                 </div>
 
                 <div class = "button">
                 <br>
-                    <input type="button" class="other_button" value="戻る">
-                    <input type="submit" class="other_button" value="変更">
+                    <input type="button" class="other_button" value="戻る" onclick="location.href=`{{url_for('mypage_mypage_top')}}`">
+                    <input type="submit" class="other_button" value="変更" onclick="location.href=`{{url_for('mypage_manage_account_edit')}}`">
                 </div>
                 <!-- (url_for('ビューに指定しているメゾット名')) -->
         </div>
