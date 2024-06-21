@@ -33,13 +33,3 @@ class Mst_ticket(db.Model):
             self.ticket_price,
             self.ticket_accept,
         )
-
-    def to_dict(self):
-        return {
-            "ticket_id": self.ticket_id,
-            "event_id": self.event_id,
-            "ticket_seat_id": self.ticket_seat_id,
-            "ticket_price": self.ticket_price,
-            "ticket_accept": self.ticket_accept,
-        }
-

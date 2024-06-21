@@ -36,13 +36,3 @@ class Mst_event(db.Model):
             self.event_place,
             self.event_overview,
         )
-    
-    def to_dict(self):
-        return {
-            "event_id": self.event_id,
-            "event_category_id": self.event_category_id,
-            "event_name": self.event_name,
-            "event_date": self.event_date,
-            "event_place": self.event_place,
-            "event_overview": self.event_overview,
-        }

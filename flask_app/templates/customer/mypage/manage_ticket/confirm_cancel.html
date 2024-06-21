@@ -4,37 +4,37 @@
 <main>
     <p><h2>予約詳細</h2></p>
     <p>イベント名</p>
-    {{event_name}}
+    {{event.event_name}}
 
     <p>開催日</p>
-    {{event_days}}
+    {{event.event_date}}
 
     <p>開催場所</p>
-    {{event_place}}
+    {{event.event_place}}
 
     <p>イベント概要</p>
-    {{event_overview}}
+    {{event.event_overview}}
 
     <p>チケット券種選択</p>
-    {{ticket_seat_if}}（{{ticket_price}}）
+    {{seat_str}}（¥{{ticket.ticket_price}}）
 
 
     <p>予約者情報</p>
     <p>氏名</p>
-    {{customer_name}}
+    {{customer_info.customer_name}}
     <p>郵便番号</p>
-    {{customer_zipcode}}
+    {{customer_info.customer_zipcode}}
     <p>住所</p>
-    {{customer_address}}
+    {{customer_info.customer_address}}
     <p>電話番号</p>
-    {{customer_phone}}
+    {{customer_info.customer_phone}}
 
     <p>支払方法</p>
-    {{customer_payment}}
+    {{customer_payment_str}}
 
     <div id="button_area">
-        <input type="submit" formaction="{{url_for('customer_new_member', mode=mode)}}" class="return_button" value="戻る">
-        <input type="submit" formaction="{{url_for('customer_new_member', mode=mode)}}" class="confirm_button" value="登録">
+        <input type="submit" formaction="{{url_for('mypage_manage_ticket', mode=mode)}}" class="return_button" value="戻る">
+        <input type="submit" formaction="{{url_for('ticket_cancel_list', mode=mode)}}" class="confirm_button" value="キャンセル">
     </div>
 
 </main>

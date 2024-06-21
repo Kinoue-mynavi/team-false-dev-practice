@@ -97,3 +97,28 @@ def param_seat(selected_seat_id, defaultStatus):
         returnParam.append(param)
 
     return returnParam
+
+# 座席席種を返す関数
+# "s00": "席種を選択","s01": "特別席","s02": "一般席","s11": "S席",
+# "s12": "A席","s13": "B席","s14": "C席","s31": "内野席","s32": "外野席"
+def ticket_seat_id_str(ticket_seat_if):
+    if ticket_seat_if =="s00":
+        seat_str = "席種を選択"
+    elif ticket_seat_if =="s01":
+        seat_str = "特別席"
+    elif ticket_seat_if =="s02":
+        seat_str = "一般席"
+    elif ticket_seat_if =="s11":
+        seat_str = "S席"
+    elif ticket_seat_if =="s12":
+        seat_str = "A席"
+    elif ticket_seat_if =="s13":
+        seat_str = "B席"
+    elif ticket_seat_if =="s14":
+        seat_str = "C席"
+    elif ticket_seat_if =="s31":
+        seat_str = "内野席"
+    elif ticket_seat_if =="s32":
+        seat_str = "外野席"
+
+    return seat_str

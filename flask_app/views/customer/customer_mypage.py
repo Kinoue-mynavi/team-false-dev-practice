@@ -1,9 +1,9 @@
 from flask import render_template, redirect, session, request
 from flask_app.__init__ import app
 from flask_app.messages import ErrorMessages, InfoMessages
-from flask_app.models.functions.ticket import read_ticket_event_id, read_ticket_one, read_ticket_one_dict
-from flask_app.models.functions.customer import read_customer_one, read_customer_one_dict
-from flask_app.models.functions.event import read_event_one, read_event_one_dict
+from flask_app.models.functions.ticket import read_ticket_one, ticket_seat_id_str
+from flask_app.models.functions.customer import read_customer_one
+from flask_app.models.functions.event import read_event_one
 
 # エラーメッセージクラスのインスタンス作成
 errorMessages = ErrorMessages()
@@ -58,37 +58,36 @@ def confirm_cancel():
         get_ticket_id = 1
 
         # チケット情報取得
-        ticket = read_ticket_one_dict(get_ticket_id)
         # チケットid, イベントid, 席種, 料金, 受付状態
+        ticket = read_ticket_one(get_ticket_id)
 
-        ticket_id = ticket["ticket_id"]
-        event_id = ticket["event_id"]
-        ticket_seat_id = ticket["ticket_seat_id"]
-        ticket_price = ticket["ticket_price"]
-        ticket_accept = ticket["ticket_accept"]
+        # チケット座席種類
+        # "s00": "席種を選択","s01": "特別席","s02": "一般席","s11": "S席",
+        # "s12": "A席","s13": "B席","s14": "C席","s31": "内野席","s32": "外野席"
+        seat_str = ticket_seat_id_str(ticket.ticket_seat_id)
 
         # 会員情報取得
         customer_id = session["logged_in_customer_id"]
-        customer_info = read_customer_one_dict(customer_id)
         # 会員名, 郵便番号, 住所, 電話番号, 支払方法
-        customer_name = customer_info["customer_name"]
-        customer_zipcode = customer_info["customer_zipcode"]
-        customer_address = customer_info["customer_address"]
-        customer_phone = customer_info["customer_phone"]
-        customer_payment = customer_info["customer_payment"]
+        customer_info = read_customer_one(customer_id)
+
+        # 支払方法
+        # 0未選択 1クレカ 2Pay 3振込
+        if customer_info.customer_payment== "0":
+            customer_payment_str = "未選択"
+        elif customer_info.customer_payment == "1":
+            customer_payment_str = "クレジットカード"
+        elif customer_info.customer_payment == "2":
+            customer_payment_str = "PayPay"
+        elif customer_info.customer_payment == "3":
+            customer_payment_str = "銀行振込"
 
         # イベント情報
-        event = read_event_one_dict(event_id)
         # イベント名, 開催日, 開催場所, イベント概要
-        event_name = event["event_name"]
-        event_days = event["event_date"]
-        event_place = event["event_place"]
-        event_overview = event["event_overview"]
+        event = read_event_one(ticket.event_id)
 
         return render_template("/customer/mypage/manage_ticket/confirm_cancel.html",
-            ticket_id=ticket_id, event_id=event_id, ticket_seat_id=ticket_seat_id, ticket_price=ticket_price, ticket_accept=ticket_accept,
-            customer_name=customer_name, customer_zipcode=customer_zipcode, customer_address=customer_address, customer_phone=customer_phone, customer_payment=customer_payment,
-            event_name=event_name, event_days=event_days, event_place=event_place, event_overview=event_overview)
+            event=event, customer_info=customer_info, ticket=ticket, customer_payment_str=customer_payment_str, seat_str=seat_str)
     else:
         return redirect("/customer/auth/login.html")
 
