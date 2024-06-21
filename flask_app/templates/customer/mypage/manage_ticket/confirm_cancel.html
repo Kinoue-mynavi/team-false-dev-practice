@@ -32,12 +32,18 @@
     <p>支払方法</p>
     {{customer_payment_str}}
 
+    {% if event_future_flag == True %}
     <form action="{{ url_for('ticket_cancel_list') }}" method="post">
         <input type="hidden" name="ticket_id" value="{{ ticket.ticket_id }}">
         <input type="submit" value="キャンセル確定">
     </form>
+    {% elif event_future_flag == False %}
+    <form action="{{ url_for('review') }}" method="post">
+        <input type="hidden" name="ticket_id" value="{{ ticket }}">
+        <input type="submit" value="レビューをする">
+    </form>
+    {% endif %}
     <input type="button" type="button" value="一覧に戻る" onClick="location.href=`/mypage_manage_ticket`">
-
 
 </main>
 

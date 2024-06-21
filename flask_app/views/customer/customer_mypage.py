@@ -5,6 +5,7 @@ from flask_app.models.functions.ticket import read_ticket_one, ticket_seat_id_st
 from flask_app.models.functions.customer import read_customer_one, read_customer_customer_account, update_customer
 from flask_app.models.functions.event import read_event_one
 from flask_app.views.customer.common.customer_common import is_customer_login
+from datetime import datetime
 
 # エラーメッセージクラスのインスタンス作成
 errorMessages = ErrorMessages()
@@ -113,8 +114,21 @@ def confirm_cancel():
         # イベント名, 開催日, 開催場所, イベント概要
         event = read_event_one(ticket.event_id)
 
+        # レビューボタンとキャンセルボタンの切り替え処理
+        # フラグ trueで未開催 falseで開催済み
+        event_future_flag = True
+        event_date = event.event_date
+        event_date = datetime.strptime(event_date, "%Y/%m/%d")
+        # イベントの日時と今日の日時の比較
+        if event_date >= datetime.now():
+            event_future_flag = True
+        elif event_date < datetime.now():
+            event_future_flag = False
+
+
         return render_template("/customer/mypage/manage_ticket/confirm_cancel.html",
-            event=event, customer_info=customer_info, ticket=ticket, customer_payment_str=customer_payment_str, seat_str=seat_str)
+            event=event, customer_info=customer_info, ticket=ticket,
+            customer_payment_str=customer_payment_str, seat_str=seat_str, event_future_flag=event_future_flag)
     else:
         return redirect("/customer/auth/login.html")
 
@@ -132,6 +146,15 @@ def ticket_cancel_list():
         return render_template("/customer/mypage/manage_ticket/list.html")
     else:
         return redirect("/customer/auth/login.html")
+
+# レビュー画面に遷移
+@app.route("/mypage_review", methods=["POST"])
+def review():
+    if session["logged_in_customer"] == True:
+        return render_template("/customer/mypage/manage_ticket/review.html")
+    else:
+        return redirect("/customer/auth/login.html")
+
 
 #アカウント情報変更に遷移
 @app.route("/mypage_manage_account/edit")
