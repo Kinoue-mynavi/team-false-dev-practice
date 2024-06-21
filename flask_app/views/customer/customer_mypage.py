@@ -30,7 +30,7 @@ def customer_info():
         payment = "未選択"
 
 
-    return render_template("/customer/mypage/manage_accont/info.html",
+    return render_template("/customer/mypage/manage_account/info.html",
                 customer_account = customer.customer_account,
                 customer_password = customer.customer_password,
                 customer_name = customer.customer_name,
@@ -42,7 +42,7 @@ def customer_info():
 # マイページメニュー（トップページ）
 @app.route("/mypage_mypage_top")
 def mypage_mypage_top():
-    return "<p>マイページTOP画面</p>"
+    return render_template("/customer/mypage/mypage_top.html")
 
 #アカウント情報に遷移
 @app.route("/mypage_manage_account")
