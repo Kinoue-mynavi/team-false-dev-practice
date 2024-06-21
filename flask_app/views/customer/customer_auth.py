@@ -18,7 +18,7 @@ def new_member():
 
 # ログイン画面へ遷移
 # デバック用
-@app.route('/login', methods=["GET", "POST"])
+@app.route('/customer/auth/login', methods=["GET", "POST"])
 def login():
     return render_template("/customer/auth/login.html")
 
@@ -99,14 +99,20 @@ def customer_new_member():
     return render_template("customer/auth/login.html")
 
 
-#会員ログイン
-@app.route("/customer_customer_login", methods=["GET", "POST"])
-def customer_customer_login():
-    return render_template("/customer/auth/login.html")
+
+
+#会員ログアウト
+@app.route("/customer/auth/logout", methods=["GET", "POST"])
+def logout_customer():
+    session.pop("logged_in_customer")
+    session.pop("logged_in_customer_account")
+    session.pop("logged_in_customer_id")
+    session.pop("logged_in_customer_name")
+    return redirect("/customer_top")
 
 
 # 会員ログイン処理
-@app.route("/login_customer", methods=["POST"])
+@app.route("/customer/auth/login/login_customer", methods=["POST"])
 def login_customer():
     isLoginError = False
 
