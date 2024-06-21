@@ -80,7 +80,7 @@ def display_confirmation():
 def confirm_cancel():
     if session["logged_in_customer"] == True:
         # チケット詳細を開いてキャンセル確認
-        # ticket_id = request.form.get('ticket_id')
+        # get_ticket_id = request.form.get('ticket_id')
         # デバック用
         get_ticket_id = 1
 
