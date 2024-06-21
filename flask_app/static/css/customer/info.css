@@ -12,3 +12,9 @@
 .required {
     color: #ed7171
 }
+
+.center{
+    width:16em;
+    margin:0 auto;
+    text-align:center;
+}
