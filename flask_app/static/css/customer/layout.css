@@ -338,7 +338,8 @@ footer p.copyright {
 .alert {
   background-color: #fffacd;
   padding: 20px 40px;
-  color: #daa520;
+  color: #B8860B;
+  /* color: #daa520; */
   border: solid 1px #f0e68c;
   border-radius: 4px;
 }

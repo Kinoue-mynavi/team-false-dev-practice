@@ -64,6 +64,7 @@
 .radio-button {
     display: flex;
     padding-top: 8px;
+    margin-bottom: 60px;
 }
 
 .radio-button input {

@@ -1,50 +1,91 @@
 {% extends "layout_customer.html" %}
 
 {% block body %}
+
 <main>
-    <p><h2>予約詳細</h2></p>
-    <p>イベント名</p>
-    {{event.event_name}}
+    <section class="section">
+        <h1 id="main_title">予約詳細</h1>
+            <div class="section_container">
+                <div class="section_item">
+                    <h3 class="section_item_label">イベント名</h3>
+                    <p class="section_item_content">{{ event.event_name }}</p>
+                </div>
+            
+                <div class="section_item">
+                    <h3 class="section_item_label">開催日</h3>
+                    <p class="section_item_content">{{event.event_date}}</p>
+                </div>
+    
+                <div class="section_item">
+                    <h3 class="section_item_label">開催場所</h3>
+                    <p class="section_item_content">{{ event.event_place }}</p>
+                </div>
 
-    <p>開催日</p>
-    {{event.event_date}}
+                <div class="section_item">
+                    <h3 class="section_item_label">イベント概要</h3>
+                    <p class="section_item_content">
+                        {{ event.event_overview }}
+                    </p>
+                </div>
 
-    <p>開催場所</p>
-    {{event.event_place}}
+                <div class="section_item">
+                    <h3 class="section_item_label">チケット券種選択</h3>
+                    <p class="section_item_content">
+                        {{seat_str}}（¥{{ticket.ticket_price}}）
+                    </p>
+                </div>
 
-    <p>イベント概要</p>
-    {{event.event_overview}}
+                <div class="section_item">
+                    <h3 class="section_item_label">予約者情報</h3>
+                    <div class="section_item_content">
+                        <div class="reserver_info_container">
+                            <div class="reserver_info_item">
+                                <span class="list_circle"></span>
+                                <span class="reserver_info_item_label">氏名</span>
+                                <p class="reserver_info_item_value">{{customer_info.customer_name}}</p>
+                            </div>
+                            <div class="reserver_info_item">
+                                <span class="list_circle"></span>
+                                <span class="reserver_info_item_label">郵便番号</span>
+                                <p class="reserver_info_item_value">{{customer_info.customer_zipcode}}</p>
+                            </div>
+                            <div class="reserver_info_item">
+                                <span class="list_circle"></span>
+                                <span class="reserver_info_item_label">住所</span>
+                                <p class="reserver_info_item_value">{{customer_info.customer_address}}</p>
+                            </div>
+                            <div class="reserver_info_item">
+                                <span class="list_circle"></span>
+                                <span class="reserver_info_item_label">電話番号</span>
+                                <p class="reserver_info_item_value">{{customer_info.customer_phone}}</p>
+                            </div>
+                            <div class="reserver_info_item">
+                                <span class="list_circle"></span>
+                                <span class="reserver_info_item_label">支払方法</span>
+                                <p class="reserver_info_item_value">{{customer_payment_str}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-    <p>チケット券種選択</p>
-    {{seat_str}}（¥{{ticket.ticket_price}}）
+                <div class="event_reservation_buttons_container">
+                    <input class="section_button back_button" type="button" value="一覧に戻る" onClick="location.href=`/mypage_manage_ticket`">
+                    {% if event_future_flag == True %}
+                    <form action="{{ url_for('ticket_cancel_list') }}" method="post">
+                        <input type="hidden" name="ticket_id" value="{{ ticket.ticket_id }}">
+                        <input class="section_button submit_button" type="submit" value="キャンセル確定">
+                    </form>
+                    {% elif event_future_flag == False %}
+                    <form action="{{ url_for('review') }}" method="post">
+                        <input type="hidden" name="ticket_id" value="{{ ticket.ticket_id }}">
+                        <input class="section_button submit_button" type="submit" value="レビューをする">
+                    </form>
+                    {% endif %}
+                </div>
 
-
-    <p>予約者情報</p>
-    <p>氏名</p>
-    {{customer_info.customer_name}}
-    <p>郵便番号</p>
-    {{customer_info.customer_zipcode}}
-    <p>住所</p>
-    {{customer_info.customer_address}}
-    <p>電話番号</p>
-    {{customer_info.customer_phone}}
-
-    <p>支払方法</p>
-    {{customer_payment_str}}
-
-    {% if event_future_flag == True %}
-    <form action="{{ url_for('ticket_cancel_list') }}" method="post">
-        <input type="hidden" name="ticket_id" value="{{ ticket.ticket_id }}">
-        <input type="submit" value="キャンセル確定">
-    </form>
-    {% elif event_future_flag == False %}
-    <form action="{{ url_for('review') }}" method="post">
-        <input type="hidden" name="ticket_id" value="{{ ticket.ticket_id }}">
-        <input type="submit" value="レビューをする">
-    </form>
-    {% endif %}
-    <input type="button" type="button" value="一覧に戻る" onClick="location.href=`/mypage_manage_ticket`">
-
+            </div>
+        </div>
+    </section>
 </main>
 
 {% endblock %}
