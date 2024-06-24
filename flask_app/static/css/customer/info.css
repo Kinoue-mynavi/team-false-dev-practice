@@ -1,14 +1,65 @@
-.under{
-    width: 600px;
-    padding: 10px;
-    border-bottom: solid 2px #dbdbdb;
+ /* 小見出しの横並び */
+.index-flex {
+    display: flex;
 }
 
-
-.container1 {
-    text-align:center;
+/* 小見出しの丸 */
+.index {
+    width: 16px;
+    height: 16px;
+    background-color: #389BE3;
+    border-radius: 30px;
+    margin-right: 4px;
+    margin-top:auto; 
+    margin-bottom: auto
 }
 
+/* 必須項目強調 */
 .required {
-    color: #ed7171
+    color: #F56A1C;
+    font-weight: 700;
+}
+
+/* バリテーション判定の条件説明の文章 */
+.judgment {
+    color: #7B7B7B;
+    margin-left: 20px;
+}
+
+/* 入力欄 */
+.input_box {
+    width: 100%;
+    padding: 10px;
+    outline: none;
+    border: solid 1px #389BE3;
+    border-radius: 4px;
+}
+
+/* 区切り線 */
+.under{
+    padding: 20px 20px;
+    border-bottom: solid rgb(217, 217, 217) 2px;
+}
+
+/* ラジオボタン */
+.radio-button {
+    justify-content: center;
+}
+
+/* 共通CSSの修正 */
+.section_item {
+    gap: 10px;
+    margin: 0px 0px 30px 0px;
+}
+
+.section_container {
+    gap: 0px;
+}
+
+.event_reservation_buttons_container {
+    gap: 0px;
+}
+
+.section_button {
+    margin: 0px 33px;
 }

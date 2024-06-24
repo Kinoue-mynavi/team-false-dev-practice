@@ -25,6 +25,7 @@
 /* イベント名のCSS */
 .event_name {
     text-align: center;
+    margin: 16px;
 }
 
 /* 詳細ボタンのCSS */

@@ -1,40 +1,91 @@
 {% extends "layout_customer.html" %}
 
 {% block body %}
-    <main>
-        <div class="new_member_registration">
 
-            <form id="inputForm" method="post" class="new_member_registration">
-                <div id="form_area" class="base_pattern">
-                <p>アカウント名<span class="required">（必須）</span>：</p>
-                <p><input name="customer_account" type="text" value=""></p>
+<!-- ↓会員情報のCSS使いまわしてます -->
+<link rel="stylesheet" href="/static/css/customer/info.css">
 
-                <p>パスワード<span class="required">（必須）</span>：</p>
-                <p><input name="customer_password" type="password" value=""></p>
+<main>
+<div class="container">
+    <div class = "section">
+        <h1 id="main_title">
+            新規会員登録
+        </h1>
 
-                <p>氏名<span class="required"></span>：</p>
-                <p><input name="customer_name" type="text" value=""></p>
+        <div class="section_container">
+            <div class = "form">
+                <form id="inputForm" method="post">
+                    <div class="form_area">
 
-                <p>郵便番号<span class="required"></span>：</p>
-                <p><input name="customer_zipcode" type="text" value=""></p>
+                        <div class="section_item">
+                            <div class="index-flex">
+                                <div class="index"></div><p>アカウント名<span class="required">（必須）</span></p>
+                            </div>
+                            <p class="judgment">50文字以内で入力してください</p>
+                            <p><input class="input_box" name="customer_account" type="text" value=""></p>
+                        </div>
 
-                <p>住所<span class="required"></span>：</p>
-                <p><input name="customer_address" type="text" value=""></p>
+                        <div class="section_item">
+                            <div class="index-flex">
+                                <div class="index"></div><p>パスワード<span class="required">（必須）</span></p>
+                            </div>
+                            <p class="judgment">6~10文字の範囲で入力してください</p>
+                            <p><input class="input_box" name="customer_password" type="password" value=""></p>
+                        </div>
 
-                <p>電話番号<span class="required"></span>：</p>
-                <p><input name="customer_phone" type="text" value=""></p>
+                        <div class="section_item">
+                            <div class="index-flex">
+                                <div class="index"></div><p>氏名</p>
+                            </div>
+                            <p class="judgment">20文字以内で入力してください</p>
+                            <p><input class="input_box" name="customer_name" type="text" value=""></p>
+                        </div>
 
-                <input type="radio" name="customer_payment" value=1>クレジットカード
-                <input type="radio" name="customer_payment" value=2>PayPay
-                <input type="radio" name="customer_payment" value=3>振込
-                <input type="radio" name="customer_payment" value=0 checked="checked">後で設定する
+                        <div class="section_item">
+                            <div class="index-flex">
+                                <div class="index"></div><p>郵便番号</p>
+                            </div>
+                            <p class="judgment">半角数字ハイフンなし7文字で入力してください</p>
+                            <p><input class="input_box" name="customer_zipcode" type="text" value=""></p>
+                        </div>
 
-                </div>
-                <div id="button_area">
-                    <input type="submit" formaction="{{url_for('customer_new_member', mode=mode)}}" class="confirm_button" value="登録">
-                </div>
-            </form>
+                        <div class="section_item">
+                            <div class="index-flex">
+                                <div class="index"></div><p>住所</p>
+                            </div>
+                            <p class="judgment">50文字で入力してください</p>
+                            <p><input class="input_box" name="customer_address" type="text" value=""></p>
+                        </div>
+
+                        <div class="section_item">
+                            <div class="index-flex">
+                                <div class="index"></div><p>電話番号</p>
+                            </div>
+                            <p class="judgment">半角数字ハイフンなし10~11文字で入力してください</p>
+                            <p><input class="input_box" name="customer_phone" type="text" value=""></p>
+                        </div>
+
+                        <div class="section_item">
+                            <div class="index-flex">
+                                <div class="index"></div><p>支払方法<span class="required">（必須）</span></p>
+                            </div>
+
+                            <input type="radio" name="customer_payment" value=1>クレジットカード
+                            <input type="radio" name="customer_payment" value=2>PayPay
+                            <input type="radio" name="customer_payment" value=3>振込
+                            <input type="radio" name="customer_payment" value=0 checked="checked">後で設定する
+                        </div>
+                        
+                        <div class="event_reservation_buttons_container" id="button_area">
+                            <input class="section_button submit_button" type="submit" 
+                            formaction="{{url_for('customer_new_member', mode=mode)}}" value="登録">
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
-    </main>
+    </div>
+</div>
+</main>
 
 {% endblock %}
