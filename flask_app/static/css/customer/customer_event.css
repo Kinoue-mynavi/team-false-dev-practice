@@ -48,3 +48,55 @@
     justify-content: center;
     margin-top: 91px;
 }
+
+.review_stars_container {
+    display: flex;
+}
+
+.review_stars_container span {
+    display: inline-block;
+    color: #D9D9D9;
+    font-size: 24px;
+}
+
+.review_stars_container .reviewed {
+    color: #F56A1C;
+}
+
+.review_stars_container.big_stars {
+    justify-content: center;
+}
+
+.review_stars_container.big_stars span {
+    font-size: 76px;
+}
+
+.review_comment_item {
+    border: solid #D9D9D9 1px;
+    border-radius: 4px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.review_comment_head_section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.review_comment_title {
+    font-size: 24px;
+}
+
+.review_comment_select {
+    width: 180px;
+    height: 50px;
+    font-size: 20px;
+    margin-left: auto;
+}
+
+.review_comment_select option {
+    font-size: 20px;
+}

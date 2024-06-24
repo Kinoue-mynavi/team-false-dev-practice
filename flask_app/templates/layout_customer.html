@@ -63,11 +63,11 @@
 		<nav class="modal-nav">
 			<ul class="modal-menu">
 				{% if session["logged_in_customer"] %}
-					<li><a href="/">トップページ</a></li>
+					<li><a href="/customer_top">トップページ</a></li>
 					<li><a href="/customer/auth/logout">ログアウト</a></li>
 					<li><a href="/customer/mypage_top">マイページ</a></li>
 				{% else %}
-					<li><a href="/">トップページ</a></li>
+					<li><a href="/customer_top">トップページ</a></li>
 					<li><a href="/customer/auth/login">ログイン</a></li>
 					<li><a href="/customer/auth/signup">新規会員登録</a></li>
 				{% endif %}

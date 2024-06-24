@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, request, flash
+from flask import render_template, redirect, url_for, request, flash, session
 from flask_app.models.functions.event import read_event_one
 from flask_app.models.functions.customer import read_customer_one
 from flask_app.models.functions.ticket import convert_seat_id, read_ticket_one
@@ -25,8 +25,7 @@ def show_ticket_reservation_confirmation():
     event = read_event_one(event_id)
     ticket = read_ticket_one(ticket_id)
     ticket_seat = f"{convert_seat_id(ticket.ticket_seat_id)} (￥{ticket.ticket_price})"
-    # FIXME: sessionからcustomer_idを取得する
-    customer = read_customer_one(1)
+    customer = read_customer_one(session["logged_in_customer_id"])
 
     return render_template(
         "/customer/ticket/confirm_reservation.html",
