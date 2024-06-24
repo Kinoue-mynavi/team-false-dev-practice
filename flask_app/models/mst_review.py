@@ -4,7 +4,7 @@ from flask_app.models.mst_customer import Mst_customer
 
 
 class Mst_review(db.Model):
-    __tablename__ = "tbl_review"
+    __tablename__ = "mst_review"
     review_id = db.Column(db.Integer, primary_key=True, autoincrement=True, unique=True)
     event_id = db.Column(db.Integer, db.ForeignKey(Mst_event.event_id))
     customer_id = db.Column(db.Integer, db.ForeignKey(Mst_customer.customer_id))
@@ -29,7 +29,7 @@ class Mst_review(db.Model):
         self.review_comment = review_comment
 
     def __repr__(self):
-        return "<Tbl_reservation review_id:{} event_id:{} customer_id:{} review_score:{} review_title:{} review_comment:{}>".format(
+        return "<Mst_review review_id:{} event_id:{} customer_id:{} review_score:{} review_title:{} review_comment:{}>".format(
             self.review_id,
             self.event_id,
             self.customer_id,
