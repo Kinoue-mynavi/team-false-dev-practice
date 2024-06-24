@@ -16,7 +16,7 @@ from flask_app.views.customer.common.customer_common import is_customer_login
 from flask_app.models.functions.reservations import param_reservation, read_reservation_customer_id
 from operator import itemgetter
 from datetime import datetime
-from flask_app.models.functions.review import create_review
+from flask_app.models.functions.review import create_review, create_review_script
 
 # エラーメッセージクラスのインスタンス作成
 errorMessages = ErrorMessages()
@@ -29,7 +29,7 @@ infoMessages = InfoMessages()
 @is_customer_login
 def customer_manage_reservation():
     # customer_id,ticket_id を取得
-    customer_id = session.get('logged_in_customer_id')  
+    customer_id = session.get('logged_in_customer_id')
     ticket_id = session.get('ticket_id')
 
     # customer_id を引数として渡す
@@ -98,6 +98,8 @@ def mypage_manage_account():
 @app.route("/customer/manage_ticket/ticket_list")
 def mypage_manage_ticket():
     if has_auth_session():
+        # 未作成
+
         return render_template("/customer/mypage/manage_ticket/list.html")
     else:
         return redirect("/customer/auth/login")
@@ -126,13 +128,16 @@ def display_confirmation():
 def confirm_cancel():
     if session["logged_in_customer"] == True:
         # チケット詳細を開いてキャンセル確認
-        get_ticket_id = request.form.get('ticket_id')
+        # get_ticket_id = request.form.get('ticket_id')
         # デバック用
-        # get_ticket_id = 1
+        get_ticket_id = 1
 
         # チケット情報取得
         # チケットid, イベントid, 席種, 料金, 受付状態
         ticket = read_ticket_one(get_ticket_id)
+
+        print("----------------------------------11")
+        print(ticket)
 
         # チケット座席種類
         # "s00": "席種を選択","s01": "特別席","s02": "一般席","s11": "S席",
@@ -231,7 +236,7 @@ def ticket_review_confirm():
         # 会員情報取得
         customer_id = session["logged_in_customer_id"]
         # 会員名, 郵便番号, 住所, 電話番号, 支払方法
-        customer_info = read_customer_one(customer_id)
+        # customer_info = read_customer_one(customer_id)
 
         print("----------------------------1")
         print(review_title)
@@ -239,7 +244,18 @@ def ticket_review_confirm():
         print(review_number)
         print("----------------------------2")
 
-        create_review(ticket.event_id, customer_id, review_number, review_title, review_comment)
+        # mst_review = Mst_review(
+        # event_id = param["event_id"],
+        # customer_id = param["customer_id"],
+        # review_score = param["review_score"],
+        # review_title = param["review_title"],
+        # review_comment = param["review_comment"]
+        # )
+
+        reviews = {"event_id": ticket.event_id, "customer_id": customer_id, "review_score": review_number,
+            "review_title": review_title, "review_comment": review_comment}
+
+        create_review_script(reviews)
 
         return render_template("/customer/mypage/manage_ticket/list.html")
     else:
@@ -358,25 +374,25 @@ def mypage_manage_account_update():
     else:
         return redirect("/customer/auth/login")
 
-# 予約管理　list
-@app.route("/customer_manage_reservation", methods=["GET", "POST"])
-@is_customer_login
-def customer_manage_reservation():
-    # customer_id を取得
-    customer_id = session.get('logged_in_customer_id')
-    ticket_id = session.get('ticket_id')
-    event_id = session.get('event_id')
+# # 予約管理　list
+# @app.route("/customer_manage_reservation", methods=["GET", "POST"])
+# @is_customer_login
+# def customer_manage_reservation():
+#     # customer_id を取得
+#     customer_id = session.get('logged_in_customer_id')
+#     ticket_id = session.get('ticket_id')
+#     event_id = session.get('event_id')
 
-    # customer_id を引数として渡す
-    tbl_reservation = read_reservation_customer_id(customer_id)
-    reservation_param_list = sorted(param_reservation(tbl_reservation),
-                                    key=itemgetter('event_date'))
+#     # customer_id を引数として渡す
+#     tbl_reservation = read_reservation_customer_id(customer_id)
+#     reservation_param_list = sorted(param_reservation(tbl_reservation),
+#                                     key=itemgetter('event_date'))
 
 
-    # 予約情報が1件も取得できなければ、エラーメッセージ表示
-    if not reservation_param_list:
-        flash(errorMessages.w01('予約情報'))
+#     # 予約情報が1件も取得できなければ、エラーメッセージ表示
+#     if not reservation_param_list:
+#         flash(errorMessages.w01('予約情報'))
 
-    return render_template("/customer/mypage/manage_ticket/list.html",
-                            reservation_param_list = reservation_param_list,
-                            event_id = event_id)
+#     return render_template("/customer/mypage/manage_ticket/list.html",
+#                             reservation_param_list = reservation_param_list,
+#                             event_id = event_id)

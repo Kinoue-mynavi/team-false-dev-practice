@@ -16,6 +16,19 @@ def create_review(request):
 
     return
 
+# レビュー　登録(スクリプトから実行用)
+def create_review_script(param):
+    mst_review = Mst_review(
+        event_id = param["event_id"],
+        customer_id = param["customer_id"],
+        review_score = param["review_score"],
+        review_title = param["review_title"],
+        review_comment = param["review_comment"]
+    )
+    db.session.add(mst_review)
+    db.session.commit()
+    return
+
 
 # レビュー　一覧取得
 def read_review():
