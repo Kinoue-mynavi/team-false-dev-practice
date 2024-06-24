@@ -32,17 +32,15 @@ def mypage_manage_ticket():
 
     # customer_id を引数として渡す
     tbl_reservation = read_reservation_customer_id(customer_id)
-    reservation_param_list = sorted(param_reservation(tbl_reservation),
-                                    key=itemgetter('event_date'))
+    reservation_param_list = sorted(param_reservation(tbl_reservation), key=itemgetter('event_date'))
 
     # 予約情報が1件も取得できなければ、エラーメッセージ表示
     if not reservation_param_list:
         flash(errorMessages.w01('予約情報'))
 
     return render_template("/customer/mypage/manage_ticket/list.html",
-                            reservation_param_list = reservation_param_list,
-                            ticket_id = ticket_id)
-#ここにログインチェック関数のインポート
+        reservation_param_list = reservation_param_list,ticket_id = ticket_id)
+    #ここにログインチェック関数のインポート
 
 # アカウント情報表示
 @app.route("/customer/manage_customer/customer_info", methods=["GET", "POST"])
@@ -60,15 +58,14 @@ def customer_info():
         else:
             payment = "未選択"
 
-
         return render_template("/customer/mypage/manage_account/info.html",
-                    customer_account = customer.customer_account,
-                    customer_password = customer.customer_password,
-                    customer_name = customer.customer_name,
-                    customer_zipcode = customer.customer_zipcode,
-                    customer_address = customer.customer_address,
-                    customer_phone = customer.customer_phone,
-                    customer_payment = payment)
+            customer_account = customer.customer_account,
+            customer_password = customer.customer_password,
+            customer_name = customer.customer_name,
+            customer_zipcode = customer.customer_zipcode,
+            customer_address = customer.customer_address,
+            customer_phone = customer.customer_phone,
+            customer_payment = payment)
     else:
         return redirect("/customer/auth/login")
 
@@ -167,7 +164,6 @@ def confirm_cancel():
         elif event_date < datetime.now():
             event_future_flag = False
 
-
         return render_template("/customer/mypage/manage_ticket/confirm_cancel.html",
             event=event, customer_info=customer_info, ticket=ticket,
             customer_payment_str=customer_payment_str, seat_str=seat_str, event_future_flag=event_future_flag)
@@ -241,15 +237,14 @@ def mypage_manage_account_edit():
         # 会員情報の取得
         customer = read_customer_one(session["logged_in_customer_id"])
 
-
         return render_template("/customer/mypage/manage_account/edit_info.html",
-                                customer_account=customer.customer_account,
-                                customer_password=customer.customer_password,
-                                customer_name=customer.customer_name,
-                                customer_zipcode=customer.customer_zipcode,
-                                customer_address=customer.customer_address,
-                                customer_phone=customer.customer_phone,
-                                custome_payment=customer.customer_payment)
+            customer_account=customer.customer_account,
+            customer_password=customer.customer_password,
+            customer_name=customer.customer_name,
+            customer_zipcode=customer.customer_zipcode,
+            customer_address=customer.customer_address,
+            customer_phone=customer.customer_phone,
+            customer_payment=customer.customer_payment)
     else:
         return redirect("/customer/auth/login")
 
@@ -334,13 +329,13 @@ def mypage_manage_account_update():
 
         # アカウント情報画面に遷移
         return render_template("/customer/mypage/manage_account/info.html",
-                                customer_account = customer.customer_account,
-                                customer_password = customer.customer_password,
-                                customer_name = customer.customer_name,
-                                customer_zipcode = customer.customer_zipcode,
-                                customer_address = customer.customer_address,
-                                customer_phone = customer.customer_phone,
-                                customer_payment = payment)
+            customer_account = customer.customer_account,
+            customer_password = customer.customer_password,
+            customer_name = customer.customer_name,
+            customer_zipcode = customer.customer_zipcode,
+            customer_address = customer.customer_address,
+            customer_phone = customer.customer_phone,
+            customer_payment = payment)
     else:
         return redirect("/customer/auth/login")
 
