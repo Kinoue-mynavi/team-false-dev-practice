@@ -31,7 +31,7 @@ def read_review_one(review_id):
 
 
 # レビュー　会員IDを条件に取得
-def read_review_customer_event(customer_id):
+def read_review_customer_id(customer_id):
     review = Mst_review.query.filter(
         Mst_review.customer_id == customer_id).all()
     return review
