@@ -9,14 +9,15 @@
         </h1>
         <div id="list_area" class="base_pattern">
             <div id="event_list">
-              {% for reservation in reservation_param_list %}
+              {% for ticket in mst_tickets %}
               <div class="event_item">
-                <h2 class="event_name">{{ reservation.event_name }}</h2>
+                <h2 class="event_name">{{ ticket.event_name }}</h2>
                 <div class="button_area">
                   <input type="button" class="event_detail_button" value="詳細" >
                 </div>
               </div>
               {% endfor %}
+
             </div>
         </div>
         </div>

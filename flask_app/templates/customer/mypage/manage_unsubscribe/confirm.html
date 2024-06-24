@@ -8,12 +8,15 @@
 		<h1 id="main_title">
 			本当に退会しますか？
 		</h1>
-		<div id="menu_button_area">
+
+		<div class="event_reservation_buttons_container" id="button_area">
 			<p>
-				<input type="button" class="menu_button" value="戻る" onClick="window.location.href=`{{url_for('mypage_mypage_top')}}`">
+				<input class="section_button back_button" type="button" 
+				value="戻る" onClick="window.location.href=`{{url_for('mypage_mypage_top')}}`">
 			</p>
 			<p>
-				<input type="button" class="menu_button" value="退会する" onClick="window.location.href=`{{url_for('customer_top')}}`">
+				<input type="button" class="section_button submit_button" style="background-color: #1C73F5; border: solid 2px #1C73F5;" 
+				value="退会する" onClick="window.location.href=`{{url_for('customer_top')}}`">
 			</p>
 			
 		</div>
