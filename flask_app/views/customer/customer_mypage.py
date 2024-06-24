@@ -14,6 +14,7 @@ from flask_app.models.functions.reservations import param_reservation, read_rese
 from operator import itemgetter
 from datetime import datetime
 from flask_app.models.functions.review import create_review_script
+from flask_paginate import Pagination, get_page_parameter
 
 
 # エラーメッセージクラスのインスタンス作成
@@ -27,20 +28,35 @@ infoMessages = InfoMessages()
 @is_customer_login
 def mypage_manage_ticket():
     # customer_id,ticket_id を取得
-    customer_id = session.get('logged_in_customer_id')
-    ticket_id = session.get('ticket_id')
+    customer_id = session.get('logged_in_customer_id')  
 
     # customer_id を引数として渡す
     tbl_reservation = read_reservation_customer_id(customer_id)
     reservation_param_list = sorted(param_reservation(tbl_reservation), key=itemgetter('event_date'))
 
     # 予約情報が1件も取得できなければ、エラーメッセージ表示
+    # イベントが1件も取得できなければ、エラーメッセージ表示
     if not reservation_param_list:
         flash(errorMessages.w01('予約情報'))
+    else:
+        # ページネーション
+        ## 現在のページ番号を取得
+        page = int(request.args.get(get_page_parameter(), 1))
+        ## ページごとの表示件数
+        per_page = 10
+        ## ページネーションオブジェクトを作成
+        pagination = Pagination(page=page, per_page=per_page, total=len(reservation_param_list))
+        # 表示するデータを取得
+        start = (page - 1) * per_page
+        end = start + per_page
+        displayed_reservations = reservation_param_list[start:end]
 
     return render_template("/customer/mypage/manage_ticket/list.html",
-        reservation_param_list = reservation_param_list,ticket_id = ticket_id)
-    #ここにログインチェック関数のインポート
+                            reservation_param_list=displayed_reservations, 
+
+                            pagination=pagination)
+ 
+#ここにログインチェック関数のインポート
 
 # アカウント情報表示
 @app.route("/customer/manage_customer/customer_info", methods=["GET", "POST"])
@@ -85,7 +101,7 @@ def mypage_manage_account():
     if has_auth_session():
         return render_template("/customer/mypage/manage_account/info.html")
     else:
-        return redirect("/customer/auth/login")
+        return redirect("/customer/auth/login.html")
 
 
 # #予約一覧に遷移
@@ -116,13 +132,11 @@ def display_confirmation():
 
 
 # チケット詳細 キャンセル確認に遷移
-@app.route("/mypage/manage_ticket/confirm_cancel")
-def confirm_cancel():
+@app.route("/mypage/manage_ticket/confirm_cancel/<int:ticket_id>")
+def confirm_cancel(ticket_id):
     if session["logged_in_customer"] == True:
         # チケット詳細を開いてキャンセル確認
-        # get_ticket_id = request.form.get('ticket_id')
-        # デバック用
-        get_ticket_id = 1
+        get_ticket_id = ticket_id
 
         # チケット情報取得
         # チケットid, イベントid, 席種, 料金, 受付状態

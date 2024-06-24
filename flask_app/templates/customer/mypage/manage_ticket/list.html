@@ -9,15 +9,17 @@
         </h1>
         <div id="list_area" class="base_pattern">
             <div id="event_list">
-              {% for ticket in mst_tickets %}
+              {% for reservation in reservation_param_list %}
               <div class="event_item">
-                <h2 class="event_name">{{ ticket.event_name }}</h2>
+                <h2 class="event_name">{{ reservation.event_name }}</h2>
                 <div class="button_area">
-                  <input type="button" class="event_detail_button" value="詳細" >
+                  <input type="button" class="event_detail_button" value="詳細" 
+                          onclick="location.href='/mypage/manage_ticket/confirm_cancel/{{ reservation.ticket_id }}'">
                 </div>
               </div>
               {% endfor %}
-
+              {{ pagination.info }}
+              {{ pagination.links }}
             </div>
         </div>
         </div>
