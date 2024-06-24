@@ -53,22 +53,78 @@
                         {% endfor %}
                     </div>
                 </div>
-                <div class="event_reservation_buttons_container" style="margin-top: 90px;">
-                    <input
-                        type="button"   
-                        formmethod="get"
-                        class="section_button back_button"
-                        onclick="location.href=`{{ url_for('customer_top') }}`"
-                        value="戻る"
-                    >
-                    <input
-                        type="submit"
-                        value="予約する"
-                        class="section_button submit_button"
-                    >
-                </div>
+                <!-- 期限切れのイベントの場合、予約ボタンを隠す -->
+                {% if not is_expired %}
+                    <div class="event_reservation_buttons_container" style="margin-top: 90px;">
+                        <input
+                            type="button"   
+                            formmethod="get"
+                            class="section_button back_button"
+                            onclick="location.href=`{{ url_for('customer_top') }}`"
+                            value="戻る"
+                        >
+                        {% if is_logged_in %}
+                            <input
+                                type="submit"
+                                value="予約する"
+                                class="section_button submit_button"
+                            >
+                        {% endif %}
+                    </div>
+                {% endif %}
             </form>
         </div>
+        {% if is_expired %}
+            <div class="section_item">
+                <h3 class="section_item_label">レビュー評価</h3>
+                <div class="review_stars_container big_stars">
+                    {% for n in range(5) %}
+                        {% if n + 1 <= avarage_review_score %}
+                            <span class="reviewed">★</span>
+                        {% else %}
+                            <span>★</span>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="section_item">
+                <h3 class="section_item_label">レビューコメント</h3>
+                <form method="post" action="{{url_for('show_event', id=event.event_id)}}">
+                    <select class="review_comment_select" name="sorted_pattern" onchange="submit(this.form)">
+                        <option value="0">昇順</option>
+                        <option value="1">降順</option>
+                    </select>
+                </form>
+                {% for review in reviews %}
+                    <div class="review_comment_item">
+                        <div class="review_comment_head_section">
+                            <div class="review_stars_container">
+                                {% for n in range(5) %}
+                                    {% if n + 1 <= review.review_score | int %}
+                                        <span class="reviewed">★</span>
+                                    {% else %}
+                                        <span>★</span>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <!-- HACK: 日付を表示する -->
+                            <!-- <span>2024/10/10</span> -->
+                        </div>
+                        <h3 class="review_comment_title">{{ review.review_title }}</h3>
+                        <p class="review_comment_content">{{ review.review_comment }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="event_reservation_buttons_container">
+                <input
+                    type="button"   
+                    formmethod="get"
+                    class="section_button back_button"
+                    onclick="location.href=`{{ url_for('customer_top') }}`"
+                    value="戻る"
+                >
+            </div>
+        {% endif %}
     </div>
 </section>
 </main>
