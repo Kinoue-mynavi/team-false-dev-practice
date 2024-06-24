@@ -9,13 +9,14 @@ from flask import render_template, flash, request, redirect, session, url_for
 from flask import render_template, redirect, session
 from flask_app.views.staff.common.staff_common import is_staff_login
 from flask_app.models.sessions.customer import has_auth_session
-from flask_app.models.functions.ticket import read_ticket_one, ticket_seat_id_str, delete_ticket
+from flask_app.models.functions.ticket import read_ticket, read_ticket_one, ticket_seat_id_str, delete_ticket
 from flask_app.models.functions.customer import read_customer_one, update_customer, read_customer_customer_account
 from flask_app.models.functions.event import read_event_one
 from flask_app.views.customer.common.customer_common import is_customer_login
 from flask_app.models.functions.reservations import param_reservation, read_reservation_customer_id
 from operator import itemgetter
 from datetime import datetime
+from flask_paginate import Pagination, get_page_parameter
 
 # エラーメッセージクラスのインスタンス作成
 errorMessages = ErrorMessages()
@@ -24,9 +25,9 @@ infoMessages = InfoMessages()
 
 
 # 予約管理　list
-@app.route("/customer_manage_reservation", methods=["GET", "POST"])
+@app.route("/customer/manage_ticket/ticket_list", methods=["GET", "POST"])
 @is_customer_login
-def customer_manage_reservation():
+def mypage_manage_ticket():
     # customer_id,ticket_id を取得
     customer_id = session.get('logged_in_customer_id')  
     ticket_id = session.get('ticket_id')
@@ -93,13 +94,13 @@ def mypage_manage_account():
         return redirect("/customer/auth/login.html")
 
 
-#予約一覧に遷移
-@app.route("/customer/manage_ticket/ticket_list")
-def mypage_manage_ticket():
-    if has_auth_session():
-        return render_template("/customer/mypage/manage_ticket/list.html")
-    else:
-        return redirect("/customer/auth/login.html")
+# #予約一覧に遷移
+# @app.route("/customer/manage_ticket/ticket_list")
+# def mypage_manage_ticket():
+#     if has_auth_session():
+#         return render_template("/customer/mypage/manage_ticket/list.html", mst_tickets=displayed_tickets, pagination=pagination)
+#     else:
+#         return redirect("/customer/auth/login.html")
 
 
 #退会に遷移
