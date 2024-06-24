@@ -32,17 +32,17 @@
                     <div class="reserver_info_item">
                         <span class="list_circle"></span>
                         <span class="reserver_info_item_label">住所</span>
-                        <p class="reserver_info_item_value">{{ customer.customer_address}}</p>
+                        <p class="reserver_info_item_value">{{ customer.customer_address }}</p>
                     </div>
                     <div class="reserver_info_item">
                         <span class="list_circle"></span>
                         <span class="reserver_info_item_label">電話番号</span>
-                        <p class="reserver_info_item_value">{{ customer.customer_phone}}</p>
+                        <p class="reserver_info_item_value">{{ customer.customer_phone }}</p>
                     </div>
                     <div class="reserver_info_item">
                         <span class="list_circle"></span>
                         <span class="reserver_info_item_label">支払方法</span>
-                        <p class="reserver_info_item_value">{{ customer.customer_payment}}</p>
+                        <p class="reserver_info_item_value">{{ customer.customer_payment }}</p>
                     </div>
                 </div>
             </div>
@@ -51,7 +51,7 @@
                 <input type="hidden" name="customer_id" value="{{ customer.customer_id }}">
                 <input type="hidden" name="ticket_id" value="{{ ticket.ticket_id }}">
                 <!-- -->
-                <button type="submit" class="section_button back_button" onclick="location.href=`/event/{{ event.event_id }}`">戻る</button>
+                <button type="button" class="section_button back_button" formaction="get" onclick="location.href=`{{ url_for('show_event', id=event.event_id) }}`">戻る</button>
                 <button type="submit" class="section_button submit_button" formmethod="post" onclick="location.href=`{{ url_for('submit_new_reservation') }}`">確定</button>
             </form>
         </div>

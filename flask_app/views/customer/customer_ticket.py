@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, request
+from flask import render_template, redirect, url_for, request, flash
 from flask_app.models.functions.event import read_event_one
 from flask_app.models.functions.customer import read_customer_one
 from flask_app.models.functions.ticket import convert_seat_id, read_ticket_one
@@ -39,5 +39,6 @@ def show_ticket_reservation_confirmation():
 @app.route("/ticket-reservation/confirm", methods=["POST"])
 def submit_new_reservation():
     create_reservation(request)
+    flash("チケットの予約に成功しました。")
 
     return redirect("/customer_top")
