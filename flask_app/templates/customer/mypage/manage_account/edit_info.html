@@ -76,26 +76,32 @@
                     </div>
                     {% if custome_payment == 1 %}
                     <div class="radio-button">
-                    <input name="customer_payment" type="radio" value="1" checked>クレジットカード
+                        <input name="customer_payment" type="radio" value="1" checked>クレジットカード
+                        <input name="customer_payment" type="radio" value="2">PayPay
+                        <input name="customer_payment" type="radio" value="3">振込
+                        <input name="customer_payment" type="radio" value="0">後で設定する
                     </div>
-                    <input name="customer_payment" type="radio" value="2">PayPay
-                    <input name="customer_payment" type="radio" value="3">振込
-                    <input name="customer_payment" type="radio" value="0">後で設定する
                     {% elif custome_payment == 2 %}
-                    <input name="customer_payment" type="radio" value="1">クレジットカード
-                    <input name="customer_payment" type="radio" value="2" checked>PayPay
-                    <input name="customer_payment" type="radio" value="3">振込
-                    <input name="customer_payment" type="radio" value="0">後で設定する
+                    <div class="radio-button">
+                        <input name="customer_payment" type="radio" value="1">クレジットカード
+                        <input name="customer_payment" type="radio" value="2" checked>PayPay
+                        <input name="customer_payment" type="radio" value="3">振込
+                        <input name="customer_payment" type="radio" value="0">後で設定する
+                    </div>
                     {% elif custome_payment == 3 %}
-                    <input name="customer_payment" type="radio" value="1">クレジットカード
-                    <input name="customer_payment" type="radio" value="2">PayPay
-                    <input name="customer_payment" type="radio" value="3" checked>振込
-                    <input name="customer_payment" type="radio" value="0">後で設定する
+                    <div class="radio-button">
+                        <input name="customer_payment" type="radio" value="1">クレジットカード
+                        <input name="customer_payment" type="radio" value="2">PayPay
+                        <input name="customer_payment" type="radio" value="3" checked>振込
+                        <input name="customer_payment" type="radio" value="0">後で設定する
+                    </div>
                     {% else %}
-                    <input name="customer_payment" type="radio" value="1">クレジットカード
-                    <input name="customer_payment" type="radio" value="2">PayPay
-                    <input name="customer_payment" type="radio" value="3">振込
-                    <input name="customer_payment" type="radio" value="0" checked>後で設定する
+                    <div class="radio-button">
+                        <input name="customer_payment" type="radio" value="1">クレジットカード
+                        <input name="customer_payment" type="radio" value="2">PayPay
+                        <input name="customer_payment" type="radio" value="3">振込
+                        <input name="customer_payment" type="radio" value="0" checked>後で設定する
+                    </div>
                     {% endif %}
                 </div>
             </div>

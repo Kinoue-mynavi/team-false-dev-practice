@@ -10,7 +10,7 @@
     padding-top: 40px;
     padding-bottom: 24px;
     padding-inline: 14px;
-    border-bottom: solid 1px #000000;
+    border-bottom: solid rgb(217, 217, 217) 2px;
 }
 
 .reserver_info_item:last-child {
@@ -19,11 +19,12 @@
 
 .list_circle {
     display: "inline-block";
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
     background-color: #389BE3;
     grid-area: A;
+    margin-top: 3px;
 }
 
 .reserver_info_item_label {
