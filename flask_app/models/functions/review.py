@@ -5,8 +5,8 @@ from flask_app.models.mst_review import Mst_review
 # レビュー　新規登録
 def create_review(request):
     mst_review = Mst_review(
-        review_event_id = request.form["review_event_id"],
-        review_customer_id = request.form["review_customer_id"],
+        event_id = request.form["event_id"],
+        customer_id = request.form["customer_id"],
         review_score = request.form["review_score"],
         review_title = request.form["review_title"],
         review_comment = request.form["review_comment"]

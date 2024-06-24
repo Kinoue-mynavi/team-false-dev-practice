@@ -1,23 +1,19 @@
-
 from operator import itemgetter
 from flask import render_template, flash, request, redirect, session, url_for, Markup
 from flask_app.__init__ import app
 from flask_app.messages import ErrorMessages, InfoMessages
-from flask_app.models.functions.event import create_event
-from flask_app.models.functions.reservations import delete_reservation, param_reservation, read_reservation
+from flask_app.models.functions.reservations import param_reservation
 from flask import render_template, flash, request, redirect, session, url_for
 from flask import render_template, redirect, session
-from flask_app.views.staff.common.staff_common import is_staff_login
 from flask_app.models.sessions.customer import has_auth_session
-from flask_app.models.functions.ticket import read_ticket, read_ticket_one, ticket_seat_id_str, delete_ticket
-from flask_app.models.functions.customer import read_customer_one, update_customer, read_customer_customer_account
+from flask_app.models.functions.ticket import read_ticket_one, ticket_seat_id_str, delete_ticket
+from flask_app.models.functions.customer import read_customer_one, update_customer
 from flask_app.models.functions.event import read_event_one
 from flask_app.views.customer.common.customer_common import is_customer_login
 from flask_app.models.functions.reservations import param_reservation, read_reservation_customer_id
 from operator import itemgetter
 from datetime import datetime
-from flask_app.models.functions.review import create_review, create_review_script
-from flask_paginate import Pagination, get_page_parameter
+from flask_app.models.functions.review import create_review_script
 
 
 # エラーメッセージクラスのインスタンス作成
@@ -135,9 +131,6 @@ def confirm_cancel():
         # チケットid, イベントid, 席種, 料金, 受付状態
         ticket = read_ticket_one(get_ticket_id)
 
-        print("----------------------------------11")
-        print(ticket)
-
         # チケット座席種類
         # "s00": "席種を選択","s01": "特別席","s02": "一般席","s11": "S席",
         # "s12": "A席","s13": "B席","s14": "C席","s31": "内野席","s32": "外野席"
@@ -206,12 +199,7 @@ def review():
         # チケット情報:チケットid, イベントid, 席種, 料金, 受付状態
         ticket_id = request.form["ticket_id"]
         ticket = read_ticket_one(ticket_id)
-        print("---------------------1")
-        print(ticket)
         # イベント情報:イベント名, 開催日, 開催場所, イベント概要
-        print("---------------------2")
-        print(ticket.event_id)
-        print("---------------------3")
         event = read_event_one(ticket.event_id)
 
         return render_template("/customer/mypage/manage_ticket/review.html", event=event, ticket_id=ticket_id)
@@ -234,18 +222,12 @@ def ticket_review_confirm():
 
         # 会員情報取得
         customer_id = session["logged_in_customer_id"]
-        # 会員名, 郵便番号, 住所, 電話番号, 支払方法
-        # customer_info = read_customer_one(customer_id)
 
-        print("----------------------------1")
-        print(review_title)
-        print(review_comment)
-        print(review_number)
-        print("----------------------------2")
-
+        # レビュー情報を辞書型に格納
         reviews = {"event_id": ticket.event_id, "customer_id": customer_id, "review_score": review_number,
             "review_title": review_title, "review_comment": review_comment}
 
+        # レビューのDB追加
         create_review_script(reviews)
 
         return render_template("/customer/mypage/manage_ticket/list.html")
@@ -343,13 +325,10 @@ def mypage_manage_account_update():
         # 支払方法の表示設定
         if customer.customer_payment == "1":
             payment = "クレジットカード"
-        
         elif customer.customer_payment == "2":
             payment = "PayPay"
-        
         elif customer.customer_payment == "3":
             payment = "銀行振込"
-        
         else:
             payment = "未選択"
 
