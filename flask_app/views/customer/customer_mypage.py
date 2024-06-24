@@ -14,6 +14,7 @@ from flask_app.models.functions.reservations import param_reservation, read_rese
 from operator import itemgetter
 from datetime import datetime
 from flask_app.models.functions.review import create_review_script
+from flask_paginate import Pagination, get_page_parameter
 
 
 # エラーメッセージクラスのインスタンス作成
