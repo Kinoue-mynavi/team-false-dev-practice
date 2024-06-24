@@ -94,9 +94,9 @@ def display_confirmation():
 def confirm_cancel():
     if session["logged_in_customer"] == True:
         # チケット詳細を開いてキャンセル確認
-        # get_ticket_id = request.form.get('ticket_id')
+        get_ticket_id = request.form.get('ticket_id')
         # デバック用
-        get_ticket_id = 1
+        # get_ticket_id = 1
 
         # チケット情報取得
         # チケットid, イベントid, 席種, 料金, 受付状態
@@ -305,4 +305,4 @@ def customer_manage_reservation():
 
     return render_template("/customer/mypage/manage_ticket/list.html",
                             reservation_param_list = reservation_param_list,
-                            event_id = event_id)
+                            ticket_id = ticket_id)
