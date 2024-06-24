@@ -42,7 +42,7 @@ def customer_info():
                     customer_phone = customer.customer_phone,
                     customer_payment = payment)
     else:
-        return redirect("/customer/auth/login.html")
+        return redirect("/customer/auth/login")
 
 
 # マイページメニュー（トップページ）
@@ -51,7 +51,7 @@ def mypage_mypage_top():
     if session["logged_in_customer"] == True:
         return render_template("/customer/mypage/mypage_top.html")
     else:
-        return redirect("/customer/auth/login.html")
+        return redirect("/customer/auth/login")
 
 
 #アカウント情報に遷移
@@ -60,7 +60,7 @@ def mypage_manage_account():
     if session["logged_in_customer"] == True:
         return render_template("/customer/mypage/manage_account/info.html")
     else:
-        return redirect("/customer/auth/login.html")
+        return redirect("/customer/auth/login")
 
 
 #予約一覧に遷移
@@ -69,7 +69,7 @@ def mypage_manage_ticket():
     if session["logged_in_customer"] == True:
         return render_template("/customer/mypage/manage_ticket/list.html")
     else:
-        return redirect("/customer/auth/login.html")
+        return redirect("/customer/auth/login")
 
 
 #退会に遷移
@@ -78,7 +78,7 @@ def mypage_manage_unsubscribe():
     if session["logged_in_customer"] == True:
         return render_template("/customer/mypage/manage_unsubscribe/confirm.html")
     else:
-        return redirect("/customer/auth/login.html")
+        return redirect("/customer/auth/login")
 
 
 #退会
@@ -87,7 +87,7 @@ def display_confirmation():
     if session["logged_in_customer"] == True:
         return render_template("/customer/mypage/manage_unsubscribe/confirm.html")
     else:
-        return redirect("/customer/auth/login.html")
+        return redirect("/customer/auth/login")
 
 
 # チケット詳細 キャンセル確認に遷移
@@ -144,7 +144,7 @@ def confirm_cancel():
             event=event, customer_info=customer_info, ticket=ticket,
             customer_payment_str=customer_payment_str, seat_str=seat_str, event_future_flag=event_future_flag)
     else:
-        return redirect("/customer/auth/login.html")
+        return redirect("/customer/auth/login")
 
 
 # チケットキャンセル チケット一覧に遷移
@@ -160,7 +160,7 @@ def ticket_cancel_list():
 
         return render_template("/customer/mypage/manage_ticket/list.html")
     else:
-        return redirect("/customer/auth/login.html")
+        return redirect("/customer/auth/login")
 
 # レビュー画面に遷移
 @app.route("/mypage_review", methods=["POST"])
@@ -169,17 +169,38 @@ def review():
         # レビュー画面
         # チケットid取得
         # チケット情報:チケットid, イベントid, 席種, 料金, 受付状態
-        ticket = request.form["ticket_id"]
-        print("----------------------1")
+        get_ticket_id = request.form["ticket_id"]
+        ticket = read_ticket_one(get_ticket_id)
+        print("---------------------1")
         print(ticket)
         # イベント情報:イベント名, 開催日, 開催場所, イベント概要
         print("---------------------2")
-        print(ticket["event_id"])
-        event = read_event_one(ticket["event_id"])
+        print(ticket.event_id)
+        print("---------------------3")
+        event = read_event_one(ticket.event_id)
 
         return render_template("/customer/mypage/manage_ticket/review.html", event=event)
     else:
-        return redirect("/customer/auth/login.html")
+        return redirect("/customer/auth/login")
+
+# レビューをDBに追加 チケット一覧に遷移
+@app.route("/mypage_manage_review", methods=["POST"])
+def ticket_review_confirm():
+    if session["logged_in_customer"] == True:
+        # レビューの受け取り
+        review_number = request.form["review_number"]
+        review_title = request.form["review_title"]
+        review_comment = request.form["review_comment"]
+
+        print("----------------------------1")
+        print(review_title)
+        print(review_comment)
+        print(review_number)
+        print("----------------------------2")
+
+        return render_template("/customer/mypage/manage_ticket/list.html")
+    else:
+        return redirect("/customer/auth/login")
 
 #アカウント情報変更に遷移
 @app.route("/mypage_manage_account/edit")
@@ -198,7 +219,7 @@ def mypage_manage_account_edit():
                                 customer_phone=customer.customer_phone,
                                 custome_payment=customer.customer_payment)
     else:
-        return redirect("/customer/auth/login.html")
+        return redirect("/customer/auth/login")
 
 
 #アカウント情報変更画面
@@ -292,7 +313,7 @@ def mypage_manage_account_update():
                                 customer_phone = customer.customer_phone,
                                 customer_payment = payment)
     else:
-        return redirect("/customer/auth/login.html")
+        return redirect("/customer/auth/login")
 
 # 予約管理　list
 @app.route("/customer_manage_reservation", methods=["GET", "POST"])
