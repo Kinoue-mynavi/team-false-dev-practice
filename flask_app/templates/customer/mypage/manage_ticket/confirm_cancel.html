@@ -39,7 +39,7 @@
     </form>
     {% elif event_future_flag == False %}
     <form action="{{ url_for('review') }}" method="post">
-        <input type="hidden" name="ticket_id" value="{{ ticket }}">
+        <input type="hidden" name="ticket_id" value="{{ ticket.ticket_id }}">
         <input type="submit" value="レビューをする">
     </form>
     {% endif %}

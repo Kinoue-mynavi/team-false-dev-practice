@@ -28,7 +28,6 @@ def customer_top():
         start = (page - 1) * per_page
         end = start + per_page
         displayed_events = mst_events[start:end]
-    
+
 
     return render_template("/customer/customer_top.html", mst_events=displayed_events, pagination=pagination)
-
