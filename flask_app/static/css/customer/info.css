@@ -3,13 +3,18 @@
     display: flex;
 }
 
+.index-flex p {
+    font-size: 18px;
+    font-weight: 500;
+}
+
 /* 小見出しの丸 */
 .index {
     width: 16px;
     height: 16px;
     background-color: #389BE3;
     border-radius: 30px;
-    margin-right: 4px;
+    margin-right: 8px;
     margin-top:auto; 
     margin-bottom: auto
 }
@@ -33,18 +38,51 @@
     outline: none;
     border: solid 1px #389BE3;
     border-radius: 4px;
+    font-size: 16px;
 }
 
 /* 区切り線 */
 .under{
-    padding: 20px 20px;
+    padding: 16px 20px;
     border-bottom: solid rgb(217, 217, 217) 2px;
 }
 
 /* ラジオボタン */
-.radio-button {
-    justify-content: center;
+/* ラジオボタンのスタイルリセット */
+.radio-button input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 1.4px solid #7B7B7B;
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
 }
+
+.radio-button {
+    display: flex;
+    padding-top: 8px;
+}
+
+.radio-button input {
+    margin: 0px 4px 0px 20px;
+} 
+
+
+/* ラジオボタンのカスタムスタイル */
+.radio-button input[type="radio"]:checked {
+  background-color: #F56A1C;
+  border-color: #F56A1C;
+}
+
+/* ラジオボタンのラベルのスタイル */
+.radio-button label {
+  margin-right: 10px;
+}
+
+
 
 /* 共通CSSの修正 */
 .section_item {

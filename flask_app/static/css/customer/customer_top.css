@@ -1,8 +1,7 @@
 /* メインタイトルのCSS */
 #main_title {
     text-align: center;
-    padding-top: 30px;
-    padding-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 
@@ -10,7 +9,7 @@
 
 /* イベント一覧全体のCSS */
 #event_list {
-    width: 500px;
+    /* width: 500px; */
     margin-inline: auto;
     padding-bottom: 50px;
 }
@@ -18,7 +17,7 @@
 .event_item {
     position: relative;
     padding-top: 15px;
-    border-bottom: solid rgb(217, 217, 217) 3px;
+    border-bottom: solid rgb(217, 217, 217) 2px;
 }
 
 
@@ -38,13 +37,13 @@
 }
 
 .event_detail_button {
-    width: 90px;
-    height: 30px;
+    width: 100px;
+    height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-weight: bold;
-    border-radius: 118px;
+    border-radius: 120px;
     background-color: transparent;
     cursor: pointer;
   }
