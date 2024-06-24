@@ -1,11 +1,12 @@
 from flask import render_template, redirect, session, request, flash, url_for
 from flask_app.__init__ import app
 from flask_app.messages import ErrorMessages, InfoMessages
-from flask_app.models.functions.ticket import read_ticket_one, ticket_seat_id_str, delete_ticket, read_ticket_event_id
-from flask_app.models.functions.customer import read_customer_one, read_customer_customer_account, update_customer
+from flask_app.models.sessions.customer import has_auth_session
+from flask_app.models.functions.ticket import read_ticket_one, ticket_seat_id_str, delete_ticket
+from flask_app.models.functions.customer import read_customer_one, update_customer
 from flask_app.models.functions.event import read_event_one
 from flask_app.views.customer.common.customer_common import is_customer_login
-from flask_app.models.functions.reservations import param_reservation, read_reservation, read_reservation_customer_id
+from flask_app.models.functions.reservations import param_reservation, read_reservation_customer_id
 from operator import itemgetter
 from datetime import datetime
 
@@ -13,8 +14,6 @@ from datetime import datetime
 errorMessages = ErrorMessages()
 # インフォメーションメッセージクラスのインスタンス作成
 infoMessages = InfoMessages()
-#ここにログインチェック関数のインポート
-
 
 # アカウント情報表示
 @app.route("/customer/manage_customer/customer_info", methods=["GET", "POST"])
@@ -57,7 +56,7 @@ def mypage_mypage_top():
 #アカウント情報に遷移
 @app.route("/mypage_manage_account")
 def mypage_manage_account():
-    if session["logged_in_customer"] == True:
+    if has_auth_session():
         return render_template("/customer/mypage/manage_account/info.html")
     else:
         return redirect("/customer/auth/login.html")
@@ -66,7 +65,7 @@ def mypage_manage_account():
 #予約一覧に遷移
 @app.route("/customer/manage_ticket/ticket_list")
 def mypage_manage_ticket():
-    if session["logged_in_customer"] == True:
+    if has_auth_session():
         return render_template("/customer/mypage/manage_ticket/list.html")
     else:
         return redirect("/customer/auth/login.html")
@@ -75,7 +74,7 @@ def mypage_manage_ticket():
 #退会に遷移
 @app.route("/customer/manage_unsubscribe/confirm")
 def mypage_manage_unsubscribe():
-    if session["logged_in_customer"] == True:
+    if has_auth_session():
         return render_template("/customer/mypage/manage_unsubscribe/confirm.html")
     else:
         return redirect("/customer/auth/login.html")
