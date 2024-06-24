@@ -1,7 +1,25 @@
 {% extends "layout_customer.html" %}
-
 {% block body %}
-
-
+<!-- メインコンテンツ領域 -->
+<main>
+    <div class="container">
+        <h1 id="main_title">
+            予約一覧
+        </h1>
+        <div id="list_area" class="base_pattern">
+            <div id="event_list">
+              {% for reservation in reservation_param_list %}
+              <div class="event_item">
+                <h2 class="event_name">{{ reservation.event_name }}</h2>
+                <div class="button_area">
+                  <input type="button" class="event_detail_button" value="詳細">
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+        </div>
+        </div>
+    </div>
+</main>
 
 {% endblock %}

@@ -4,37 +4,46 @@
 <main>
     <p><h2>予約詳細</h2></p>
     <p>イベント名</p>
-    テキストエリア
+    {{event.event_name}}
 
     <p>開催日</p>
-    日時
+    {{event.event_date}}
 
     <p>開催場所</p>
-    場所
+    {{event.event_place}}
 
     <p>イベント概要</p>
-    概要
+    {{event.event_overview}}
 
     <p>チケット券種選択</p>
-    券種（値段）
+    {{seat_str}}（¥{{ticket.ticket_price}}）
+
 
     <p>予約者情報</p>
     <p>氏名</p>
-    氏名
+    {{customer_info.customer_name}}
     <p>郵便番号</p>
-    郵便番号
+    {{customer_info.customer_zipcode}}
     <p>住所</p>
-    住所
+    {{customer_info.customer_address}}
     <p>電話番号</p>
-    電話番号
+    {{customer_info.customer_phone}}
 
     <p>支払方法</p>
-    クレカpay振込　ラジオで
+    {{customer_payment_str}}
 
-    <div id="button_area">
-        <input type="submit" formaction="{{url_for('customer_new_member', mode=mode)}}" class="return_button" value="戻る">
-        <input type="submit" formaction="{{url_for('customer_new_member', mode=mode)}}" class="confirm_button" value="登録">
-    </div>
+    {% if event_future_flag == True %}
+    <form action="{{ url_for('ticket_cancel_list') }}" method="post">
+        <input type="hidden" name="ticket_id" value="{{ ticket.ticket_id }}">
+        <input type="submit" value="キャンセル確定">
+    </form>
+    {% elif event_future_flag == False %}
+    <form action="{{ url_for('review') }}" method="post">
+        <input type="hidden" name="ticket_id" value="{{ ticket }}">
+        <input type="submit" value="レビューをする">
+    </form>
+    {% endif %}
+    <input type="button" type="button" value="一覧に戻る" onClick="location.href=`/mypage_manage_ticket`">
 
 </main>
 

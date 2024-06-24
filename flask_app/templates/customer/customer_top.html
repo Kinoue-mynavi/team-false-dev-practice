@@ -2,22 +2,31 @@
 
 {% block body %}
 
+
+
 <!-- 機能画面表示領域 -->
 <div class="container">
   <h1 id="main_title">
     イベント一覧
   </h1>
 
-  <div id="list_area" class="base_pattern">
-    <div id="output_list_table">
-      <div id="button_area">
-        ここにイベント名
-        <input type="button" class="event_detail_button" value="詳細">
-      </div>
-    </div>
-  </div>
-  </div>
 
+  <div id="list_area" class="base_pattern">
+      <div id="event_list">
+        {% for event in mst_events %}
+        <div class="event_item">
+          <h3 class="event_name">{{ event.event_name }}</h2>
+          <div class="button_area">
+            <input type="button" class="event_detail_button back_button" value="詳細"
+              onclick="location.href='/event/{{ event.event_id }}'">
+          </div>
+        </div>
+        {% endfor %}
+        {{ pagination.info }}
+        {{ pagination.links }}
+      </div>
+  </div>
+  
 
 </div>
 
