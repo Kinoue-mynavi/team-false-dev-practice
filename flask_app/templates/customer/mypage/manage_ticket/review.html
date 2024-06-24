@@ -17,10 +17,11 @@
         <input type="text" name="review_title"><br>
         レビューコメント:<br>
         <textarea name="review_comment"></textarea><br>
+        <input type="hidden" name="ticket_id" value="{{ ticket_id }}">
         <input type="submit" value="送信">
     </form>
 
-    <form action="{{url_for('confirm_cancel')}}"　method="post">
+    <form action="{{url_for('confirm_cancel')}}" method="post">
         <input type="hidden" name="ticket_id" value="{{ ticket }}">
         <input type="submit" class="button" value="詳細に戻る">
     </form>

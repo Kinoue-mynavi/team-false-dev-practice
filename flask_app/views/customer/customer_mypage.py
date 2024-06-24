@@ -16,6 +16,7 @@ from flask_app.views.customer.common.customer_common import is_customer_login
 from flask_app.models.functions.reservations import param_reservation, read_reservation_customer_id
 from operator import itemgetter
 from datetime import datetime
+from flask_app.models.functions.review import create_review
 
 # エラーメッセージクラスのインスタンス作成
 errorMessages = ErrorMessages()
@@ -199,8 +200,8 @@ def review():
         # レビュー画面
         # チケットid取得
         # チケット情報:チケットid, イベントid, 席種, 料金, 受付状態
-        get_ticket_id = request.form["ticket_id"]
-        ticket = read_ticket_one(get_ticket_id)
+        ticket_id = request.form["ticket_id"]
+        ticket = read_ticket_one(ticket_id)
         print("---------------------1")
         print(ticket)
         # イベント情報:イベント名, 開催日, 開催場所, イベント概要
@@ -209,7 +210,7 @@ def review():
         print("---------------------3")
         event = read_event_one(ticket.event_id)
 
-        return render_template("/customer/mypage/manage_ticket/review.html", event=event)
+        return render_template("/customer/mypage/manage_ticket/review.html", event=event, ticket_id=ticket_id)
     else:
         return redirect("/customer/auth/login")
 
@@ -222,11 +223,23 @@ def ticket_review_confirm():
         review_title = request.form["review_title"]
         review_comment = request.form["review_comment"]
 
+        # チケットid取得
+        # チケット情報:チケットid, イベントid, 席種, 料金, 受付状態
+        ticket_id = request.form["ticket_id"]
+        ticket = read_ticket_one(ticket_id)
+
+        # 会員情報取得
+        customer_id = session["logged_in_customer_id"]
+        # 会員名, 郵便番号, 住所, 電話番号, 支払方法
+        customer_info = read_customer_one(customer_id)
+
         print("----------------------------1")
         print(review_title)
         print(review_comment)
         print(review_number)
         print("----------------------------2")
+
+        create_review(ticket.event_id, customer_id, review_number, review_title, review_comment)
 
         return render_template("/customer/mypage/manage_ticket/list.html")
     else:
@@ -348,7 +361,6 @@ def mypage_manage_account_update():
 # 予約管理　list
 @app.route("/customer_manage_reservation", methods=["GET", "POST"])
 @is_customer_login
-
 def customer_manage_reservation():
     # customer_id を取得
     customer_id = session.get('logged_in_customer_id')
@@ -359,7 +371,6 @@ def customer_manage_reservation():
     tbl_reservation = read_reservation_customer_id(customer_id)
     reservation_param_list = sorted(param_reservation(tbl_reservation),
                                     key=itemgetter('event_date'))
-
 
 
     # 予約情報が1件も取得できなければ、エラーメッセージ表示
