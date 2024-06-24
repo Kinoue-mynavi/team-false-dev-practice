@@ -88,10 +88,12 @@
             </div>
             <div class="section_item">
                 <h3 class="section_item_label">レビューコメント</h3>
-                <select class="review_comment_select" id="" name="" onchange="submit(this.form)">
-                    <option value="0">OOOO選択</option>
-                    {{ selectbox_option }}
-                </select>
+                <form method="post" action="{{url_for('show_event', id=event.event_id)}}">
+                    <select class="review_comment_select" name="sorted_pattern" onchange="submit(this.form)">
+                        <option value="0">昇順</option>
+                        <option value="1">降順</option>
+                    </select>
+                </form>
                 {% for review in reviews %}
                     <div class="review_comment_item">
                         <div class="review_comment_head_section">
@@ -104,7 +106,8 @@
                                     {% endif %}
                                 {% endfor %}
                             </div>
-                            <span>2024/10/10</span>
+                            <!-- HACK: 日付を表示する -->
+                            <!-- <span>2024/10/10</span> -->
                         </div>
                         <h3 class="review_comment_title">{{ review.review_title }}</h3>
                         <p class="review_comment_content">{{ review.review_comment }}</p>

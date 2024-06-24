@@ -19,9 +19,11 @@ def create_review(request):
 
 # レビュー　一覧取得
 def read_review():
-    mst_review = Mst_review.query.order_by(
-        Mst_review.event_id.desc()).all()
+    mst_review = Mst_review.query.order_by(Mst_review.review_id.desc()).all()
     return mst_review
+
+def read_review_asc():
+    return Mst_review.query.all()
 
 
 # レビュー　一件取得
