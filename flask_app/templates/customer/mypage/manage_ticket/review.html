@@ -2,14 +2,26 @@
 
 {% block body %}
 <main>
-    ##ここはレビュー用のページ##
-    <br>
-    ##現在はただのモックアップです##
-    <br>
-    <h1>##井上君イケメン!!!##</h1>
-    <h2">##佐々木君かっこいい!!!##</h2>
+    イベント名：{{event.event_name}}
 
-    <form action="{{url_for('confirm_cancel')}}"　method="post">
+    <form action="{{url_for('ticket_review_confirm')}}" method="post">
+        <select name="review_number">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+        <br>
+        レビュータイトル:<br>
+        <input type="text" name="review_title"><br>
+        レビューコメント:<br>
+        <textarea name="review_comment"></textarea><br>
+        <input type="hidden" name="ticket_id" value="{{ ticket_id }}">
+        <input type="submit" value="送信">
+    </form>
+
+    <form action="{{url_for('confirm_cancel')}}" method="post">
         <input type="hidden" name="ticket_id" value="{{ ticket }}">
         <input type="submit" class="button" value="詳細に戻る">
     </form>
