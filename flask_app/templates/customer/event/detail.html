@@ -38,35 +38,35 @@
                 チケットの券種を選択してください。
             </p>
     
-            <form class="event_reservation_form">
-                <div class="event_reservation_form_container">
-                    <label class="event_reservation_form_item">
-                        <div class="event_reservation_radio_input_container">
-                            <input type="radio" name="seat_id" class="event_reservation_radio_input">
-                            S席
-                        </div>
-                        <span>￥13,000</span>
-                    </label>
-                    <label class="event_reservation_form_item">
-                        <div class="event_reservation_radio_input_container">
-                            <input type="radio" name="seat_id" class="event_reservation_radio_input">
-                            A席
-                        </div>
-                        <span>￥9,000</span>
-                    </label>
-                    <label class="event_reservation_form_item">
-                        <div class="event_reservation_radio_input_container">
-                            <input type="radio" name="seat_id" class="event_reservation_radio_input">
-                            立ち見
-                        </div>
-                        <span>￥7,000</span>
-                    </label>
+            <form method="post" action="{{ url_for('create_new_reservation', event_id=event.event_id) }}">
+                <div class="event_reservation_form">
+                    <div class="event_reservation_form_container">
+                        {% for ticket in tickets %}
+                            <label class="event_reservation_form_item">
+                                <div class="event_reservation_radio_input_container">
+                                    <input type="radio" name="ticket_id" value="{{ ticket.ticket_id }}" class="event_reservation_radio_input">
+                                    {{ ticket.ticket_seat_name }}
+                                </div>
+                                <span>￥{{ ticket.ticket_price }}</span>
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="event_reservation_buttons_container">
+                    <input
+                        type="button"   
+                        formmethod="get"
+                        class="section_button back_button"
+                        onclick="location.href=`{{ url_for('customer_top') }}`"
+                        value="戻る"
+                    >
+                    <input
+                        type="submit"
+                        value="予約する"
+                        class="section_button submit_button"
+                    >
                 </div>
             </form>
-            <div class="event_reservation_buttons_container">
-                <button class="section_button back_button" type="submit" onclick="location.href=`{{ url_for('customer_top') }}`">戻る</button>
-                <button class="section_button submit_button">予約する</button>
-            </div>
         </div>
     </div>
 </section>

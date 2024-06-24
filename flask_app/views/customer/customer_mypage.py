@@ -1,11 +1,19 @@
-from flask import render_template, redirect, session, request, flash, url_for
+
+from operator import itemgetter
+from flask import render_template, flash, request, redirect, session, url_for, Markup
 from flask_app.__init__ import app
 from flask_app.messages import ErrorMessages, InfoMessages
-from flask_app.models.functions.ticket import read_ticket_one, ticket_seat_id_str, delete_ticket, read_ticket_event_id
-from flask_app.models.functions.customer import read_customer_one, read_customer_customer_account, update_customer
+from flask_app.models.functions.event import create_event
+from flask_app.models.functions.reservations import delete_reservation, param_reservation, read_reservation
+from flask import render_template, flash, request, redirect, session, url_for
+from flask import render_template, redirect, session
+from flask_app.views.staff.common.staff_common import is_staff_login
+from flask_app.models.sessions.customer import has_auth_session
+from flask_app.models.functions.ticket import read_ticket_one, ticket_seat_id_str, delete_ticket
+from flask_app.models.functions.customer import read_customer_one, update_customer, read_customer_customer_account
 from flask_app.models.functions.event import read_event_one
 from flask_app.views.customer.common.customer_common import is_customer_login
-from flask_app.models.functions.reservations import param_reservation, read_reservation, read_reservation_customer_id
+from flask_app.models.functions.reservations import param_reservation, read_reservation_customer_id
 from operator import itemgetter
 from datetime import datetime
 
@@ -13,8 +21,30 @@ from datetime import datetime
 errorMessages = ErrorMessages()
 # インフォメーションメッセージクラスのインスタンス作成
 infoMessages = InfoMessages()
-#ここにログインチェック関数のインポート
 
+
+# 予約管理　list
+@app.route("/customer_manage_reservation", methods=["GET", "POST"])
+@is_customer_login
+def customer_manage_reservation():
+    # customer_id,ticket_id を取得
+    customer_id = session.get('logged_in_customer_id')  
+    ticket_id = session.get('ticket_id')
+
+    # customer_id を引数として渡す
+    tbl_reservation = read_reservation_customer_id(customer_id)
+    reservation_param_list = sorted(param_reservation(tbl_reservation),
+                                    key=itemgetter('event_date'))
+
+    # 予約情報が1件も取得できなければ、エラーメッセージ表示
+    if not reservation_param_list:
+        flash(errorMessages.w01('予約情報'))
+
+    return render_template("/customer/mypage/manage_ticket/list.html",
+                            reservation_param_list = reservation_param_list,
+                            ticket_id = ticket_id)
+ 
+#ここにログインチェック関数のインポート
 
 # アカウント情報表示
 @app.route("/customer/manage_customer/customer_info", methods=["GET", "POST"])
@@ -57,7 +87,7 @@ def mypage_mypage_top():
 #アカウント情報に遷移
 @app.route("/mypage_manage_account")
 def mypage_manage_account():
-    if session["logged_in_customer"] == True:
+    if has_auth_session():
         return render_template("/customer/mypage/manage_account/info.html")
     else:
         return redirect("/customer/auth/login")
@@ -66,7 +96,7 @@ def mypage_manage_account():
 #予約一覧に遷移
 @app.route("/customer/manage_ticket/ticket_list")
 def mypage_manage_ticket():
-    if session["logged_in_customer"] == True:
+    if has_auth_session():
         return render_template("/customer/mypage/manage_ticket/list.html")
     else:
         return redirect("/customer/auth/login")
@@ -75,7 +105,7 @@ def mypage_manage_ticket():
 #退会に遷移
 @app.route("/customer/manage_unsubscribe/confirm")
 def mypage_manage_unsubscribe():
-    if session["logged_in_customer"] == True:
+    if has_auth_session():
         return render_template("/customer/mypage/manage_unsubscribe/confirm.html")
     else:
         return redirect("/customer/auth/login")
@@ -95,9 +125,9 @@ def display_confirmation():
 def confirm_cancel():
     if session["logged_in_customer"] == True:
         # チケット詳細を開いてキャンセル確認
-        # get_ticket_id = request.form.get('ticket_id')
+        get_ticket_id = request.form.get('ticket_id')
         # デバック用
-        get_ticket_id = 1
+        # get_ticket_id = 1
 
         # チケット情報取得
         # チケットid, イベントid, 席種, 料金, 受付状態
