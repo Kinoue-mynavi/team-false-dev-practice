@@ -29,7 +29,6 @@ def customer_new_member():
     isValidateError = False
 
     # フォームから送信されたデータを受け取る
-    # デバック用
     customer_account = request.form.get('customer_account')
     customer_password = request.form.get('customer_password')
     customer_name = request.form.get('customer_name')
@@ -99,8 +98,6 @@ def customer_new_member():
     return render_template("customer/auth/login.html")
 
 
-
-
 #会員ログアウト
 @app.route("/customer/auth/logout", methods=["GET", "POST"])
 def logout_customer():
@@ -123,10 +120,10 @@ def login_customer():
     if not customer_account or not customer_password:
         flash(errorMessages.w02('アカウント名またはパスワード'))
         return render_template("/customer/auth/login.html")
-    
+
     customer_array = read_customer_customer_account(
         request.form["customer_account"])
-    
+
     # 会員アカウントが存在するかチェック
     if len(customer_array) == 0:
         flash(errorMessages.w04('アカウント名'))

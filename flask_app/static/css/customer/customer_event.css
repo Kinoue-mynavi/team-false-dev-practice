@@ -46,7 +46,8 @@
     display: flex;
     gap: 67px;
     justify-content: center;
-    margin-top: 91px;
+    margin-top: 40px;
+    /* margin-top: 91px; */
 }
 
 .review_stars_container {
