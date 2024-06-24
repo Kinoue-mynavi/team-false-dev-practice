@@ -44,7 +44,6 @@ def customer_manage_reservation():
     return render_template("/customer/mypage/manage_ticket/list.html",
                             reservation_param_list = reservation_param_list,
                             ticket_id = ticket_id)
- 
 #ここにログインチェック関数のインポート
 
 # アカウント情報表示
@@ -243,14 +242,6 @@ def ticket_review_confirm():
         print(review_comment)
         print(review_number)
         print("----------------------------2")
-
-        # mst_review = Mst_review(
-        # event_id = param["event_id"],
-        # customer_id = param["customer_id"],
-        # review_score = param["review_score"],
-        # review_title = param["review_title"],
-        # review_comment = param["review_comment"]
-        # )
 
         reviews = {"event_id": ticket.event_id, "customer_id": customer_id, "review_score": review_number,
             "review_title": review_title, "review_comment": review_comment}
