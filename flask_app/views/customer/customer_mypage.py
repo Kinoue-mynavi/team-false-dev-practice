@@ -157,7 +157,7 @@ def confirm_cancel():
         # フラグ trueで未開催 falseで開催済み
         event_future_flag = True
         event_date = event.event_date
-        event_date = datetime.strptime(event_date, "%Y/%m/%d")
+        event_date = datetime.strptime(event_date, "%Y-%m-%d")
         # イベントの日時と今日の日時の比較
         if event_date >= datetime.now():
             event_future_flag = True
