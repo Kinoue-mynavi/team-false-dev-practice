@@ -351,7 +351,7 @@ def mypage_manage_account_update():
 
 def customer_manage_reservation():
     # customer_id を取得
-    customer_id = session.get('logged_in_customer_id')  
+    customer_id = session.get('logged_in_customer_id')
     ticket_id = session.get('ticket_id')
     event_id = session.get('event_id')
 
