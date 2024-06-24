@@ -54,8 +54,12 @@ def read_review_customer_id(customer_id):
 
 # レビュー　イベントIDで取得
 def read_review_event_id(event_id):
-    review = Mst_review.query.filter(
-        Mst_review.event_id == event_id).all()
+    review = Mst_review.query.filter(Mst_review.event_id == event_id).all()
+    return review
+
+# レビュー　イベントIDで取得
+def read_review_event_id_asc(event_id):
+    review = Mst_review.query.filter(Mst_review.event_id == event_id).order_by(Mst_review.review_id.desc()).all()
     return review
 
 
@@ -69,9 +73,12 @@ def delete_review(review_id):
     return
 
 # レビュースコアの平均を求める
-def calc_avarage_review_score(reviews) -> int:
+def calc_avarage_review_score(reviews):
+    if len(reviews) <= 0:
+        return 0
+
     review_score_list = []
     for review in reviews:
-        review_score_list.append(review["review_score"])
+        review_score_list.append(int(review.review_score))
     
     return sum(review_score_list) / len(review_score_list)

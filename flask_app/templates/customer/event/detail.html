@@ -99,7 +99,7 @@
                         <div class="review_comment_head_section">
                             <div class="review_stars_container">
                                 {% for n in range(5) %}
-                                    {% if n + 1 <= review.review_score %}
+                                    {% if n + 1 <= review.review_score | int %}
                                         <span class="reviewed">★</span>
                                     {% else %}
                                         <span>★</span>
