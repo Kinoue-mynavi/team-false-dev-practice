@@ -1,10 +1,10 @@
 
 from flask import render_template, flash, request, redirect, session, url_for
 from flask_app.__init__ import app
-from flask import Flask, request
+from flask import request
 from flask_app.models.functions.customer import create_customer_script, read_customer_customer_account
 from flask_app.messages import ErrorMessages, InfoMessages
-from flask_app.views.customer.common.customer_common import is_customer_login
+from flask_app.models.sessions.customer import create_auth_session, has_auth_session
 
 # エラーメッセージクラスのインスタンス作成
 errorMessages = ErrorMessages()
@@ -18,7 +18,7 @@ def new_member():
 
 # ログイン画面へ遷移
 # デバック用
-@app.route('/login', methods=["GET", "POST"])
+@app.route('/customer/auth/login', methods=["GET", "POST"])
 def login():
     return render_template("/customer/auth/login.html")
 
@@ -99,14 +99,20 @@ def customer_new_member():
     return render_template("customer/auth/login.html")
 
 
-#会員ログイン
-@app.route("/customer_customer_login", methods=["GET", "POST"])
-def customer_customer_login():
-    return render_template("/customer/auth/login.html")
+
+
+#会員ログアウト
+@app.route("/customer/auth/logout", methods=["GET", "POST"])
+def logout_customer():
+    session.pop("logged_in_customer")
+    session.pop("logged_in_customer_account")
+    session.pop("logged_in_customer_id")
+    session.pop("logged_in_customer_name")
+    return redirect("/customer_top")
 
 
 # 会員ログイン処理
-@app.route("/login_customer", methods=["POST"])
+@app.route("/customer/auth/login/login_customer", methods=["POST"])
 def login_customer():
     isLoginError = False
 
@@ -138,7 +144,7 @@ def login_customer():
 
     else:
         # login処理を実行する
-        session["logged_in_customer"] = True
+        create_auth_session()
         session["logged_in_customer_account"] = customer.customer_account
         session["logged_in_customer_id"] = customer.customer_id
         session["logged_in_customer_name"] = customer.customer_name

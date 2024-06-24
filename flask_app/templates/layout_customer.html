@@ -6,9 +6,13 @@
 
     <link rel="stylesheet" href="/static/css/customer/base.css">
     <link rel="stylesheet" href="/static/css/customer/layout.css">
+    <link rel="stylesheet" href="/static/css/customer/customer_event.css">
+    <link rel="stylesheet" href="/static/css/customer/customer_ticket.css">
 	<!-- 機能共用 CSS -->
 	<link rel="stylesheet" href="/static/css/customer/customer_top.css">
-
+	<link rel="stylesheet" href="/static/css/customer/mypage_top.css">
+	<link rel="stylesheet" href="/static/css/customer/manage_ticket.css">
+	<link rel="stylesheet" href="/static/css/customer/manage_customer.css">
 </head>
 <body>
 	<header>
@@ -17,13 +21,22 @@
 			<a href="/"><img src="/static/images/logo_customer.png" alt="ムジクロチケット"></a>
 		</div>
 		<div class="user_info">
-			<p class="header-display-name">ゲストさん</p>
-			<div class="button-container">
-				<input class="header-button" type="button" value="ログイン"
-					onClick="location.href=`{{url_for('customer_customer_login')}}`">
-				<input class="header-button" type="button" value="新規登録"
-					onClick="location.href=`{{url_for('new_member')}}`">
-            </div>
+			{% if session["logged_in_customer"] %}
+				<p class="header-display-name">{{ session["logged_in_customer_name"] }}</p>
+				<div class="button-container">
+					<input class="header-button" type="button" value="ログアウト"
+						onClick="location.href=`{{url_for('logout_customer')}}`">
+            	</div>
+			{% else %}
+				<p class="header-display-name">ゲストさん</p>
+				<div class="button-container">
+					<input class="header-button" type="button" value="ログイン"
+						onClick="location.href=`{{url_for('login')}}`">
+					<input class="header-button" type="button" value="新規登録"
+						onClick="location.href=`{{url_for('new_member')}}`">
+            	</div>
+			{% endif %}
+			
 		</div>
 	</header>
 
@@ -49,11 +62,16 @@
   <div class="modal-container">
 		<nav class="modal-nav">
 			<ul class="modal-menu">
-				<li><a href="/">トップページ</a></li>
-				<!-- ↓url違うかも -->
-				<li><a href="/customer/auth/login">ログイン</a></li>
-				<!-- ↓url違うかも -->
-				<li><a href="/customer/auth/signup">新規会員登録</a></li>
+				{% if session["logged_in_customer"] %}
+					<li><a href="/">トップページ</a></li>
+					<li><a href="/customer/auth/logout">ログアウト</a></li>
+					<li><a href="/customer/mypage_top">マイページ</a></li>
+				{% else %}
+					<li><a href="/">トップページ</a></li>
+					<li><a href="/customer/auth/login">ログイン</a></li>
+					<li><a href="/customer/auth/signup">新規会員登録</a></li>
+				{% endif %}
+				
 			</ul>
 		</nav>
   </div>
