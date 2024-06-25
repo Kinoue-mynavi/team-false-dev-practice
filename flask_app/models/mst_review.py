@@ -6,8 +6,8 @@ from flask_app.models.mst_customer import Mst_customer
 class Mst_review(db.Model):
     __tablename__ = "mst_review"
     review_id = db.Column(db.Integer, primary_key=True, autoincrement=True, unique=True)
-    event_id = db.Column(db.Integer, db.ForeignKey(Mst_event.event_id))
-    customer_id = db.Column(db.Integer, db.ForeignKey(Mst_customer.customer_id))
+    event_id = db.Column(db.Integer, db.ForeignKey(Mst_event.event_id, ondelete="CASCADE"))
+    customer_id = db.Column(db.Integer, db.ForeignKey(Mst_customer.customer_id, ondelete="CASCADE"))
     review_score = db.Column(db.String(1))
     review_title = db.Column(db.String(30))
     review_comment = db.Column(db.String(500))

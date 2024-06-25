@@ -8,7 +8,12 @@ from flask_app.__init__ import app
 @app.route("/ticket-reservation", methods=["POST", "GET"])
 def create_new_reservation():
     event_id = request.args.get("event_id")
-    ticket_id = request.form["ticket_id"]
+    ticket_id = request.form["ticket_id"] if request.form else ""
+
+    if not ticket_id:
+        flash("チケットを選択してください")
+        return redirect(f"/event/{event_id}")
+    
     return redirect(
         url_for(
             "show_ticket_reservation_confirmation",

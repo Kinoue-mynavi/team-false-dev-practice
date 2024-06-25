@@ -1,16 +1,15 @@
 from operator import itemgetter
-from flask import render_template, flash, request, redirect, session, url_for, Markup
+from flask import render_template, flash, request, redirect, session, url_for
 from flask_app.__init__ import app
 from flask_app.messages import ErrorMessages, InfoMessages
 from flask_app.models.functions.reservations import param_reservation
 from flask import render_template, flash, request, redirect, session, url_for
-from flask import render_template, redirect, session
 from flask_app.models.sessions.customer import has_auth_session
-from flask_app.models.functions.ticket import read_ticket_one, ticket_seat_id_str, delete_ticket
+from flask_app.models.functions.ticket import read_ticket_one, ticket_seat_id_str
 from flask_app.models.functions.customer import read_customer_one, update_customer
 from flask_app.models.functions.event import read_event_one
 from flask_app.views.customer.common.customer_common import is_customer_login
-from flask_app.models.functions.reservations import param_reservation, read_reservation_customer_id
+from flask_app.models.functions.reservations import param_reservation, read_reservation_customer_id, delete_reservation, read_reservation_by_each_id
 from operator import itemgetter
 from datetime import datetime
 from flask_app.models.functions.review import create_review_script
@@ -39,19 +38,18 @@ def mypage_manage_ticket():
     # イベントが1件も取得できなければ、エラーメッセージ表示
     if not reservation_param_list:
         flash(errorMessages.w01('予約情報'))
-        return render_template("/customer/mypage/mypage_top.html")
-    else:
-        # ページネーション
-        ## 現在のページ番号を取得
-        page = int(request.args.get(get_page_parameter(), 1))
-        ## ページごとの表示件数
-        per_page = 10
-        ## ページネーションオブジェクトを作成
-        pagination = Pagination(page=page, per_page=per_page, total=len(reservation_param_list))
-        # 表示するデータを取得
-        start = (page - 1) * per_page
-        end = start + per_page
-        displayed_reservations = reservation_param_list[start:end]
+       
+    # ページネーション
+    ## 現在のページ番号を取得
+    page = int(request.args.get(get_page_parameter(), 1))
+    ## ページごとの表示件数
+    per_page = 10
+    ## ページネーションオブジェクトを作成
+    pagination = Pagination(page=page, per_page=per_page, total=len(reservation_param_list))
+    # 表示するデータを取得
+    start = (page - 1) * per_page
+    end = start + per_page
+    displayed_reservations = reservation_param_list[start:end]
 
     return render_template("/customer/mypage/manage_ticket/list.html",
                             reservation_param_list=displayed_reservations, 
@@ -180,12 +178,18 @@ def confirm_cancel(ticket_id):
 @app.route("/mypage_manage_ticket/<int:ticket_id>", methods=["POST"])
 def ticket_cancel_list(ticket_id):
     if session["logged_in_customer"] == True:
+        customer_id = session["logged_in_customer_id"]
+        reservation = read_reservation_by_each_id(customer_id, ticket_id)
 
         # チケット削除
-        delete_ticket(ticket_id)
-        flash(infoMessages.i03("予約情報"))
+        if not reservation:
+            flash(infoMessages.i03("チケット予約"))
+        else:
+            delete_reservation(reservation.reservation_id)
+            flash("チケット予約を削除しました。")
 
-        return render_template("/customer/mypage/manage_ticket/list.html")
+        return redirect(url_for("mypage_manage_ticket"))
+
     else:
         return redirect("/customer/auth/login")
 
@@ -276,34 +280,36 @@ def mypage_manage_account_update():
             flash(errorMessages.w02('アカウント名'))
             isValidateError = True
         # 必須 パスワード6ｰ10文字 W2 W8
-        if 6 >= len(customer_password) and 10 <= len(customer_password):
+        if 6 > len(customer_password) or 10 < len(customer_password):
             flash(errorMessages.w08('パスワード', '6', '10'))
             isValidateError = True
         if 0 >= len(customer_password):
             flash(errorMessages.w02('パスワード'))
             isValidateError = True
         # 氏名20文字以下 W7
-        if 20 <= len(customer_name):
+        if 20 < len(customer_name):
             flash(errorMessages.w07('氏名', '20'))
             isValidateError = True
         # 郵便番号7文字 W6 W10
-        if 7!= len(customer_zipcode):
+        if 7!= len(customer_zipcode) and 0 != len(customer_zipcode):
             flash(errorMessages.w06('郵便番号', '7'))
             isValidateError = True
-        if not customer_zipcode.isdigit():
-            flash(errorMessages.w10('郵便番号'))
-            isValidateError = True
+        if 7== len(customer_zipcode):
+            if not customer_zipcode.isdigit():
+                flash(errorMessages.w10('郵便番号'))
+                isValidateError = True
         # 住所50文字以下 W7
         if 50 <= len(customer_address):
             flash(errorMessages.w07('住所', '50'))
             isValidateError = True
         # 電話番号10-11文字 W8 W10
-        if 10 > len(customer_phone) or 11 < len(customer_phone):
+        if 10 > len(customer_phone) and 11 < len(customer_phone) and 0 != len(customer_phone):
             flash(errorMessages.w08('電話番号', '10', '11'))
             isValidateError = True
-        if not customer_phone.isdigit():
-            flash(errorMessages.w10('電話番号'))
-            isValidateError = True
+        if 10 == len(customer_phone) or 11 == len(customer_phone):
+            if not customer_phone.isdigit():
+                flash(errorMessages.w10('電話番号'))
+                isValidateError = True
 
         # バリデーションフラグのチェック
         # 不備がある場合はアカウント情報変更画面にリダイレクト
