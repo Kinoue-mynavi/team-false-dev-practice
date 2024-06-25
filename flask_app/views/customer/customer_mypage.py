@@ -34,10 +34,12 @@ def mypage_manage_ticket():
     tbl_reservation = read_reservation_customer_id(customer_id)
     reservation_param_list = sorted(param_reservation(tbl_reservation), key=itemgetter('event_date'))
 
+
     # 予約情報が1件も取得できなければ、エラーメッセージ表示
     # イベントが1件も取得できなければ、エラーメッセージ表示
     if not reservation_param_list:
         flash(errorMessages.w01('予約情報'))
+        return render_template("/customer/mypage/mypage_top.html")
     else:
         # ページネーション
         ## 現在のページ番号を取得
@@ -53,7 +55,6 @@ def mypage_manage_ticket():
 
     return render_template("/customer/mypage/manage_ticket/list.html",
                             reservation_param_list=displayed_reservations, 
-
                             pagination=pagination)
  
 #ここにログインチェック関数のインポート
