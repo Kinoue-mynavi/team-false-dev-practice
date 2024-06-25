@@ -71,7 +71,7 @@
                 <div class="event_reservation_buttons_container">
                     <input class="section_button back_button" type="button" value="一覧に戻る" onClick="location.href=`/mypage_manage_ticket`">
                     {% if event_future_flag %}
-                        <form action="{{ url_for('ticket_cancel_list') }}" method="post">
+                        <form action="{{ url_for('ticket_cancel_list', ticket_id=ticket.ticket_id) }}" method="post">
                             <input type="hidden" name="ticket_id" value="{{ ticket.ticket_id }}">
                             <input class="section_button submit_button" type="submit" value="キャンセル確定">
                         </form>

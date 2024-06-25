@@ -1,16 +1,15 @@
 from operator import itemgetter
-from flask import render_template, flash, request, redirect, session, url_for, Markup
+from flask import render_template, flash, request, redirect, session, url_for
 from flask_app.__init__ import app
 from flask_app.messages import ErrorMessages, InfoMessages
 from flask_app.models.functions.reservations import param_reservation
 from flask import render_template, flash, request, redirect, session, url_for
-from flask import render_template, redirect, session
 from flask_app.models.sessions.customer import has_auth_session
-from flask_app.models.functions.ticket import read_ticket_one, ticket_seat_id_str, delete_ticket
+from flask_app.models.functions.ticket import read_ticket_one, ticket_seat_id_str
 from flask_app.models.functions.customer import read_customer_one, update_customer
 from flask_app.models.functions.event import read_event_one
 from flask_app.views.customer.common.customer_common import is_customer_login
-from flask_app.models.functions.reservations import param_reservation, read_reservation_customer_id
+from flask_app.models.functions.reservations import param_reservation, read_reservation_customer_id, delete_reservation, read_reservation_by_each_id
 from operator import itemgetter
 from datetime import datetime
 from flask_app.models.functions.review import create_review_script
@@ -39,19 +38,18 @@ def mypage_manage_ticket():
     # イベントが1件も取得できなければ、エラーメッセージ表示
     if not reservation_param_list:
         flash(errorMessages.w01('予約情報'))
-        return render_template("/customer/mypage/mypage_top.html")
-    else:
-        # ページネーション
-        ## 現在のページ番号を取得
-        page = int(request.args.get(get_page_parameter(), 1))
-        ## ページごとの表示件数
-        per_page = 10
-        ## ページネーションオブジェクトを作成
-        pagination = Pagination(page=page, per_page=per_page, total=len(reservation_param_list))
-        # 表示するデータを取得
-        start = (page - 1) * per_page
-        end = start + per_page
-        displayed_reservations = reservation_param_list[start:end]
+       
+    # ページネーション
+    ## 現在のページ番号を取得
+    page = int(request.args.get(get_page_parameter(), 1))
+    ## ページごとの表示件数
+    per_page = 10
+    ## ページネーションオブジェクトを作成
+    pagination = Pagination(page=page, per_page=per_page, total=len(reservation_param_list))
+    # 表示するデータを取得
+    start = (page - 1) * per_page
+    end = start + per_page
+    displayed_reservations = reservation_param_list[start:end]
 
     return render_template("/customer/mypage/manage_ticket/list.html",
                             reservation_param_list=displayed_reservations, 
@@ -180,16 +178,20 @@ def confirm_cancel(ticket_id):
 @app.route("/mypage_manage_ticket/<int:ticket_id>", methods=["POST"])
 def ticket_cancel_list(ticket_id):
     if session["logged_in_customer"] == True:
+        customer_id = session["logged_in_customer_id"]
+        reservation = read_reservation_by_each_id(customer_id, ticket_id)
 
         # チケット削除
-        # delete_ticket(ticket_id)
-        # flash(infoMessages.i03("予約情報"))
-        print(ticket_id)
-        flash(f"チケットID:{ticket_id}")
+        if not reservation:
+            flash(infoMessages.i03("チケット予約"))
+        else:
+            delete_reservation(reservation.reservation_id)
+            flash("チケット予約を削除しました。")
 
-        return "<p>おおおおおおお</p>"
+        return redirect(url_for("mypage_manage_ticket"))
+
     else:
-        return "<p>えるす</p>"
+        return redirect("/customer/auth/login")
 
 # レビュー画面に遷移
 @app.route("/mypage_review/<int:ticket_id>", methods=["POST"])
