@@ -72,7 +72,7 @@ def delete_event(event_id):
 
 
 def is_expired_event(event_date):
-    ed = datetime.strptime(event_date, "%Y-%m-%d")
+    date = datetime.strptime(event_date, "%Y-%m-%d")
     now = datetime.now()
 
-    return now > ed
+    return now >= date

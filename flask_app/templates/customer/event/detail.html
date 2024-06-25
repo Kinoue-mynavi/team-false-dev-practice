@@ -85,16 +85,21 @@
                             <span>★</span>
                         {% endif %}
                     {% endfor %}
+                    <p class="review_score_label">{{ avarage_review_score }}</p>
                 </div>
             </div>
             <div class="section_item">
                 <h3 class="section_item_label">レビューコメント</h3>
-                <form method="post" action="{{url_for('show_event', id=event.event_id)}}">
-                    <select class="review_comment_select" name="sorted_pattern" onchange="submit(this.form)">
-                        <option value="0">昇順</option>
-                        <option value="1">降順</option>
-                    </select>
-                </form>
+                {% if not reviews %}
+                    <p　class="section_item_content">レビューコメントがありません。</p>
+                {% else %}
+                    <form method="post" action="{{url_for('show_event', id=event.event_id)}}">
+                        <select class="review_comment_select" name="sorted_pattern" onchange="submit(this.form)">
+                            <option value="0">昇順</option>
+                            <option value="1">降順</option>
+                        </select>
+                    </form>
+                {% endif %}
                 {% for review in reviews %}
                     <div class="review_comment_item">
                         <div class="review_comment_head_section">
