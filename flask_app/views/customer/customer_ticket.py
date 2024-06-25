@@ -26,12 +26,22 @@ def show_ticket_reservation_confirmation():
     ticket = read_ticket_one(ticket_id)
     ticket_seat = f"{convert_seat_id(ticket.ticket_seat_id)} (￥{ticket.ticket_price})"
     customer = read_customer_one(session["logged_in_customer_id"])
+    payment=""
+    if customer.customer_payment == "1":
+        payment = "クレジットカード"
+    elif customer.customer_payment == "2":
+        payment = "PayPay"
+    elif customer.customer_payment == "3":
+        payment = "銀行振込"
+    else:
+        payment = "未選択"
 
     return render_template(
         "/customer/ticket/confirm_reservation.html",
         event=event,
         ticket=ticket,
         customer=customer,
+        payment=payment,
         ticket_seat=ticket_seat
     )
 
