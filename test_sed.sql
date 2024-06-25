@@ -23,17 +23,6 @@ insert into mst_event VALUES (
     1, 1, '大運動会', '2022-04-25', '東京', 'これは大運動会です。'
 );
 
--- TI-01 チケット新規登録
-insert into mst_ticket VALUES (
-    1, 1, "s01", 1, 1
-);
-
--- RV-01 予約情報新規登録
-insert into tbl_reservation VALUES (
-    1, 1, 1
-);
-
--- イベント新規登録
 -- ET-02 - ET-21
 insert into mst_event VALUES (2, 1, '大コンサート', '2022-04-26', '埼玉', 'これは大コンサートです。');
 insert into mst_event VALUES (3, 1, '大花火大会', '2022-04-27', '群馬', 'これは大花火大会です。');
@@ -55,3 +44,49 @@ insert into mst_event VALUES (18, 1, '大HIPPOPライブ', '2025-02-25', '東京
 insert into mst_event VALUES (19, 1, '大アートイベント', '2025-03-25', '東京', 'これは大アートイベントです。');
 insert into mst_event VALUES (20, 1, '大演劇', '2025-04-25', '東京', 'これは大演劇です。');
 insert into mst_event VALUES (21, 1, '大呪物展', '2025-05-25', '東京', 'これは大呪物展です。');
+
+-- TI-01 チケット新規登録
+insert into mst_ticket VALUES (
+    1, 1, "s01", 1, 1
+);
+
+-- TI-02 - TI-21
+insert into mst_ticket VALUES (2, 2, "s01", 2, 1);
+insert into mst_ticket VALUES (3, 3, "s01", 3, 1);
+insert into mst_ticket VALUES (4, 4, "s01", 4, 1);
+insert into mst_ticket VALUES (5, 5, "s01", 5, 1);
+insert into mst_ticket VALUES (6, 6, "s01", 6, 1);
+insert into mst_ticket VALUES (7, 7, "s01", 7, 1);
+insert into mst_ticket VALUES (8, 8, "s01", 8, 1);
+insert into mst_ticket VALUES (9, 9, "s01", 9, 1);
+insert into mst_ticket VALUES (10, 10, "s01", 10, 1);
+insert into mst_ticket VALUES (11, 11, "s01", 11, 1);
+insert into mst_ticket VALUES (12, 12, "s01", 12, 1);
+insert into mst_ticket VALUES (13, 13, "s01", 13, 1);
+insert into mst_ticket VALUES (14, 14, "s01", 14, 1);
+insert into mst_ticket VALUES (15, 15, "s01", 15, 1);
+insert into mst_ticket VALUES (16, 16, "s01", 16, 1);
+insert into mst_ticket VALUES (17, 17, "s01", 17, 1);
+insert into mst_ticket VALUES (18, 18, "s01", 18, 1);
+insert into mst_ticket VALUES (19, 19, "s01", 19, 1);
+insert into mst_ticket VALUES (20, 20, "s01", 20, 1);
+insert into mst_ticket VALUES (21, 21, "s01", 21, 1);
+
+SELECT * FROM mst_ticket
+
+-- RV-01 予約情報新規登録
+insert into tbl_reservation VALUES (
+    1, 1, 1
+);
+
+-- RV-02
+insert into tbl_reservation VALUES (
+    2, 1, 1
+);
+
+-- RE-01 -RE-05 レビュー新規追加
+insert into mst_review VALUES (1, 1, 1, "1", "タイトル", "本文");
+insert into mst_review VALUES (2, 1, 1, "2", "タイトル2", "本文2");
+insert into mst_review VALUES (3, 1, 1, "3", "タイトル3", "本文3");
+insert into mst_review VALUES (4, 1, 1, "4", "タイトル4", "本文4");
+insert into mst_review VALUES (5, 1, 1, "5", "タイトル5", "本文5");
