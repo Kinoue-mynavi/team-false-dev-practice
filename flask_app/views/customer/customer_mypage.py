@@ -278,7 +278,6 @@ def mypage_manage_account_update():
         customer_zipcode = request.form.get('customer_zipcode')
         customer_address = request.form.get('customer_address')
         customer_phone = request.form.get('customer_phone')
-        customer_payment = request.form.get('customer_payment')
 
         # バリデーションチェック
         # 必須 アカウント名50文字以下 W2 W7
@@ -324,9 +323,8 @@ def mypage_manage_account_update():
             return redirect(url_for('mypage_manage_account_edit'))
 
         # 会員IDの取得
-        # customer_id = read_customer_one(session[logged_in_customer_id])
-        customer = read_customer_one(1)
-        customer_id=customer.customer_id
+        customer_id = session["logged_in_customer_id"]
+        customer = read_customer_one(customer_id)
 
         # データベースを変更
         update_customer(customer_id, request)
@@ -352,26 +350,3 @@ def mypage_manage_account_update():
             customer_payment = payment)
     else:
         return redirect("/customer/auth/login")
-
-# # 予約管理　list
-# @app.route("/customer_manage_reservation", methods=["GET", "POST"])
-# @is_customer_login
-# def customer_manage_reservation():
-#     # customer_id を取得
-#     customer_id = session.get('logged_in_customer_id')
-#     ticket_id = session.get('ticket_id')
-#     event_id = session.get('event_id')
-
-#     # customer_id を引数として渡す
-#     tbl_reservation = read_reservation_customer_id(customer_id)
-#     reservation_param_list = sorted(param_reservation(tbl_reservation),
-#                                     key=itemgetter('event_date'))
-
-
-#     # 予約情報が1件も取得できなければ、エラーメッセージ表示
-#     if not reservation_param_list:
-#         flash(errorMessages.w01('予約情報'))
-
-#     return render_template("/customer/mypage/manage_ticket/list.html",
-#                             reservation_param_list = reservation_param_list,
-#                             event_id = event_id)

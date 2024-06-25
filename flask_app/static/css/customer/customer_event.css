@@ -52,6 +52,13 @@
 
 .review_stars_container {
     display: flex;
+    align-items: center;
+}
+
+.review_score_label {
+    margin-left: 36px;
+    font-size: 40px;
+    font-weight: bold;
 }
 
 .review_stars_container span {

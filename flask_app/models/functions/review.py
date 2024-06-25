@@ -81,4 +81,4 @@ def calc_avarage_review_score(reviews):
     for review in reviews:
         review_score_list.append(int(review.review_score))
     
-    return sum(review_score_list) / len(review_score_list)
+    return round(sum(review_score_list) / len(review_score_list), 1)
