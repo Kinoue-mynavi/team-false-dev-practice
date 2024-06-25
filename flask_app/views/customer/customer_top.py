@@ -13,6 +13,7 @@ infoMessages = InfoMessages()
 def customer_top():
     # 一覧のレコードを取得
     mst_events = read_event()
+    displayed_events = []
     # イベントが1件も取得できなければ、エラーメッセージ表示
     if not mst_events:
         flash(errorMessages.w01('イベントカテゴリ'))
