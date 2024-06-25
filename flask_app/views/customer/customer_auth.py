@@ -2,7 +2,7 @@
 from flask import render_template, flash, request, redirect, session, url_for
 from flask_app.__init__ import app
 from flask import request
-from flask_app.models.functions.customer import create_customer_script, read_customer_customer_account
+from flask_app.models.functions.customer import create_customer_script, read_customer_customer_account, delete_customer
 from flask_app.messages import ErrorMessages, InfoMessages
 from flask_app.models.sessions.customer import create_auth_session, has_auth_session
 
@@ -125,9 +125,10 @@ def login_customer():
         request.form["customer_account"])
 
     # 会員アカウントが存在するかチェック
-    if len(customer_array) == 0:
+    if not len(customer_array):
         flash(errorMessages.w04('アカウント名'))
         isLoginError = True
+        return render_template("/customer/auth/login.html")
 
     # パスワードが一致するかチェック
     customer = customer_array[0]
@@ -147,3 +148,13 @@ def login_customer():
         session["logged_in_customer_name"] = customer.customer_name
         flash(infoMessages.i05())
         return redirect("/customer_top")
+    
+# 会員退会処理
+@app.route("/customer/mypage/manage_unsubscribe")
+def confirm_unsubscribe():
+    delete_customer(session["logged_in_customer_id"])
+    session.pop("logged_in_customer")
+    session.pop("logged_in_customer_account")
+    session.pop("logged_in_customer_id")
+    session.pop("logged_in_customer_name")
+    return redirect("/customer_top")
