@@ -1,5 +1,6 @@
 from flask_app.database import db
 from flask_app.models.mst_event import Mst_event
+from datetime import datetime
 
 
 # イベント　新規登録
@@ -68,3 +69,10 @@ def delete_event(event_id):
     db.session.commit()
 
     return
+
+
+def is_expired_event(event_date):
+    date = datetime.strptime(event_date, "%Y-%m-%d")
+    now = datetime.now()
+
+    return now >= date

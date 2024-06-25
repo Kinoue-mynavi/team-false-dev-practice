@@ -1,0 +1,91 @@
+{% extends "layout_customer.html" %}
+
+{% block body %}
+
+<main>
+    <section class="section">
+        <h1 id="main_title">予約詳細</h1>
+            <div class="section_container">
+                <div class="section_item">
+                    <h3 class="section_item_label">イベント名</h3>
+                    <p class="section_item_content">{{ event.event_name }}</p>
+                </div>
+            
+                <div class="section_item">
+                    <h3 class="section_item_label">開催日</h3>
+                    <p class="section_item_content">{{event.event_date}}</p>
+                </div>
+    
+                <div class="section_item">
+                    <h3 class="section_item_label">開催場所</h3>
+                    <p class="section_item_content">{{ event.event_place }}</p>
+                </div>
+
+                <div class="section_item">
+                    <h3 class="section_item_label">イベント概要</h3>
+                    <p class="section_item_content">
+                        {{ event.event_overview }}
+                    </p>
+                </div>
+
+                <div class="section_item">
+                    <h3 class="section_item_label">チケット券種選択</h3>
+                    <p class="section_item_content">
+                        {{seat_str}}（¥{{ticket.ticket_price}}）
+                    </p>
+                </div>
+
+                <div class="section_item">
+                    <h3 class="section_item_label">予約者情報</h3>
+                    <div class="section_item_content">
+                        <div class="reserver_info_container">
+                            <div class="reserver_info_item">
+                                <span class="list_circle"></span>
+                                <span class="reserver_info_item_label">氏名</span>
+                                <p class="reserver_info_item_value">{{customer_info.customer_name}}</p>
+                            </div>
+                            <div class="reserver_info_item">
+                                <span class="list_circle"></span>
+                                <span class="reserver_info_item_label">郵便番号</span>
+                                <p class="reserver_info_item_value">{{customer_info.customer_zipcode}}</p>
+                            </div>
+                            <div class="reserver_info_item">
+                                <span class="list_circle"></span>
+                                <span class="reserver_info_item_label">住所</span>
+                                <p class="reserver_info_item_value">{{customer_info.customer_address}}</p>
+                            </div>
+                            <div class="reserver_info_item">
+                                <span class="list_circle"></span>
+                                <span class="reserver_info_item_label">電話番号</span>
+                                <p class="reserver_info_item_value">{{customer_info.customer_phone}}</p>
+                            </div>
+                            <div class="reserver_info_item">
+                                <span class="list_circle"></span>
+                                <span class="reserver_info_item_label">支払方法</span>
+                                <p class="reserver_info_item_value">{{customer_payment_str}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event_reservation_buttons_container">
+                    <input class="section_button back_button" type="button" value="一覧に戻る" onClick="location.href=`/mypage_manage_ticket`">
+                    {% if event_future_flag %}
+                        <form action="{{ url_for('ticket_cancel_list', ticket_id=ticket.ticket_id) }}" method="post">
+                            <input type="hidden" name="ticket_id" value="{{ ticket.ticket_id }}">
+                            <input class="section_button submit_button" type="submit" value="キャンセル確定">
+                        </form>
+                    {% else %}
+                        <form action="{{ url_for('review') }}" method="post">
+                            <input type="hidden" name="ticket_id" value="{{ ticket.ticket_id }}">
+                            <input class="section_button submit_button" type="submit" value="レビューをする">
+                        </form>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+    </section>
+</main>
+
+{% endblock %}

@@ -1,0 +1,49 @@
+/* メインタイトルのCSS */
+#main_title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+
+
+
+/* イベント一覧全体のCSS */
+#event_list {
+    /* width: 500px; */
+    margin-inline: auto;
+    padding-bottom: 50px;
+}
+
+.event_item {
+    position: relative;
+    padding-top: 15px;
+    border-bottom: solid rgb(217, 217, 217) 2px;
+}
+
+
+/* イベント名のCSS */
+.event_name {
+    text-align: center;
+    margin: 16px;
+}
+
+/* 詳細ボタンのCSS */
+.button_area {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-top: 5px;
+}
+
+.event_detail_button {
+    width: 100px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    border-radius: 120px;
+    background-color: transparent;
+    cursor: pointer;
+  }

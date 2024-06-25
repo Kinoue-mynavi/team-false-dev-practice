@@ -38,6 +38,11 @@ def read_reservation_customer_id(customer_id):
         Tbl_reservation.customer_id == customer_id).all()
     return reservation_list
 
+def read_reservation_by_each_id(customer_id, ticket_id):
+    reservation = Tbl_reservation.query.filter(
+        Tbl_reservation.customer_id == customer_id, Tbl_reservation.ticket_id == ticket_id).first()
+    return reservation
+
 
 # 予約　削除
 def delete_reservation(reservation_id):
@@ -46,7 +51,6 @@ def delete_reservation(reservation_id):
     db.session.delete(reservation)
     db.session.commit()
     return
-
 
 # 予約情報のparamを返す
 def param_reservation(reservation_list):
@@ -62,6 +66,7 @@ def param_reservation(reservation_list):
             "event_date": "",
             "event_place": "",
             "event_overview": "",
+            "ticket_id": "",
             "ticket_seat_name": "",
             "ticket_price": "",
             "customer_name": ""
@@ -69,6 +74,7 @@ def param_reservation(reservation_list):
 
         param['reservation_id'] = reservation.reservation_id
         ticket = read_ticket_one(reservation.ticket_id)
+        param['ticket_id'] = reservation.ticket_id
         param['ticket_price'] = ticket.ticket_price
         param['ticket_seat_name'] = convert_seat_id(ticket.ticket_seat_id)
         event = read_event_one(ticket.event_id)

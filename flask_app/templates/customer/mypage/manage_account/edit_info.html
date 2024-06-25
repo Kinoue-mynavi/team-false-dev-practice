@@ -1,0 +1,122 @@
+{% extends "layout_customer.html" %}
+
+{% block body %}
+
+<link rel="stylesheet" href="/static/css/customer/info.css">
+
+<!-- メイン領域 -->
+<main>
+<div class="container">
+
+    <div class="section">
+        <h1 id="main_title">
+			会員情報変更
+		</h1>
+        
+        <div class="section_container">
+            <form>
+                <div class="form_area">
+                    <div class="section_item">
+                        <div class="index-flex">
+                            <div class="index"></div><p>アカウント名<span class="required">（必須）</span></p>
+                        </div>
+                        <p class="judgment">50文字以内で入力してください</p>
+                        <p><input class="input_box" name="customer_account" 
+                            type="text" value="{{ customer_account }}"></p>
+                    </div>
+
+                    <div class="section_item">
+                        <div class="index-flex">
+                            <div class="index"></div><p>パスワード<span class="required">（必須）</span></p>
+                        </div>
+                        <p class="judgment">6~10文字の範囲で入力してください</p>
+                        <p><input class="input_box" name="customer_password" 
+                            type="password" value="{{ customer_password }}"></p>
+                    </div>
+                    
+                    <div class="section_item">
+                        <div class="index-flex">
+                            <div class="index"></div><p>氏名</p>
+                        </div>
+                        <p class="judgment">20文字以内で入力してください</p>
+                        <p><input class="input_box" name="customer_name" 
+                            type="text" value="{{ customer_name }}"></p>
+                    </div>
+
+                    <div class="section_item">
+                        <div class="index-flex">
+                            <div class="index"></div><p>郵便番号</p>
+                        </div>
+                        <p class="judgment">半角数字ハイフンなし7文字で入力してください</p>
+                        <p><input class="input_box" name="customer_zipcode" 
+                            type="text" value="{{ customer_zipcode }}"></p>
+                    </div>
+                    
+                    <div class="section_item">
+                        <div class="index-flex">
+                            <div class="index"></div><p>住所</p>
+                        </div>
+                        <p class="judgment">50文字以内で入力してください</p>
+                        <p><input class="input_box" name="customer_address" 
+                            type="text" value="{{ customer_address }}"></p>
+                    </div>
+
+                    <div class="section_item">
+                        <div class="index-flex">
+                            <div class="index"></div><p>電話番号</p>
+                        </div>
+                        <p class="judgment">半角数字ハイフンなし10~11文字で入力してください</p>
+                        <p><input class="input_box" name="customer_phone" 
+                            type="text" value="{{ customer_phone }}"></p>
+                    </div>
+
+                    <div class="section_item">
+                        <div class="index-flex">
+                            <div class="index"></div><p>支払方法<span class="required">（必須）</span></p>
+                        </div>
+                        {% if custome_payment == 1 %}
+                        <div class="radio-button">
+                            <input name="customer_payment" type="radio" value="1" checked>クレジットカード
+                            <input name="customer_payment" type="radio" value="2">PayPay
+                            <input name="customer_payment" type="radio" value="3">振込
+                            <input name="customer_payment" type="radio" value="0">後で設定する
+                        </div>
+                        {% elif custome_payment == 2 %}
+                        <div class="radio-button">
+                            <input name="customer_payment" type="radio" value="1">クレジットカード
+                            <input name="customer_payment" type="radio" value="2" checked>PayPay
+                            <input name="customer_payment" type="radio" value="3">振込
+                            <input name="customer_payment" type="radio" value="0">後で設定する
+                        </div>
+                        {% elif custome_payment == 3 %}
+                        <div class="radio-button">
+                            <input name="customer_payment" type="radio" value="1">クレジットカード
+                            <input name="customer_payment" type="radio" value="2">PayPay
+                            <input name="customer_payment" type="radio" value="3" checked>振込
+                            <input name="customer_payment" type="radio" value="0">後で設定する
+                        </div>
+                        {% else %}
+                        <div class="radio-button">
+                            <input name="customer_payment" type="radio" value="1">クレジットカード
+                            <input name="customer_payment" type="radio" value="2">PayPay
+                            <input name="customer_payment" type="radio" value="3">振込
+                            <input name="customer_payment" type="radio" value="0" checked>後で設定する
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="event_reservation_buttons_container" id="button_area">
+                    <input type="button" class="section_button back_button" 
+                    value="戻る" onclick="location.href=`{{url_for('customer_info')}}`">
+                    <input type="submit" class="section_button submit_button" 
+                    formmethod="post" formaction="{{ url_for('mypage_manage_account_update') }}" class="go_next_button" value="確定">
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+</main>
+
+{% endblock %}

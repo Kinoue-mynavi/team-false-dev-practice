@@ -1,0 +1,44 @@
+{% extends "layout_customer.html" %}
+
+{% block body %}
+
+<!-- ↓会員情報のCSS使いまわしてます -->
+<link rel="stylesheet" href="/static/css/customer/info.css">
+
+<main>
+<div class="container">
+    <div class = "section">
+        <h1 id="main_title">
+            ログイン
+        </h1>
+
+		<div class="section_container">
+			<form action="/customer/auth/login/login_customer" method="post" name="inputForm">
+				<div id="form_area" class="base_pattern">
+
+					<div class="section_item">
+						<div class="index-flex">
+							<div class="index"></div><p>アカウント名<span class="required">（必須）</span></p>
+						</div>
+						<p class="judgment">50文字以内で入力してください</p>
+						<p><input class="input_box" name="customer_account" type="text" value="" id="InputTitle"></p>
+					</div>
+
+					<div class="section_item">
+						<div class="index-flex">
+							<div class="index"></div><p>パスワード<span class="required">（必須）</span></p>
+						</div>
+						<p class="judgment">6~10文字の範囲で入力してください</p>
+						<p><input class="input_box" name="customer_password" type="password" value=""></p>
+					</div>
+				</div>
+
+				<div class="event_reservation_buttons_container" id="button_area">
+					<input class="section_button submit_button" type="submit" value="ログイン">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+</main>
+{% endblock %}

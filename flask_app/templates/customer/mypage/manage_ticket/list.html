@@ -1,0 +1,31 @@
+{% extends "layout_customer.html" %}
+{% block body %}
+<!-- メインコンテンツ領域 -->
+<main>
+<div class="container">
+  <div class="section">
+        <h1 id="main_title">
+            予約一覧
+        </h1>
+
+        <div id="list_area" class="base_pattern">
+            <div class="section_container" id="event_list" style="gap: 8px;">
+              {% for reservation in reservation_param_list %}
+              <div class="event_item">
+                <h3 class="event_name">{{ reservation.event_name }}</h3>
+                <div class="button_area">
+                  <input type="button" class="event_detail_button back_button" value="詳細" 
+                          onclick="location.href='/mypage/manage_ticket/confirm_cancel/{{ reservation.ticket_id }}'">
+                </div>
+              </div>
+              {% endfor %}
+              {{ pagination.info }}
+              {{ pagination.links }}
+            </div>
+        </div>
+  </div>
+</div>
+</main>
+
+
+{% endblock %}

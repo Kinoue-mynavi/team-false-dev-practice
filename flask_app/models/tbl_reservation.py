@@ -6,8 +6,8 @@ from flask_app.models.mst_customer import Mst_customer
 class Tbl_reservation(db.Model):
     __tablename__ = "tbl_reservation"
     reservation_id = db.Column(db.Integer, primary_key=True, autoincrement=True, unique=True)
-    ticket_id = db.Column(db.Integer, db.ForeignKey(Mst_ticket.ticket_id))
-    customer_id = db.Column(db.Integer, db.ForeignKey(Mst_customer.customer_id))
+    ticket_id = db.Column(db.Integer, db.ForeignKey(Mst_ticket.ticket_id, ondelete="CASCADE"))
+    customer_id = db.Column(db.Integer, db.ForeignKey(Mst_customer.customer_id, ondelete="CASCADE"))
 
     def __init__(
         self,

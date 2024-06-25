@@ -5,7 +5,7 @@ from flask_app.models.mst_event_category import Mst_event_category
 class Mst_event(db.Model):
     __tablename__ = "mst_event"
     event_id = db.Column(db.Integer, primary_key=True, autoincrement=True, unique=True)
-    event_category_id = db.Column(db.Integer, db.ForeignKey(Mst_event_category.event_category_id))
+    event_category_id = db.Column(db.Integer, db.ForeignKey(Mst_event_category.event_category_id, ondelete="CASCADE"))
     event_name = db.Column(db.String(50))
     event_date = db.Column(db.String(10))
     event_place = db.Column(db.String(30))

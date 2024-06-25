@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+	<title>ムジクロチケット管理ページ</title>
+
+    <link rel="stylesheet" href="/static/css/customer/base.css">
+    <link rel="stylesheet" href="/static/css/customer/layout.css">
+    <link rel="stylesheet" href="/static/css/customer/customer_event.css">
+    <link rel="stylesheet" href="/static/css/customer/customer_ticket.css">
+	<!-- 機能共用 CSS -->
+	<link rel="stylesheet" href="/static/css/customer/customer_top.css">
+	<link rel="stylesheet" href="/static/css/customer/mypage_top.css">
+	<link rel="stylesheet" href="/static/css/customer/manage_ticket.css">
+	<link rel="stylesheet" href="/static/css/customer/manage_customer.css">
+</head>
+<body>
+	<header>
+		<button class="toggle-menu-button"></button>
+		<div class="site_title">
+			<a href="/"><img src="/static/images/logo_customer.png" alt="ムジクロチケット"></a>
+		</div>
+		<div class="user_info">
+			{% if session["logged_in_customer"] %}
+				<p class="header-display-name">{{ session["logged_in_customer_name"] }}</p>
+				<div class="button-container">
+					<input class="header-button" type="button" value="ログアウト"
+						onClick="location.href=`{{url_for('logout_customer')}}`">
+            	</div>
+			{% else %}
+				<p class="header-display-name">ゲストさん</p>
+				<div class="button-container">
+					<input class="header-button" type="button" value="ログイン"
+						onClick="location.href=`{{url_for('login')}}`">
+					<input class="header-button" type="button" value="新規登録"
+						onClick="location.href=`{{url_for('new_member')}}`">
+            	</div>
+			{% endif %}
+			
+		</div>
+	</header>
+
+	<!-- flashメッセージ表示 -->
+	{% for message in get_flashed_messages() %}
+	<div class="alert alert-info" role="alert">
+		{{ message }}
+	</div>
+	{% endfor %}
+
+	<!-- メインコンテンツ領域 -->
+	<div class="mujiclo-staff-body">
+		{% block body %}{% endblock %}
+	</div>
+
+	<!-- フッター領域 -->
+	<footer>
+		<div class="container">
+			<p class="copyright"><small>© MUJIQLO ENTERTAINMENT INC.</small></p>
+		</div>
+	</footer>
+
+  <div class="modal-container">
+		<nav class="modal-nav">
+			<ul class="modal-menu">
+				{% if session["logged_in_customer"] %}
+					<li><a href="/customer_top">トップページ</a></li>
+					<li><a href="/customer/auth/logout">ログアウト</a></li>
+					<li><a href="/customer/mypage_top">マイページ</a></li>
+				{% else %}
+					<li><a href="/customer_top">トップページ</a></li>
+					<li><a href="/customer/auth/login">ログイン</a></li>
+					<li><a href="/customer/auth/signup">新規会員登録</a></li>
+				{% endif %}
+				
+			</ul>
+		</nav>
+  </div>
+
+  <script src="/static/js/main.js"></script>
+</body>
+</html>

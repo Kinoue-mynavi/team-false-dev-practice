@@ -1,0 +1,345 @@
+@charset "UTF-8";
+/* ==================================================
+* サイトの基本デザイン
+* ================================================== */
+* {
+	margin: 0px;
+	padding: 0px;
+	box-sizing: border-box;
+	font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Meiryo,
+		メイリオ, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+}
+
+/* --------------------------------------------------
+* 基本設定
+---------- */
+/* コンテナ領域 */
+.container {
+	width: 900px;
+	margin:  0px auto;
+	position: relative;
+}
+
+/* --------------------------------------------------
+* ヘッダー領域
+---------- */
+header {
+  width: 100%;
+  background-color: #389BE3;
+  height: 90px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline: 24px;
+  position: relative;
+}
+
+/* ロゴ表示領域 */
+header .site_title {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  height: 50px;
+  z-index: 20;
+}
+
+header img {
+	max-width: 100%;
+	height: 100%;
+}
+
+/* ログイン・ログアウトボタン表示領域 */
+header .user_info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+header .user_info p {
+  margin-bottom: 0;
+  color: #ffffff;
+}
+
+.button-container {
+    display: flex;
+    gap: 12px;
+}
+
+.header-button {
+    display: flex;
+    align-items: center;
+    padding-inline: 24px;
+    height: 32px;
+    border-radius: 16px;
+    border: 2px solid #ffffff;
+    font-size: 14px;
+    background-color: transparent;
+    color: #ffffff;
+}
+
+.header-display-name {
+    position: relative;
+    z-index: 20;
+}
+
+.toggle-menu-button {
+  height: 26px;
+  width: 26px;
+  background-color: transparent;
+  background-image: url("/static/icons/hamburger.svg");
+  border: none;
+  position: relative;
+  z-index: 20;
+  margin-left: 16px;
+}
+
+.toggle-menu-button.is-visible {
+  background-image: url("/static/icons/close.svg");
+}
+
+.toggle-menu-button:focus {
+  outline: none;
+}
+
+/* --------------------------------------------------
+* メインコンテンツ領域
+---------- */
+main {
+	width: 100%;
+	padding-bottom: 40px; /* フッターの長さ分 画面下端に余白を設ける */
+}
+
+main h1 {
+	padding: 20px 0 10px;
+  font-size: 30px;
+}
+
+main h2 {
+	margin: 10px 0 5px;
+	padding: 0.25em 0.5em;
+	line-height: 1em;
+	border-left: solid 10px #389BE3;
+}
+
+/* --------------------------------------------------
+* フッター領域
+---------- */
+footer {
+	height: 40px;
+	width: 100%;
+	background-color: gray;
+}
+
+/* 企業のコピーライト */
+footer p.copyright {
+	padding-top: 5px;
+	text-align: center;
+	color: white;
+}
+
+/* --------------------------------------------------
+* セクション
+---------- */
+
+.section {
+  max-width: 700px;
+  /* max-width: 765px; */
+  margin-inline: auto;
+  padding-top: 32px;
+  padding-bottom: 120px;
+}
+
+.section_title {
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 45px;
+}
+
+.section_container {
+  display: flex;
+  flex-direction: column;
+  gap: 58px;
+  min-height: 300px;
+}
+
+.section_item {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.section_item_label {
+  padding-left: 22px;
+  padding-block: 12px;
+  border-left: solid 12px #389BE3;
+  border-bottom: solid 2px #389BE3;
+}
+
+.section_item_content {
+  padding-left: 35px;
+}
+
+.section_button {
+  width: 180px;
+  height: 60px;
+  /* 勝手に変えます。すみません。（モロタ）
+  width: 236px;
+  height: 77px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 118px;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.section_button:hover {
+  opacity: 0.5;
+  transition: .5s;
+}
+
+.back_button {
+  border: solid 2px #389BE3;
+  color: #389BE3;
+}
+
+.submit_button {
+  background-color: #F56A1C;
+  border: solid 2px #F56A1C;
+  color: #ffffff;
+}
+
+/* --------------------------------------------------
+* ハンバーガーメニュー
+---------- */
+.modal-container {
+  margin: 0;
+  padding: 16px;
+  background-color: #389BE3;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+  visibility: hidden;
+  opacity: 0;
+  transition-property: opacity visibility;
+  transition-duration: 0.5s;
+}
+
+.modal-nav {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-container.is-visible {
+  visibility: visible;
+  opacity: 1;
+}
+
+.modal-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.modal-menu li {
+  text-align: center;
+  margin: 0;
+}
+
+.modal-menu li a {
+  color: #fff;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.close-menu {
+  border: solid 2px #ffffff;
+  height: 32px;
+  padding-inline: 16px;
+  background-color: transparent;
+  color: #ffffff;
+  border-radius: 16px;
+}
+
+
+/* --------------------------------------------------
+* ページネーション
+---------- */
+
+.content nav {
+  background-color: #fff;
+  padding: 10px;
+  z-index: 9999;
+}
+
+.page-item.active .page-link {
+  color: #212529;
+  border-color: #f2f2f2;
+  background-color: #f2f2f2;
+}
+
+.pagination {
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.pagination li {
+  margin: 0 5px;
+}
+
+.pagination li.active a {
+  font-weight: bold;
+}
+
+.pagination li a {
+  text-decoration: none;
+  color: #000;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.pagination li a:hover {
+  background-color: #f5f5f5;
+}
+
+.sr-only {
+  display: none;
+}
+
+/* --------------------------------------------------
+* ページネーションの情報（件数）表示
+---------- */
+.pagination-page-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 10px;
+}
+
+
+
+/* --------------------------------------------------
+* flashメッセージの表示
+---------- */
+.alert {
+  background-color: #fffacd;
+  padding: 20px 40px;
+  color: #B8860B;
+  /* color: #daa520; */
+  border: solid 1px #f0e68c;
+  border-radius: 4px;
+}

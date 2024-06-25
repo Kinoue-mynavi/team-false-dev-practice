@@ -1,0 +1,95 @@
+{% extends "layout_customer.html" %}
+
+{% block body %}
+
+<link rel="stylesheet" href="/static/css/customer/info.css">
+
+<main>
+    <div class="container">
+        <div class = "section">
+            <h1 id="main_title">
+                会員情報
+            </h1>
+            
+            <div class="section_container">
+                <div class = "form">
+                    <div class="section_item">
+                        <div class="index-flex">
+                            <div class="index"></div><p>アカウント名<span class="required">（必須）</span></p>
+                        </div>
+                        <div class="under">
+                            <p>{{ customer_account }}</p>
+                        </div>
+                    </div>
+
+                    <div class="section_item">
+                        <div class="index-flex">
+                            <div class="index"></div><p>パスワード<span class="required">（必須）</span></p>
+                        </div>
+                        <div class = "under">
+                            <p>{{ customer_password }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="section_item">
+                        <div class="index-flex">
+                            <div class="index"></div><p>氏名</p>
+                        </div>
+                        <div class = "under">
+                            <p>{{ customer_name }}</p>
+                        </div>
+                    </div>    
+                    
+                    <div class="section_item">
+                        <div class="index-flex">
+                            <div class="index"></div><p>郵便番号</p>
+                        </div>
+                        <div class = "under">
+                            <p>{{customer_zipcode }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="section_item">
+                        <div class="index-flex">
+                            <div class="index"></div><p>住所</p>
+                        </div>
+                        <div class = "under">
+                            <p>{{ customer_address }}</p>
+                        </div>
+                    </div>
+
+                    <div class="section_item">
+                        <div class="index-flex">
+                            <div class="index"></div><p>電話番号</p>
+                        </div>
+                        <div class = "under">
+                            <p>{{ customer_phone }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="section_item">
+                        <div class="index-flex">
+                            <div class="index"></div><p>支払方法<span class="required">（必須）</span></p>
+                        </div>
+                        <div class="under" style="border-bottom:none;">
+                            <p>{{ customer_payment }}</p>
+                        </div>
+                    </div>
+                    
+                </div>
+
+                <div class="event_reservation_buttons_container">
+                <br>
+                    <input type="button" class="section_button back_button"
+                     value="戻る" onclick="location.href=`{{url_for('mypage_mypage_top')}}`">
+                    <input type="submit" class="section_button submit_button"
+                     value="変更" onclick="location.href=`{{url_for('mypage_manage_account_edit')}}`">
+                </div>
+
+            </div>    
+        </div>
+    </div>
+</main>
+
+
+{% endblock %}
