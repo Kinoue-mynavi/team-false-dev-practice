@@ -1,4 +1,5 @@
 from flask_app.database import db
+from sqlalchemy.orm import relationship
 
 
 class Mst_customer(db.Model):
@@ -12,6 +13,7 @@ class Mst_customer(db.Model):
     customer_address = db.Column(db.String(50))
     customer_phone = db.Column(db.String(11))
     customer_payment = db.Column(db.String(1))
+    tbl_reservations = relationship("Tbl_reservation", cascade="all,delete", backref="mst_customer")
 
     def __init__(
         self,
