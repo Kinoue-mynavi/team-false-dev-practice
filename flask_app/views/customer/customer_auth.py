@@ -39,14 +39,14 @@ def customer_new_member():
 
     # バリデーションチェック
     # 必須 アカウント名50文字以下 W2 W7
-    if 50 < len(customer_account):
+    if 50 <= len(customer_account):
         flash(errorMessages.w07('アカウント名', '50'))
         isValidateError = True
     if 0 >= len(customer_account):
         flash(errorMessages.w02('アカウント名'))
         isValidateError = True
     # 必須 パスワード6ｰ10文字 W2 W8
-    if 6 >= len(customer_password) and 10 <= len(customer_password):
+    if 6 > len(customer_password) or 10 < len(customer_password):
         flash(errorMessages.w08('パスワード', '6', '10'))
         isValidateError = True
     if 0 >= len(customer_password):
@@ -57,7 +57,7 @@ def customer_new_member():
         flash(errorMessages.w07('氏名', '20'))
         isValidateError = True
     # 郵便番号7文字 W6 W10
-    if 7!= len(customer_zipcode):
+    if 7!= len(customer_zipcode) or 0 != len(customer_zipcode):
         flash(errorMessages.w06('郵便番号', '7'))
         isValidateError = True
     if not customer_zipcode.isdigit():
@@ -68,7 +68,7 @@ def customer_new_member():
         flash(errorMessages.w07('住所', '50'))
         isValidateError = True
     # 電話番号10-11文字 W8 W10
-    if 10 > len(customer_phone) or 11 < len(customer_phone):
+    if 10 > len(customer_phone) or 11 < len(customer_phone) or 0 != len(customer_phone):
         flash(errorMessages.w08('電話番号', '10', '11'))
         isValidateError = True
     if not customer_phone.isdigit():
