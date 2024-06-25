@@ -282,7 +282,7 @@ def mypage_manage_account_update():
 
         # バリデーションチェック
         # 必須 アカウント名50文字以下 W2 W7
-        if 50 <= len(customer_account):
+        if 50 < len(customer_account):
             flash(errorMessages.w07('アカウント名', '50'))
             isValidateError = True
         if 0 >= len(customer_account):
@@ -296,27 +296,29 @@ def mypage_manage_account_update():
             flash(errorMessages.w02('パスワード'))
             isValidateError = True
         # 氏名20文字以下 W7
-        if 20 <= len(customer_name):
+        if 20 < len(customer_name):
             flash(errorMessages.w07('氏名', '20'))
             isValidateError = True
         # 郵便番号7文字 W6 W10
-        if 7!= len(customer_zipcode) or 0 != len(customer_zipcode):
+        if 7!= len(customer_zipcode) and 0 != len(customer_zipcode):
             flash(errorMessages.w06('郵便番号', '7'))
             isValidateError = True
-        if not customer_zipcode.isdigit():
-            flash(errorMessages.w10('郵便番号'))
-            isValidateError = True
+        if 7== len(customer_zipcode):
+            if not customer_zipcode.isdigit():
+                flash(errorMessages.w10('郵便番号'))
+                isValidateError = True
         # 住所50文字以下 W7
         if 50 <= len(customer_address):
             flash(errorMessages.w07('住所', '50'))
             isValidateError = True
         # 電話番号10-11文字 W8 W10
-        if 10 > len(customer_phone) or 11 < len(customer_phone) or 0 != len(customer_phone):
+        if 10 > len(customer_phone) and 11 < len(customer_phone) and 0 != len(customer_phone):
             flash(errorMessages.w08('電話番号', '10', '11'))
             isValidateError = True
-        if not customer_phone.isdigit():
-            flash(errorMessages.w10('電話番号'))
-            isValidateError = True
+        if 10 == len(customer_phone) or 11 == len(customer_phone):
+            if not customer_phone.isdigit():
+                flash(errorMessages.w10('電話番号'))
+                isValidateError = True
 
         # バリデーションフラグのチェック
         # 不備がある場合はアカウント情報変更画面にリダイレクト
