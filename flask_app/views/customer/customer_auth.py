@@ -154,7 +154,8 @@ def login_customer():
 # 会員退会処理
 @app.route("/customer/mypage/manage_unsubscribe")
 def confirm_unsubscribe():
-    delete_customer(session["logged_in_customer_id"])
+    # HACK: 会員をDBから削除
+    # delete_customer(session["logged_in_customer_id"])
     session.pop("logged_in_customer")
     session.pop("logged_in_customer_account")
     session.pop("logged_in_customer_id")

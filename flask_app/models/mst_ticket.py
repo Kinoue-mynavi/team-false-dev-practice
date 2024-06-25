@@ -6,7 +6,7 @@ class Mst_ticket(db.Model):
     __tablename__ = "mst_ticket"
     ticket_id = db.Column(db.Integer, primary_key=True,
                           autoincrement=True, unique=True)
-    event_id = db.Column(db.Integer, db.ForeignKey(Mst_event.event_id))
+    event_id = db.Column(db.Integer, db.ForeignKey(Mst_event.event_id, ondelete="CASCADE"))
     ticket_seat_id = db.Column(db.String(3))
     ticket_price = db.Column(db.Integer)
     ticket_accept = db.Column(db.Integer)
