@@ -36,7 +36,11 @@
         <div class="section_item">
             <h3 class="section_item_label">チケット券種選択</h3>
             <p class="section_item_content">
-                チケットの券種を選択してください。
+                {% if not tickets %}
+                    販売中のチケットはありません。
+                {% else %}
+                    チケットの券種を選択してください。
+                {% endif %}
             </p>
     
             <form method="post" action="{{ url_for('create_new_reservation', event_id=event.event_id) }}">

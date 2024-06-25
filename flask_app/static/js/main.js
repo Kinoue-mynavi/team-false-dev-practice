@@ -27,3 +27,14 @@ toggleMenuButton.addEventListener("click", handleClickMenuButton);
 const pageInfoDiv = document.querySelector(".pagination-page-info");
 const pageInfo = pageInfoDiv.querySelectorAll("b");
 document.querySelector(".pagination-page-info").innerText = pageInfo[1].innerText + " 件中 " + pageInfo[0].innerText + " 件目を表示";
+
+// アラート
+const confirmBooking = (elem) => {
+  if(confirm("キャンセルしますか")) {
+      alert("registed: " + elem); 
+      document.getElementById("userInput").value = "True";
+  } else { 
+       document.getElementById("userInput").value = "False";
+       return 0;
+  }          
+}
