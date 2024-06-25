@@ -104,16 +104,6 @@ def mypage_manage_account():
     else:
         return redirect("/customer/auth/login.html")
 
-
-# #予約一覧に遷移
-# @app.route("/customer/manage_ticket/ticket_list")
-# def mypage_manage_ticket():
-#     if has_auth_session():
-#         return render_template("/customer/mypage/manage_ticket/list.html", mst_tickets=displayed_tickets, pagination=pagination)
-#     else:
-#         return redirect("/customer/auth/login.html")
-
-
 #退会に遷移
 @app.route("/customer/manage_unsubscribe/confirm")
 def mypage_manage_unsubscribe():
@@ -187,11 +177,9 @@ def confirm_cancel(ticket_id):
 
 
 # チケットキャンセル チケット一覧に遷移
-@app.route("/mypage_manage_ticket", methods=["POST"])
-def ticket_cancel_list():
+@app.route("/mypage_manage_ticket/<int:ticket_id>", methods=["POST"])
+def ticket_cancel_list(ticket_id):
     if session["logged_in_customer"] == True:
-        # チケットキャンセルして一覧に戻る
-        ticket_id = request.form["ticket_id"]
 
         # チケット削除
         delete_ticket(ticket_id)
@@ -202,13 +190,12 @@ def ticket_cancel_list():
         return redirect("/customer/auth/login")
 
 # レビュー画面に遷移
-@app.route("/mypage_review", methods=["POST"])
-def review():
+@app.route("/mypage_review/<int:ticket_id>", methods=["POST"])
+def review(ticket_id):
     if session["logged_in_customer"] == True:
         # レビュー画面
         # チケットid取得
         # チケット情報:チケットid, イベントid, 席種, 料金, 受付状態
-        ticket_id = request.form["ticket_id"]
         ticket = read_ticket_one(ticket_id)
         # イベント情報:イベント名, 開催日, 開催場所, イベント概要
         event = read_event_one(ticket.event_id)
