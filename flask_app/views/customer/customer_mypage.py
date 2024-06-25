@@ -182,12 +182,14 @@ def ticket_cancel_list(ticket_id):
     if session["logged_in_customer"] == True:
 
         # チケット削除
-        delete_ticket(ticket_id)
-        flash(infoMessages.i03("予約情報"))
+        # delete_ticket(ticket_id)
+        # flash(infoMessages.i03("予約情報"))
+        print(ticket_id)
+        flash(f"チケットID:{ticket_id}")
 
-        return render_template("/customer/mypage/manage_ticket/list.html")
+        return "<p>おおおおおおお</p>"
     else:
-        return redirect("/customer/auth/login")
+        return "<p>えるす</p>"
 
 # レビュー画面に遷移
 @app.route("/mypage_review/<int:ticket_id>", methods=["POST"])
