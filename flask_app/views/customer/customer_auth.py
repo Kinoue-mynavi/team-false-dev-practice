@@ -5,6 +5,7 @@ from flask import request
 from flask_app.models.functions.customer import create_customer_script, read_customer_customer_account, delete_customer
 from flask_app.messages import ErrorMessages, InfoMessages
 from flask_app.models.sessions.customer import create_auth_session, has_auth_session
+from flask_app.models.functions.review import delete_review
 
 # エラーメッセージクラスのインスタンス作成
 errorMessages = ErrorMessages()
@@ -152,6 +153,7 @@ def login_customer():
 # 会員退会処理
 @app.route("/customer/mypage/manage_unsubscribe")
 def confirm_unsubscribe():
+    delete_review(session["logged_in_customer_id"])
     delete_customer(session["logged_in_customer_id"])
     session.pop("logged_in_customer")
     session.pop("logged_in_customer_account")

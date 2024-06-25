@@ -123,7 +123,7 @@ def display_confirmation():
 
 
 # チケット詳細 キャンセル確認に遷移
-@app.route("/mypage/manage_ticket/confirm_cancel/<int:ticket_id>", methods=['POST'])
+@app.route("/mypage/manage_ticket/confirm_cancel/<int:ticket_id>", methods=['POST','GET'])
 def confirm_cancel(ticket_id):
     if session["logged_in_customer"] == True:
         # チケット詳細を開いてキャンセル確認
