@@ -194,7 +194,7 @@ def ticket_cancel_list(ticket_id):
         return redirect("/customer/auth/login")
 
 # レビュー画面に遷移
-@app.route("/mypage_review/<int:ticket_id>", methods=["POST"])
+@app.route("/mypage_review/<int:ticket_id>", methods=["POST","GET"])
 def review(ticket_id):
     if session["logged_in_customer"] == True:
         # レビュー画面
